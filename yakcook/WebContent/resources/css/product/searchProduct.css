@@ -1,0 +1,901 @@
+/* 프레임 */
+*
+{
+    box-sizing: border-box;
+    font-family: "나눔고딕";
+}
+.wrap
+{
+    width: 1200px;
+    height: 1150px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.category
+{
+    width: 240px;
+    height: 100%;
+    float: left;
+    border-right: 1px solid gainsboro;
+}
+.categoryHorizon
+{
+    width: 100%;
+    height: 10%;
+    float: left;
+    border-bottom: 1px solid gainsboro;
+}
+.products
+{
+    width: 958px;
+    height: 100%;
+    float: left;
+    position: relative;
+}
+/* 카테고리 */
+.category_title
+{
+    height: 10%;
+    width: 220px;
+    margin-left: 10px;
+    text-align: center;
+    font-size: 1.7em;
+    line-height: 4;
+    color: rgb(108, 128, 75);
+    border-bottom: 1px solid gainsboro;
+    font-weight: 800;
+}
+.categoryHorizon_title
+{
+    height: 100%;
+    width: 220px;
+    margin-left: 10px;
+    text-align: center;
+    font-size: 1.7em;
+    line-height: 4;
+    color: rgb(108, 128, 75);
+    font-weight: 800;
+}
+.category_content
+{
+    height: 90%;
+}
+.category_content>ul
+{
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+}
+.category_content>ul>li
+{
+    list-style: none;
+    margin-left: 20px;
+    height: 32px;
+    width: 200px;
+}
+.category_content>ul>li>a
+{
+    display: block;
+    text-decoration: none;
+    line-height: 2;
+    font-size: 15px;
+    color: #262626;
+    padding-left: 10px;
+}
+.category_content>ul>li>a:hover
+{
+    color: #fff;
+    background: rgb(171, 184, 104);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+/* 선택된 카테고리에서만 보이게 그냥 호버 말고 */
+.category .far
+{
+    float: right;
+    transform: translate(-10px, 8px);
+}
+/* products */
+.search_product
+{
+    width: 23%;
+    height: 260px;
+    margin-top: 10px;
+    margin-left: 19px;
+    float: left;
+    position: relative;
+}
+.sb
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 130px;
+    height: 40px;
+    background: rgb(250, 174, 88);
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px gainsboro;
+}
+/* 장바구니 추가버튼 */
+.sb>a
+{
+    display: block;
+    line-height: 2.5;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+}
+.sb:hover
+{
+    background: rgb(177, 122, 60);
+}
+.sp_photo
+{
+    height: 182px;
+    position: relative;
+}
+/* 제품사진 */
+.sp_photo *
+{
+    width: 90%;
+    height: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+}
+/* 제품 이름 가격 */
+.sp_name_price
+{
+    height: 40px;
+    text-align: center;
+}
+.sp_name_price a
+{
+    color: #262626;
+    text-decoration: none;
+    line-height: 1.5;
+    font-size: 13px;
+    font-weight: 600;
+}
+.sp_name_price a:nth-child(1)
+{
+    display: block;
+    width: 70%;
+    float: left;
+}
+.sp_name_price a:nth-child(1):hover
+{
+    text-decoration: underline;
+}
+.sp_name_price a:nth-child(2)
+{
+    width: 30%;
+    line-height: 3;
+}
+/* 태그 */
+.sp_tag *
+{
+    height: 30px;
+    text-align: center;
+    background: rgb(171, 184, 104);
+    border-radius: 20px;
+    width: 67px;
+    float: left;
+    margin: 3px;
+}
+.sp_tag a
+{
+    float: left;
+    line-height: 2;
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+}
+/* 정렬 */
+.p_title_range
+{
+    width: 100%;
+    height: 50px;
+    background: rgb(232, 224, 161);
+    line-height: 3;
+    position: relative;
+}
+.p_title
+{
+    float: left;
+    margin-left: 20px;
+}
+.p_title a
+{
+    text-decoration: none;
+    color: #262626;
+    font-size: 15px;
+    font-weight: 700;
+}
+.p_range
+{
+    float: right;
+    margin-right: 20px;
+}
+label
+{
+    font-size: 13px;
+    font-weight: 700;
+}
+/* paging */
+.paging
+{
+    width: 100%;
+    height: 50px;
+    float: left;
+    position: relative;
+}
+.paging>ul
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    margin-top: 5px;
+}
+.paging>ul>li
+{
+    float: left;
+    list-style: none;
+    padding-right: 15px;
+}
+.paging>ul>li>a
+{
+    text-decoration: none;
+    color: #262626;
+    font-size: 15px;
+}
+.paging .fas
+{
+    color: rgb(250, 174, 88);
+    font-size: 20px;
+}
+.paging .fas:hover
+{
+    color: rgb(177, 122, 60);
+}
+/* 제품 조회 페이지 line */
+.col
+{
+    height: 1080px;
+    border-right: 1px solid gainsboro;
+}
+.row
+{
+    width: 948px;
+    border-top: 1px solid gainsboro;
+}
+.col1
+{
+    position: absolute;
+    transform: translate(487px, 60px);
+}
+.col2
+{
+    position: absolute;
+    transform: translate(727px, 60px);
+}
+.col3
+{
+    position: absolute;
+    transform: translate(966px, 60px);
+}
+.row1
+{
+    position: absolute;
+    transform: translate(250px, 324px);
+}
+.row2
+{
+    position: absolute;
+    transform: translate(250px, 595px);
+}
+.row3
+{
+    position: absolute;
+    transform: translate(250px, 864px);
+}
+
+/* --------------------제품 관리 페이지------------------------*/
+.manage_product 
+{
+    width: 100%;
+    height: 76px;
+    border-bottom: 1px solid gainsboro;
+    line-height: 5;
+    text-align: center;
+    font-size: 14px;
+    
+}
+.manage_product>div
+{
+    float: left;
+}
+.mp_photo
+{
+    height: 100%;
+    width: 95px;
+}
+.mp_photo img
+{
+    height: 100%;
+    width: 95%;
+}
+.mp_no
+{
+    height: 100%;
+    width: 90px;
+}
+.mp_name
+{
+    height: 100%;
+    width: 150px;
+}
+.mp_price
+{
+    height: 100%;
+    width: 90px;
+}
+.mp_tag
+{
+    height: 100%;
+    width: 180px;
+}
+.mp_register_date
+{
+    height: 100%;
+    width: 95px;
+}
+.mp_update_date
+{
+    height: 100%;
+    width: 95px;
+}
+.mp_update_button
+{
+    height: 100%;
+    width: 120px;
+}
+.mp_update_button>a
+{
+    text-decoration: none;
+    color: #fff;
+    background: rgb(250, 174, 88);
+    padding: 3px;
+    font-size: 13px;
+}
+.mp_check
+{
+    height: 100%;
+    width: 30px;
+}
+.mp_header
+{
+    background: rgb(108, 128, 75);
+    height: 50px;
+    color: #fff;
+    line-height: 3;
+    font-size: 15px;
+    font-weight: 700;
+}
+.mp_update
+{
+    height: 100%;
+    width: 120px;
+}
+/* 제품 등록 삭제 버튼 */
+.p_register
+{
+    position: absolute;
+    transform: translateX(611px);
+}
+.p_register>a
+{
+    text-decoration: none;
+    color: #fff;
+    background: rgb(250, 174, 88);
+    padding: 3px;
+    font-size: 13px;
+}
+.p_delete
+{
+    position: absolute;
+    transform: translateX(696px);
+}
+.p_delete>a
+{
+    text-decoration: none;
+    color: #fff;
+    background: rgb(250, 174, 88);
+    padding: 3px;
+    font-size: 13px;
+}
+
+/* --------------------제품 등록, 수정 페이지------------------------*/
+.register_product
+{
+    width: 100%;
+    height: 90%;
+    float: left;
+    position: relative;
+}
+#registerForm
+{
+    border: 1px solid gainsboro;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+}
+td, th
+{
+    border-bottom: 1px solid gainsboro;
+    height: 40px;
+}
+.productImg
+{
+    width: 150px;
+    float: left;
+}
+.rp_btn
+{
+    color: #fff;
+    background: rgb(250, 174, 88);
+    padding: 3px;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+}
+.rp_cancle
+{
+    color: rgb(250, 174, 88);
+    border: 1px solid rgb(250, 174, 88);
+    background: #fff;
+}
+/* --------------------장바구니 페이지------------------------*/
+.shoppingBasket_list
+{
+    width: 70%;
+    height: 90%;
+    float: left;
+}
+.shoppingBasket_forward_pay
+{
+    width: 28%;
+    height: 90%;
+    float: left;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+    margin-left: 12px;
+    margin-top: 12px;
+    padding: 25px;
+    height: 400px;
+    margin-top: 0;
+}
+.shoppingBasket_header
+{
+    width: 100%;
+    height: 50px;
+    background: rgb(171, 184, 104);
+}
+.shoppingBasket_header>ul
+{
+    width: 90%;
+    margin: 0;
+    padding: 0;
+}
+.shoppingBasket_header>ul>li
+{
+    float: left;
+    list-style: none;
+    color: #fff;
+    line-height: 3.5;
+    font-weight: 700;
+    font-size: 14px;
+}
+.shoppingBasket_header>ul>li:nth-child(1)
+{
+    transform: translateX(40px);
+}
+.shoppingBasket_header>ul>li:nth-child(2)
+{
+    transform: translateX(100px);
+}
+.shoppingBasket_header>ul>li:nth-child(3)
+{
+    transform: translateX(410px);
+}
+.shoppingBasket_header>ul>li:nth-child(4)
+{
+    transform: translateX(475px);
+}
+.shoppingBasket_header>ul>li:nth-child(5)
+{
+    transform: translateX(540px);
+}
+.shoppingBasket_header>ul>li:nth-child(6)
+{
+    transform: translateX(600px);
+}
+.shoppingBasket_list_each
+{
+    height: 100px;
+    border-bottom: 1px solid gainsboro;
+    line-height: 7;
+}
+.shoppingBasket_list_each_photo
+{
+    width: 125px;
+    height: 100%;
+    position: relative;
+    float: left;
+}
+.shoppingBasket_list_each_photo>img
+{
+    width: 80%;
+    height: 90%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.shoppingBasket_list_each_name
+{
+    width: 350px;
+    float: left;
+    text-align: center;
+    font-size: 14px;
+}
+.shoppingBasket_list_each_name>a
+{
+    text-decoration: none;
+    color: #262626;
+}
+.shoppingBasket_list_each_name>a:hover
+{
+    text-decoration: underline;
+    font-weight: 700;
+}
+.shoppingBasket_list_each_price,
+.shoppingBasket_list_each_amount,
+.shoppingBasket_list_each_total,
+.shoppingBasket_list_each_check
+{
+    width: 90px;
+    float: left;
+    text-align: center;
+    font-size: 14px;
+}
+.shoppingBasket_selected_delete>a,
+.shoppingBasket_all_delete>a
+{
+    text-decoration: none;
+    color: #fff;
+    background: rgb(250, 174, 88);
+    padding: 3px;
+    font-size: 13px;
+    float: left;
+    margin: 10px;
+    margin-right: 0;
+}
+.shoppingBasket_forward_pay_header
+{
+    height: 50px;
+    font-size: 30px;
+    font-weight: 600;
+    border-bottom: 1px solid gainsboro;
+}
+.shoppingBasket_forward_pay_price
+{
+    height: 50px;
+    font-size: 20px;
+    line-height: 2;
+}
+.shoppingBasket_forward_pay_price>div
+{
+    float: left;
+    width: 50%;
+}
+.shoppingBasket_forward_pay_delivery_price
+{
+    height: 50px;
+    font-size: 20px;
+    line-height: 2;
+}
+.shoppingBasket_forward_pay_delivery_price>div
+{
+    float: left;
+    width: 50%;
+}
+.shoppingBasket_forward_pay_delivery_price_details
+{
+    font-size: 13px;
+    height: 30px;
+    color: rgb(108, 128, 75);
+}
+.shoppingBasket_forward_pay_all_price
+{
+    height: 50px;
+    font-size: 23px;
+    line-height: 2;
+}
+.shoppingBasket_forward_pay_all_price>div
+{
+    float: left;
+    width: 50%;
+}
+.shoppingBasket_forward_pay_gopay_btn
+{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    text-align: center;
+    background: rgb(250, 174, 88);
+    line-height: 2.5;
+    margin-top: 50px;
+}
+.shoppingBasket_forward_pay_gopay_btn>a
+{
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+}
+.shoppingBasket_forward_pay_backshop_btn
+{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid rgb(250, 174, 88);
+    text-align: center;
+    line-height: 2.5;
+    margin-top: 10px;
+}
+.shoppingBasket_forward_pay_backshop_btn>a
+{
+    text-decoration: none;
+    color: rgb(250, 174, 88);
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+}
+.categoryHorizon_sb
+{
+    width: 100%;
+    height: 10%;
+    float: left;
+}
+
+/* --------------------제품 상세 페이지------------------------*/
+.detailsProduct_contents
+{
+    width: 100%;
+    height: 450px;
+    margin-top: 10px;
+    float: left;
+    border-bottom: 1px solid gainsboro;
+    padding-top: 30px;
+}
+.dp_productImg
+{
+    width: 900px;
+    height: 80%;
+    margin: 20px;
+}
+.dp_productImg img
+{
+    width: 300px;
+    height: 300px;
+    float: left;
+}
+#dp_prev
+{
+    transform: translate(-18px, 130px);
+}
+#dp_next
+{
+    transform: translate(300px, 130px);
+}
+#dp_prev,
+#dp_next
+{
+    position: absolute;
+    font-size: 30px;
+}
+#dp_prev>a,
+#dp_next>a
+{
+    color: #262626;
+}
+#dp_bean
+{
+    position: absolute;
+    font-size: 5px;
+    transform: translate(128px, 330px);
+}
+#dp_bean>i
+{
+    color: gray;
+    letter-spacing: 4px;
+}
+.dp_productInfo
+{
+    width: 510px;
+    height: 400px;
+    float: left;
+    position: absolute;
+    transform: translate(344px, -398px);
+    background: #fff;
+    z-index: 2;
+    padding: 20px;
+}
+.dp_info_name
+{
+    height: 50px;
+    font-size: 23px;
+    font-weight: 700;
+    border-bottom: 1px solid gainsboro;
+    line-height: 2;
+}
+.dp_info_stock_review
+{
+    height: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 2;
+    margin-top: 5px;
+    border-bottom: 1px solid gainsboro;
+}
+.dp_info_stock_review>div
+{
+    float: left;
+    margin-left: 10px;
+}
+.dp_info_stock_review>div>a
+{
+    text-decoration: none; 
+    color: #fff;
+    background: rgb(108, 128, 75);
+    padding: 3px;
+}
+.dp_info_stock_review>div:nth-child(2)>a
+{
+    color: rgb(108, 128, 75);
+    border: 1px solid rgb(108, 128, 75);
+    background: #fff;
+    padding: 3px;
+}
+.dp_info_info
+{
+    font-size: 14px;
+    line-height: 2;
+    border-bottom: 1px solid gainsboro;
+}
+.dp_info_go_pay_sb
+{
+    width: 345px;
+    height: 330px;
+    float: right;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+    transform: translate(1px, -399px);
+    margin-top: 10px;
+    padding: 30px;
+}
+.dp_info_go_pay_sb_price
+{
+    height: 50px;
+    line-height: 2.5;
+    border-bottom: 1px solid gainsboro;
+}
+.dp_info_go_pay_sb_price>div
+{
+    width: 50%;
+    float: left;
+    font-size: 17px;
+    font-weight: 700;
+}
+.dp_info_go_pay_sb_amount
+{
+    height: 50px;
+    line-height: 2.5;
+    border-bottom: 1px solid gainsboro;
+}
+.dp_info_go_pay_sb_amount>div
+{
+    width: 50%;
+    float: left;
+    font-size: 17px;
+    font-weight: 700;
+}
+.dp_info_forward_pay_gopay_btn
+{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    text-align: center;
+    background: rgb(250, 174, 88);
+    line-height: 2.5;
+    margin-top: 50px;
+}
+.dp_info_forward_pay_gopay_btn>a
+{
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+}
+.dp_info_forward_pay_backshop_btn
+{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid rgb(250, 174, 88);
+    text-align: center;
+    line-height: 2.5;
+    margin-top: 10px;
+}
+.dp_info_forward_pay_backshop_btn>a
+{
+    text-decoration: none;
+    color: rgb(250, 174, 88);
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+}
+.detailsProduct_notice
+{
+    width: 100%;
+    margin-top: 30px;
+    float: left;
+    transform: translateY(-300px);
+}
+.detailsProduct_notice_tab_btn
+{
+    height: 40px;
+}
+.detailsProduct_notice_tab_btn ul
+{
+    margin: 0;
+    padding: 0;
+}
+.detailsProduct_notice_tab_btn li
+{
+    float: left;
+    width: 25%;
+    text-align: center;
+    list-style: none;
+}
+.detailsProduct_notice_tab_btn li.active a
+{
+    display: block;
+    background: rgb(171, 184, 104);
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+}
+.detailsProduct_notice_tab_btn li a
+{
+    display: block;
+    background: #fff;
+    padding: 10px;
+    border: 1px solid rgb(171, 184, 104);
+    color: #262626;
+    text-decoration: none;
+    font-size: 15px;
+    border-left: none;
+}
