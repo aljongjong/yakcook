@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,16 +16,19 @@
         </div>
 
         <div class="register_product">
-            <form action="registerProduct" method="POST" id="registerForm" enctype="multipart/form-data">
+        
+            <form action="registerProduct" method="POST" id="registerForm" enctype="application/x-www-form-urlencoded">
                 <table>
                     <tr>
                         <th>카테고리</th>
                         <td>
-                            <select name="productCategory" id="productCategory">
+                            <select name="productCategory" id="productCategory" required="required">
                                 <!-- 카테고리 테이블에 있는 카테고리 불러오기 -->
-                                <option value="category1">category1</option>
-                                <option value="category2">category2</option>
-                                <option value="category3">category3</option>
+	                            <% int c = 1; %>
+                                <c:forEach items="${categoryList}" var="c">
+	                                	<option value="<%=c%>">${c.categoryName}</option>
+	                                	<% c++; %>
+                                </c:forEach>
                             </select>
                         </td>
                     </tr>
@@ -33,13 +37,28 @@
                         <td>
                             <!-- 태그 테이블에 있는 태그 불러오기 -->
                             <select name="productTag1" id="productTag1">
-                                <option value="tag1">tag1</option>
+	                            <% int t1 = 1; %>
+	                           	<option value="0">----</option>
+                                <c:forEach items="${tagList}" var="t">
+	                                	<option value="<%=t1%>">${t.tagName}</option>
+	                                	<% t1++; %>
+                                </c:forEach>
                             </select>
                             <select name="productTag2" id="productTag2">
-                                <option value="tag2">tag2</option>
+	                            <% int t2 = 1; %>
+	                           	<option value="0">----</option>
+                                <c:forEach items="${tagList}" var="t">
+	                                	<option value="<%=t2%>">${t.tagName}</option>
+	                                	<% t2++; %>
+                                </c:forEach>
                             </select>
                             <select name="productTag3" id="productTag3">
-                                <option value="tag3">tag3</option>
+	                            <% int t3 = 1; %>
+	                           	<option value="0">----</option>
+                                <c:forEach items="${tagList}" var="t">
+	                                	<option value="<%=t3%>">${t.tagName}</option>
+	                                	<% t3++; %>
+                                </c:forEach>
                             </select>
                         </td>
                     </tr>
@@ -61,7 +80,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <textarea name="productContent" id="productContent" cols="120" rows="30" required style="resize: none;"></textarea>
+                            <textarea name="productContents" id="productContents" cols="120" rows="30" required style="resize: none;"></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -79,19 +98,16 @@
                                 <i class="fas fa-edit"></i>
                             </button>
                             <button class="rp_btn rp_cancle">
-                                <span>취소 하기 </span>
+                                <span><a href="manageProduct" style="text-decoration:none; color:rgb(250, 174, 88);">돌아 가기</a></span>
                                 <i class="far fa-window-close"></i>
                             </button>
                         </th>
                     </tr>
-                    
                 </table>
-
 
             </form>
         </div>
         
-        <div></div>
     </div>
 </body>
 </html>

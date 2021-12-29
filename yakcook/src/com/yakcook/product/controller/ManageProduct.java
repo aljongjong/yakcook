@@ -1,7 +1,6 @@
 package com.yakcook.product.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,12 +13,11 @@ import com.yakcook.product.service.ServiceProduct;
 import com.yakcook.product.vo.CategoryVo;
 import com.yakcook.product.vo.ProductVo;
 
-@WebServlet("/searchProduct")
-public class SearchProduct extends HttpServlet{
-
+@WebServlet("/manageProduct")
+public class ManageProduct extends HttpServlet{
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 		
 		// 제품 조회 페이지 좌측 카테고리 불러 오기
 		List<CategoryVo> cList = new ServiceProduct().searchCategory();
@@ -36,7 +34,7 @@ public class SearchProduct extends HttpServlet{
 				currentPage = "1";
 			}
 			int categoryNo = Integer.parseInt(req.getParameter("categoryNo"));
-			List<ProductVo> cpList = new ServiceProduct().searchSelectedCategoryProduct(categoryNo, currentPage);
+			List<ProductVo> cpList = new ServiceProduct().searchSelectedCategoryProductM(categoryNo, currentPage);
 			req.setAttribute("categoryNo", categoryNo);
 			req.setAttribute("categoryProductList", cpList);
 		}
@@ -50,24 +48,13 @@ public class SearchProduct extends HttpServlet{
 		
 		if(req.getParameter("categoryNo") != null) {
 			int categoryNo = Integer.parseInt(req.getParameter("categoryNo"));
-			int maxPage = new ServiceProduct().maxPage(categoryNo);
+			int maxPage = new ServiceProduct().maxPageM(categoryNo);
 			req.setAttribute("maxPage", maxPage);
 		} else {
-			int maxPage = new ServiceProduct().maxPage();
+			int maxPage = new ServiceProduct().maxPageM();
 			req.setAttribute("maxPage", maxPage);
 		}
 		
-		// 제품 정렬
-		List<ProductVo> rList = new ArrayList<>();
-		int range = 0; 
-		if(req.getParameter("range") != null) {
-			range = Integer.parseInt(req.getParameter("range"));
-			rList = new ServiceProduct().searchRangeProduct(range);
-		}
-		req.setAttribute("range", range);
-		req.setAttribute("rangeList", rList);
-		
-		System.out.println("range : " + range);
 		// 다음 페이지 
 		int startPage = Integer.parseInt(currentPage) - 2;
 		if(startPage <= 0) {
@@ -77,15 +64,7 @@ public class SearchProduct extends HttpServlet{
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
 		
-		List<ProductVo> nextPageList = new ArrayList<>();
-		
-		if(range == 0) {
-			nextPageList = new ServiceProduct().nextPageList(currentPage);
-		} else {
-			nextPageList = new ServiceProduct().nextPageListRange(currentPage, range);
-		}
-		System.out.println(nextPageList.get(0).getProductName());
-		
+		List<ProductVo> nextPageList = new ServiceProduct().nextPageListM(currentPage);
 		req.setAttribute("nextPageList", nextPageList);
 		
 		// 이전 페이지, 다음 페이지 버튼
@@ -95,7 +74,7 @@ public class SearchProduct extends HttpServlet{
 		List<ProductVo> tagProductList = new ServiceProduct().tagProductList();
 		req.setAttribute("tagProductList", tagProductList);
 		
+		req.getRequestDispatcher("/WEB-INF/views/product/manageProduct.jsp").forward(req, resp);
 		
-		req.getRequestDispatcher("/WEB-INF/views/product/searchProduct.jsp").forward(req, resp);
 	}
 }
