@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,14 +43,14 @@
             
             <div class="dp_productInfo">
                 <div class="dp_info_name">
-                    <span>ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
+                    <span>${detailsProduct.productName}</span>
                 </div>
 
                 <div class="dp_info_stock_review">
                     <div class="dp_info_stock">
                         <a href="#">
                             <i class="fas fa-box-open"></i>
-                            <span>재고 : 99개</span>
+                            <span>재고 : ${detailsProduct.inventory}개</span>
                         </a>
                     </div>
                     <div class="dp_info_review">
@@ -62,13 +63,7 @@
 
                 <div class="dp_info_info">
                     <p>
-                        유통기한:? 2023 년 09 월 01 일<br>
-                        판매 시작일: 2016 년 01 월 08 일<br>
-                        배송 무게:? 0.35 lbs킬로/그램 단위로 변경<br>
-                        상품 코드: LEX-18279<br>
-                        UPC 코드: 737870182795<br>
-                        포장 수량: 90 개<br>
-                        부피 및 배송 중량: 4.7 x 2.4 x 2.4 in, 0.3 lbs킬로/그램 단위로 변경
+                        ${detailsProduct.productContents}
                     </p>
                 </div>
             </div>
@@ -79,7 +74,7 @@
                         판매가격 :
                     </div>
                     <div>
-                        ₩50,000
+                        ₩${detailsProduct.price}
                     </div>
                 </div>
                 
@@ -89,12 +84,14 @@
                     </div>
                     <div>
                         <select name="dp_info_go_pay_sb_amount" id="dp_info_go_pay_sb_amount">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
+                        <c:forEach var="i" begin="1" end="${detailsProduct.inventory}">
+                            <option value="${i}">${i}</option>                        
+                        </c:forEach>
                         </select>
                     </div>
+                </div>
+                <div class="dp_info_go_pay_sb_amount">
+
                 </div>
 
                 <div class="dp_info_forward_pay_gopay_btn">

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* 프레임 */
 *
 {
@@ -90,11 +91,19 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
+.category_content>ul>li>a.active
+{
+    color: #fff;
+    background: rgb(171, 184, 104);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
 /* 선택된 카테고리에서만 보이게 그냥 호버 말고 */
 .category .far
 {
     float: right;
     transform: translate(-10px, 8px);
+    color: #fff
 }
 /* products */
 .search_product
@@ -108,6 +117,7 @@
 }
 .sb
 {
+	display: none;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -131,6 +141,7 @@
 .sb:hover
 {
     background: rgb(177, 122, 60);
+    display: block;
 }
 .sp_photo
 {
@@ -146,6 +157,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
+}
+.sp_photo:hover + .sb
+{
+	display: block;
 }
 /* 제품 이름 가격 */
 .sp_name_price
@@ -174,7 +189,7 @@
 .sp_name_price a:nth-child(2)
 {
     width: 30%;
-    line-height: 3;
+    line-height: 1.5;
 }
 /* 태그 */
 .sp_tag *
@@ -350,6 +365,10 @@ label
 {
     height: 100%;
     width: 180px;
+}
+.mp_tag>a
+{
+    
 }
 .mp_register_date
 {
@@ -702,22 +721,27 @@ td, th
 }
 #dp_prev
 {
-    transform: translate(-18px, 130px);
+    transform: translateX(-30px);
 }
 #dp_next
 {
-    transform: translate(300px, 130px);
+    transform: translateX(300px);
 }
 #dp_prev,
 #dp_next
 {
     position: absolute;
     font-size: 30px;
+    height: 300px;
+    width: 30px;
+    background: #fff;
 }
 #dp_prev>a,
 #dp_next>a
 {
     color: #262626;
+    top: 45%;
+    position: absolute;
 }
 #dp_bean
 {
@@ -785,8 +809,9 @@ td, th
 }
 .dp_info_go_pay_sb
 {
-    width: 345px;
-    height: 330px;
+    width: 347px;
+    height: 337px;
+    background: #fff;
     float: right;
     border: 1px solid gainsboro;
     border-radius: 5px;
