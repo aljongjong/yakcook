@@ -1,0 +1,28 @@
+@charset "UTF-8";
+.btn1{
+    background-color: rgb(171, 184, 104);
+    padding: 5px 10px;
+    font-size: 15px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.btn1:hover{
+    background-color: rgb(250, 174, 088);
+    cursor: pointer;
+}
+
+section {
+    margin: auto;
+    width: 500px;
+    height: 200px;
+    text-align: center;
+    padding-top: 50px;
+    
+}
+
+section span{
+    font-size: 20px;
+    font-weight:bold;
+}
+
