@@ -16,8 +16,8 @@ import com.yakcook.member.model.vo.MemberVo;
 public class MemberDao {
 	public int insertMember(Connection conn, MemberVo m) throws SQLException {
 		// 쿼리 날리기?
-		String sql = "INSERT INTO MEMBER(MEMBER_NO, ID, PWD, NAME, DETAIL, ENROLL_DATE, EMAIL) "
-				+ "VALUES(SEQ_MEMBER.NEXTVAL, ?, ?, ?, ?, SYSDATE,?)";
+		String sql = "INSERT INTO MEMBER(MEMBER_NO, ID, PWD, NAME, PHONE, EMAIL, DETAIL, MODIFY_DATE) "
+				+ "VALUES(SEQ_MEMBER.NEXTVAL, ?, ?, ?, ?, ?, ?, SYSDATE)";
 		PreparedStatement pstmt = null;
 		int result = 0;
 		try {
@@ -25,8 +25,9 @@ public class MemberDao {
 			pstmt.setString(1, m.getId());
 			pstmt.setString(2, m.getPwd());
 			pstmt.setString(3, m.getName());
-			pstmt.setInt(4, -1);
+			pstmt.setString(4, m.getPhone());
 			pstmt.setString(5, m.getEmail());
+			pstmt.setInt(6, -1);
 			result = pstmt.executeUpdate();
 		} finally {
 			JDBCTemplate.close(pstmt);
@@ -53,10 +54,8 @@ public class MemberDao {
 				String pwd = rs.getString("PWD");
 				String name = rs.getString("NAME");
 				int detail = rs.getInt("DETAIL");
-				Timestamp enrollDate = rs.getTimestamp("ENROLL_DATE");
 				Timestamp modifyDate = rs.getTimestamp("MODIFY_DATE");
 				String openYn = rs.getString("OPEN_YN");
-				//String quitYn = rs.getString("QUIT_YN");
 
 				selectedMember = new MemberVo();
 				selectedMember.setMemberNo(memberNo);
@@ -64,7 +63,6 @@ public class MemberDao {
 				selectedMember.setPwd(pwd);
 				selectedMember.setName(name);
 				selectedMember.setDetail(detail);
-				selectedMember.setEnrollDate(enrollDate);
 				selectedMember.setOpenYn(openYn);
 				
 			}
@@ -224,6 +222,7 @@ public class MemberDao {
 				m.setName(rs.getString("NAME"));
 				m.setDetail(rs.getInt("DETAIL"));
 				m.setEmail(rs.getString("EMAIL"));
+				m.setPhone(rs.getString("PHONE"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

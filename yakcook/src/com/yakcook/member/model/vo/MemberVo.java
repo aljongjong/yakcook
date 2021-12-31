@@ -12,6 +12,7 @@ public class MemberVo {
 	private Timestamp modifyDate;
 	private String openYn;
 	private String email;
+	private String phone;
 	
 	public int getMemberNo() {
 		return memberNo;
@@ -66,5 +67,12 @@ public class MemberVo {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	} 
+	
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	} 
 }

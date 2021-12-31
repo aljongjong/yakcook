@@ -35,6 +35,7 @@ public class joinController extends HttpServlet{
 		String pwd = req.getParameter("pwd");
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
+		String phone = req.getParameter("phone");
 		
 		//파일 읽을 준비
 //		Part part = req.getPart("profile");
@@ -64,6 +65,7 @@ public class joinController extends HttpServlet{
 		m.setPwd(pwd);
 		m.setName(name);
 		m.setEmail(email);
+		m.setPhone(phone);
 		
 		int result = new MemberService().join(m);
 		

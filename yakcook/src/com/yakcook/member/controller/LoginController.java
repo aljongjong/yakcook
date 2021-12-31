@@ -31,11 +31,6 @@ public class LoginController extends HttpServlet{
 		MemberVo loginUser = new MemberService().login(m);
 		
 		if(loginUser != null) {
-			// 성공 
-			// req.setAttribute("msg", "로그인 성공");
-			// req.getRequestDispatcher("/WEB-INF/views/common/successPage.jsp").forward(req, resp);
-			// 로그인 상태 유지
-			// 세션 통해서 마이페이지 보여주면 될듯...?!
 			req.getSession().setAttribute("loginUser", loginUser);
 			req.setAttribute("msg", "로그인 성공");
 			req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
