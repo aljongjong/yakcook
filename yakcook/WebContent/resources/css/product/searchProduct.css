@@ -148,6 +148,10 @@
     height: 182px;
     position: relative;
 }
+.sp_photo img:nth-child(2)
+{
+	display:none;
+}
 /* 제품사진 */
 .sp_photo *
 {
@@ -346,6 +350,10 @@ label
     height: 100%;
     width: 95%;
 }
+.mp_photo img:nth-child(2)
+{
+	display: none;
+}
 .mp_no
 {
     height: 100%;
@@ -416,7 +424,7 @@ label
 .p_register
 {
     position: absolute;
-    transform: translateX(611px);
+    transform: translateX(90px);
 }
 .p_register>a
 {
@@ -429,7 +437,8 @@ label
 .p_delete
 {
     position: absolute;
-    transform: translateX(696px);
+    width: 50px;
+    transform: translateX(-10px);
 }
 .p_delete>a
 {
@@ -465,7 +474,6 @@ td, th
 .productImg
 {
     width: 150px;
-    float: left;
 }
 .rp_btn
 {
@@ -639,7 +647,7 @@ td, th
 }
 .shoppingBasket_forward_pay_delivery_price_details
 {
-    font-size: 13px;
+    font-size: 12px;
     height: 30px;
     color: rgb(108, 128, 75);
 }
@@ -747,7 +755,7 @@ td, th
 {
     position: absolute;
     font-size: 5px;
-    transform: translate(128px, 330px);
+    transform: translate(130px, 330px);
 }
 #dp_bean>i
 {
@@ -822,29 +830,53 @@ td, th
 .dp_info_go_pay_sb_price
 {
     height: 50px;
-    line-height: 2.5;
+    line-height: 3;
     border-bottom: 1px solid gainsboro;
 }
 .dp_info_go_pay_sb_price>div
 {
     width: 50%;
     float: left;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 700;
 }
+.dp_info_go_pay_sb_price>div:nth-child(2)
+{
+	width: 30%
+}
+
 .dp_info_go_pay_sb_amount
 {
     height: 50px;
-    line-height: 2.5;
+    line-height: 3;
     border-bottom: 1px solid gainsboro;
 }
 .dp_info_go_pay_sb_amount>div
 {
     width: 50%;
     float: left;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 700;
 }
+.dp_info_go_pay_sb_total
+{
+	height: 50px;
+    line-height: 3;
+    border-bottom: 1px solid gainsboro;
+}
+.dp_info_go_pay_sb_total>div
+{
+	width: 50%;
+	float: left;
+	font-size: 16px;
+	font-weight: 700;
+}
+.dp_info_go_pay_sb_total>div:nth-child(2)
+{
+	color: red;
+	width: 30%
+}
+
 .dp_info_forward_pay_gopay_btn
 {
     width: 100%;
@@ -853,7 +885,7 @@ td, th
     text-align: center;
     background: rgb(250, 174, 88);
     line-height: 2.5;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 .dp_info_forward_pay_gopay_btn>a
 {
@@ -923,4 +955,24 @@ td, th
     text-decoration: none;
     font-size: 15px;
     border-left: none;
+}
+#searchProductTodetails
+{
+    border:none; 
+    background: #fff; 
+    cursor: pointer;
+}
+#searchProductTodetails:hover
+{
+    font-weight: 700;
+    text-decoration: underline;
+}
+#detailsProductToShoppingBasket
+{
+	border: none;
+	background : #fff;
+	cursor: pointer;
+	color: rgb(250, 174, 88);
+    width: 280px;
+    transform: translateY(-5px);
 }

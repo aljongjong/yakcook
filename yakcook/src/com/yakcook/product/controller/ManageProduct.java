@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.yakcook.product.service.ServiceProduct;
 import com.yakcook.product.vo.CategoryVo;
+import com.yakcook.product.vo.ProductImgVo;
 import com.yakcook.product.vo.ProductVo;
 
 @WebServlet("/manageProduct")
@@ -18,6 +19,10 @@ public class ManageProduct extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		// 제품 이미지 불러오기
+		List<ProductImgVo> piList = new ServiceProduct().searchAllProductImg();
+		req.setAttribute("productImgList", piList);
 		
 		// 제품 조회 페이지 좌측 카테고리 불러 오기
 		List<CategoryVo> cList = new ServiceProduct().searchCategory();
@@ -73,6 +78,7 @@ public class ManageProduct extends HttpServlet{
 		// 태그 매치
 		List<ProductVo> tagProductList = new ServiceProduct().tagProductList();
 		req.setAttribute("tagProductList", tagProductList);
+	
 		
 		req.getRequestDispatcher("/WEB-INF/views/product/manageProduct.jsp").forward(req, resp);
 		

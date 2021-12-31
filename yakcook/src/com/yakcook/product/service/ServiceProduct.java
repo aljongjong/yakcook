@@ -8,12 +8,34 @@ import java.util.List;
 
 import com.yakcook.product.dao.DaoProduct;
 import com.yakcook.product.vo.CategoryVo;
+import com.yakcook.product.vo.MemberVo;
+import com.yakcook.product.vo.ProductImgVo;
 import com.yakcook.product.vo.ProductVo;
+import com.yakcook.product.vo.ShoppingBasketProVo;
+import com.yakcook.product.vo.ShoppingBasketVo;
 import com.yakcook.product.vo.TagVo;
 
 public class ServiceProduct {
 
 /*-------------------------------------제품 조회----------------------------------------*/
+	// 제품 조회 페이지 제품 이미지 가지고 오는 메소드
+	public List<ProductImgVo> searchAllProductImg() {
+		
+		Connection conn = getConnection();
+		
+		List<ProductImgVo> list = new DaoProduct().searchAllProductImg(conn);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return list;
+	}
+	
 	// 제품 조회 페이지에 좌측 카테고리 가지고 오는 메소드
 	public List<CategoryVo> searchCategory() {
 		
@@ -366,6 +388,24 @@ public class ServiceProduct {
 		System.out.println("result : " + result);
 		return result;
 	}
+	
+	// 제품 이미지 등록 메소드
+	public int registerProductImg(List<ProductImgVo> pImgList) {
+		
+		Connection conn = getConnection();
+		
+		int result = new DaoProduct().registerProductImg(conn, pImgList);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return result;
+	}
 /*-------------------------------------제품 수정----------------------------------------*/
 	// 제품 관리 페이지에서 제품 수정 페이지 이동시 기존값 가져오는 메소드
 	public List<ProductVo> updateProductInfo(int updateProuctNo) {
@@ -404,6 +444,102 @@ public class ServiceProduct {
 		
 		return result;
 	}
+	// 제품 이미지 수정
+	public int updateProductImg(ProductVo pv, List<ProductImgVo> pImgList) {
+		
+		Connection conn = getConnection();
+		
+		int result = new DaoProduct().updateProductImg(conn, pv, pImgList);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return result;
+	}
+/*-------------------------------------제품 삭제----------------------------------------*/
+	public int deleteProduct(int deleteProuctNo) {
+
+		Connection conn = getConnection();
+		
+		int result = new DaoProduct().deleteProduct(conn, deleteProuctNo);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return result;
+	}
+/*-------------------------------------장바구니----------------------------------------*/
+	
+	// 기존 회원 장바구니가 있으면 기존거 반환, 없으면 생성하고 반환 하기
+	public ShoppingBasketVo shoppingBasket(MemberVo mv) {
+		
+		Connection conn = getConnection();
+		
+		ShoppingBasketVo sv = new DaoProduct().shoppingBasket(conn, mv);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		return sv;
+	}
+	// 장바구니에 이미 있는 제품인지 확인
+	public int checkMyShoppingBasket(ShoppingBasketVo sv, ProductVo pv) {
+		
+		Connection conn = getConnection();
+		
+		int result = new DaoProduct().checkMyShoppingBasket(conn, sv, pv);
+		
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return result;
+	}
+	
+	// 가져온 장바구니에 제품 넣기
+	public List<ShoppingBasketProVo> putShoopingBasket(ShoppingBasketVo sv, ProductVo pv) {
+		
+		Connection conn = getConnection();
+		
+		List<ShoppingBasketProVo> list = new DaoProduct().putShoopingBasket(conn, sv, pv);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return list;
+	}
+
+	
+
+	
+	
+
+
+	
 
 	
 	

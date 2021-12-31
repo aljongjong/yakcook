@@ -17,7 +17,7 @@
 
         <div class="register_product">
         
-            <form action="registerProduct" method="POST" id="registerForm" enctype="application/x-www-form-urlencoded">
+            <form action="registerProduct" method="POST" id="registerForm" enctype="multipart/form-data">
                 <table>
                     <tr>
                         <th>카테고리</th>
@@ -86,10 +86,12 @@
                     <tr>
                         <th>제품 이미지</th>
                         <td>
-                            <input type="file" name="productImg1" class="productImg">
-                            <input type="file" name="productImg2" class="productImg">
-                            <input type="file" name="productImg3" class="productImg">
-                        </td>
+                        	<label>제품 정면 사진 :
+                            	<input type="file" name="f" class="productImg" required="required">
+                            </label>
+                        	<label>제품 후면 사진 :
+                            	<input type="file" name="f" class="productImg" required="required">
+                            </label>
                     </tr>
                     <tr>
                         <th colspan="2" style="border: none;">

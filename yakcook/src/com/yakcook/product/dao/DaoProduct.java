@@ -10,15 +10,55 @@ import java.util.List;
 
 import static com.yakcook.common.JDBCTemplate.*;
 import com.yakcook.product.vo.CategoryVo;
+import com.yakcook.product.vo.MemberVo;
+import com.yakcook.product.vo.ProductImgVo;
 import com.yakcook.product.vo.ProductVo;
+import com.yakcook.product.vo.ShoppingBasketProVo;
+import com.yakcook.product.vo.ShoppingBasketVo;
 import com.yakcook.product.vo.TagVo;
 
 public class DaoProduct {
 
+	// 제품 이미지 불러오는 메소드
+	public List<ProductImgVo> searchAllProductImg(Connection conn) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM PRODUCT_IMG ORDER BY PRODUCT_IMG_NO";
+		ProductImgVo piv = null;
+		List<ProductImgVo> list = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int productImgNo = rs.getInt("PRODUCT_IMG_NO");
+				int productNo = rs.getInt("PRODUCT_NO");
+				String productImgName = rs.getString("PRODUCT_IMG_NAME");
+				
+				piv = new ProductImgVo();
+				
+				piv.setProductImgNo(productImgNo);
+				piv.setProductNo(productNo);
+				piv.setProductImgName(productImgName);
+				
+				list.add(piv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return list;
+	}
+	
 	// 제품 조회 페이지에 좌측 카테고리 가지고 오는 메소드
 	public List<CategoryVo> searchCategory(Connection conn) {
 		
-		PreparedStatement pstmt = null;;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "SELECT * FROM CATEGORY";
 		CategoryVo cv = null;
@@ -103,7 +143,7 @@ public class DaoProduct {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM PRODUCT p WHERE CATEGORY_NO = ?) WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM PRODUCT p WHERE CATEGORY_NO = ? AND PRODUCT_DELETE = 'N') WHERE RNUM BETWEEN ? AND ?";
 		ProductVo pv = null;
 		List<ProductVo> list = new ArrayList<>();
 		
@@ -155,7 +195,7 @@ public class DaoProduct {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int result = 0;
-		String sql = "SELECT COUNT(*) FROM PRODUCT";
+		String sql = "SELECT COUNT(*) FROM PRODUCT WHERE PRODUCT_DELETE = 'N'";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -178,7 +218,7 @@ public class DaoProduct {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int result = 0;
-		String sql = "SELECT COUNT(*) FROM PRODUCT WHERE CATEGORY_NO = ?";
+		String sql = "SELECT COUNT(*) FROM PRODUCT WHERE CATEGORY_NO = ? AND PRODUCT_DELETE = 'N'";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -201,7 +241,7 @@ public class DaoProduct {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM PRODUCT p) WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM PRODUCT p WHERE PRODUCT_DELETE = 'N') WHERE RNUM BETWEEN ? AND ?";
 		ProductVo pv = null;
 		List<ProductVo> list = new ArrayList<>();
 		
@@ -250,7 +290,7 @@ public class DaoProduct {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM (SELECT * FROM PRODUCT ORDER BY CATEGORY_DATE) p) WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM (SELECT * FROM PRODUCT WHERE PRODUCT_DELETE = 'N' ORDER BY CATEGORY_DATE) p) WHERE RNUM BETWEEN ? AND ?";
 		ProductVo pv = null;
 		List<ProductVo> list = new ArrayList<>();
 		
@@ -299,7 +339,7 @@ public class DaoProduct {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM (SELECT * FROM PRODUCT ORDER BY CATEGORY_DATE DESC) p) WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM (SELECT * FROM PRODUCT WHERE PRODUCT_DELETE = 'N' ORDER BY CATEGORY_DATE DESC) p) WHERE RNUM BETWEEN ? AND ?";
 		ProductVo pv = null;
 		List<ProductVo> list = new ArrayList<>();
 		
@@ -348,7 +388,7 @@ public class DaoProduct {
 			
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM (SELECT * FROM PRODUCT ORDER BY PRICE) p) WHERE RNUM BETWEEN ? AND ?";
+			String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM (SELECT * FROM PRODUCT WHERE PRODUCT_DELETE = 'N' ORDER BY PRICE) p) WHERE RNUM BETWEEN ? AND ?";
 			ProductVo pv = null;
 			List<ProductVo> list = new ArrayList<>();
 			
@@ -397,7 +437,7 @@ public class DaoProduct {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM (SELECT * FROM PRODUCT ORDER BY PRICE DESC) p) WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM (SELECT * FROM PRODUCT WHERE PRODUCT_DELETE = 'N' ORDER BY PRICE DESC) p) WHERE RNUM BETWEEN ? AND ?";
 		ProductVo pv = null;
 		List<ProductVo> list = new ArrayList<>();
 		
@@ -503,7 +543,7 @@ public class DaoProduct {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM PRODUCT ORDER BY CATEGORY_DATE ASC";
+		String sql = "SELECT * FROM PRODUCT WHERE PRODUCT_DELETE = 'N' ORDER BY CATEGORY_DATE ASC";
 		ProductVo pv = null;
 		List<ProductVo> list = new ArrayList<>();
 		
@@ -552,7 +592,7 @@ public class DaoProduct {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM PRODUCT ORDER BY CATEGORY_DATE DESC";
+		String sql = "SELECT * FROM PRODUCT WHERE PRODUCT_DELETE = 'N' ORDER BY CATEGORY_DATE DESC";
 		ProductVo pv = null;
 		List<ProductVo> list = new ArrayList<>();
 		
@@ -601,7 +641,7 @@ public class DaoProduct {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM PRODUCT ORDER BY PRICE ASC";
+		String sql = "SELECT * FROM PRODUCT WHERE PRODUCT_DELETE = 'N' ORDER BY PRICE ASC";
 		ProductVo pv = null;
 		List<ProductVo> list = new ArrayList<>();
 		
@@ -649,7 +689,7 @@ public class DaoProduct {
 	public List<ProductVo> searchRangeProductPriceHigh(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM PRODUCT ORDER BY PRICE DESC";
+		String sql = "SELECT * FROM PRODUCT WHERE PRODUCT_DELETE = 'N' ORDER BY PRICE DESC";
 		ProductVo pv = null;
 		List<ProductVo> list = new ArrayList<>();
 		
@@ -898,6 +938,35 @@ public class DaoProduct {
 		}
 		return result;
 	}
+	
+	// 이미지 등록
+	public int registerProductImg(Connection conn, List<ProductImgVo> pImgList) {
+		
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO PRODUCT_IMG VALUES"
+				+ "(SEQ_PRODUCT_IMG_NO.NEXTVAL, "
+				+ "(SELECT PRODUCT_NO FROM (SELECT ROWNUM AS RNUM, p.* FROM PRODUCT p ORDER BY P.PRODUCT_NO DESC) WHERE ROWNUM = 1), "
+				+ "?, "
+				+ "SYSDATE, 'N')";
+		int result = 0;
+		
+		for(int i = 0; i < pImgList.size(); i++) {
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, pImgList.get(i).getProductImgName());
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+		}
+		
+		System.out.println("이미지이름 1: " + pImgList.get(0).getProductImgName());
+		System.out.println("이미지이름 2: " + pImgList.get(1).getProductImgName());
+		return result;
+	}
 
 /*-------------------------------------제품 수정----------------------------------------*/
 	// 제품 관리 페이지에서 제품 수정시 기존값 가지고 오는 메소드
@@ -1013,7 +1082,8 @@ public int updateProductTag1(Connection conn, ProductVo pv, int tagNo1, int tagN
 				+ "PRODUCT_NAME = ?, "
 				+ "PRICE = ?, "
 				+ "INVENTORY = ?, "
-				+ "PRODUCT_CONTENTS = ? "
+				+ "PRODUCT_CONTENTS = ?,"
+				+ "LASTEDIT_DATE = SYSDATE "
 				+ "WHERE PRODUCT_NO = ?";
 		int result1 = 0;
 		try {
@@ -1132,6 +1202,219 @@ public int updateProductTag1(Connection conn, ProductVo pv, int tagNo1, int tagN
 		}
 		return result;
 	}
+	
+	// 제품 이미지 수정
+	public int updateProductImg(Connection conn, ProductVo pv, List<ProductImgVo> pImgList) {
+
+		PreparedStatement pstmt = null;
+		String sql1 = "DELETE FROM PRODUCT_IMG WHERE PRODUCT_NO = ?";
+		String sql2 = "INSERT INTO PRODUCT_IMG VALUES"
+				+ "(SEQ_PRODUCT_IMG_NO.NEXTVAL, "
+				+ "?, "
+				+ "?, "
+				+ "SYSDATE, 'N')";
+		int result1 = 0;
+		int result2 = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql1);
+			pstmt.setInt(1, pv.getProductNo());
+			result1 = pstmt.executeUpdate();
+			
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		for(int i = 0; i < pImgList.size(); i++) {
+			try {
+				pstmt = conn.prepareStatement(sql2);
+				pstmt.setInt(1, pv.getProductNo());
+				pstmt.setString(2, pImgList.get(i).getProductImgName());
+				result2 = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+		}
+		System.out.println("이미지이름 1: " + pImgList.get(0).getProductImgName());
+		System.out.println("이미지이름 2: " + pImgList.get(1).getProductImgName());
+		System.out.println("제품 넘버: " + pv.getProductNo());
+		System.out.println("이미지삭제행: " + result1);
+		System.out.println("이미지등록행: " + result2);
+		
+		return result2;
+	}
+	
+	
+/*-------------------------------------제품 삭제----------------------------------------*/
+	public int deleteProduct(Connection conn, int deleteProuctNo) {
+		
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE PRODUCT SET PRODUCT_DELETE = 'Y' WHERE PRODUCT_NO = ?";
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, deleteProuctNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+/*-------------------------------------장바구니----------------------------------------*/
+
+//	장바구니를 먼저 조회하는 쿼리 실행 후 있는 장바구니면 그대로 그 장바구니 반환하고 없으면 만든다음에 반환
+	public ShoppingBasketVo shoppingBasket(Connection conn, MemberVo mv) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ShoppingBasketVo sv = null;
+		String sql = "SELECT * FROM SHOPPINGBAG WHERE MEMBER_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mv.getMemberNo());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				int shoppingBasketNo = rs.getInt("SHOPPINGBAG_NO");
+				int memberNo = rs.getInt("MEMBER_NO");
+				
+				sv = new ShoppingBasketVo();
+				
+				sv.setShoppingBasketNo(shoppingBasketNo);
+				sv.setMemberNo(memberNo);
+				
+			} else {
+				sv = shoppingBasketInsert(conn, mv);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return sv;
+	}
+	// 기존 장바구니가 없으면 장바구니 만들고 셀렉트해서 장바구니 반환
+	private ShoppingBasketVo shoppingBasketInsert(Connection conn, MemberVo mv) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		ShoppingBasketVo sv = null;
+		String sql = "INSERT INTO SHOPPINGBAG VALUES(SEQ_SHOPPINGBAG_NO.NEXTVAL, ?)";
+		String sql1 = "SELECT * FROM SHOPPINGBAG WHERE MEMBER_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mv.getMemberNo());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		if(result == 1) {
+			try {
+				pstmt = conn.prepareStatement(sql1);
+				pstmt.setInt(1, mv.getMemberNo());
+				rs = pstmt.executeQuery();
+				
+				rs.next();
+				
+				int shoppingBasketNo = rs.getInt("SHOPPINGBAG_NO");
+				int memberNo = rs.getInt("MEMBER_NO");
+				
+				sv = new ShoppingBasketVo();
+				
+				sv.setShoppingBasketNo(shoppingBasketNo);
+				sv.setMemberNo(memberNo);
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+		}
+		
+		return sv;
+	}
+	// 장바구니에 이미 있는 제품인지 확인
+	public int checkMyShoppingBasket(Connection conn, ShoppingBasketVo sv, ProductVo pv) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "SELECT * FROM SHOPPINGBAG_PRO WHERE SHOPPINGBAG_NO = ? AND PRODUCT_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sv.getShoppingBasketNo());
+			pstmt.setInt(2, pv.getProductNo());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	// 가져온 장바구니에 제품 넣기
+	public List<ShoppingBasketProVo> putShoopingBasket(Connection conn, ShoppingBasketVo sv, ProductVo pv) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		// 이미 존재하는 제품일수도 있는데... 삭제하고?
+		String sql = "INSERT INTO SHOPPINGBAG_PRO VALUES (?, ?, ?)";
+		ShoppingBasketProVo spv = null;
+		List<ShoppingBasketProVo> list = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sv.getShoppingBasketNo());
+			pstmt.setInt(2, pv.getProductNo());
+			pstmt.setInt(3, pv.getInventory());
+			
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		return list;
+	}
+
+	
+
+	
+
+
+
+
 
 	
 
