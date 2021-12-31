@@ -13,7 +13,6 @@ import javax.servlet.annotation.WebFilter;
 @WebFilter("/*")
 public class EncodeFilter implements Filter {
 
-	@Override
 	public void destroy() {}
 
 	@Override
