@@ -1,0 +1,45 @@
+@charset "UTF-8";
+#home{
+    display: inline-block;
+	font-weight: bold;
+	font-size: 25px;
+    margin: 20px;
+}
+#home:link{
+	color: rgb(108, 128, 075);
+	text-decoration:none;
+}
+#home:visited{
+	color: rgb(108, 128, 075);
+	text-decoration:none;
+}
+#linkWrap{
+    float: left;
+    text-align: center;
+    width: 20%;
+    padding-left:8%;
+    margin-right:4%;
+}
+
+hr{
+	border-color:black;
+	background-color:black;
+}
+
+.link{
+    font-weight: bold;
+	font-size: 20px;
+    display: inline-block;
+    margin: 10px;
+}
+.link:link{
+	color: rgb(108, 128, 075);
+	text-decoration:none;
+}
+.link:visited{
+	color: rgb(108, 128, 075);
+}
+.link:hover{
+    background-color: rgb(250, 174, 088);
+    color: white;
+}
