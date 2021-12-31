@@ -1,19 +1,32 @@
 package com.yakcook.product.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import com.yakcook.product.service.ServiceProduct;
 import com.yakcook.product.vo.CategoryVo;
+import com.yakcook.product.vo.ProductImgVo;
 import com.yakcook.product.vo.ProductVo;
 import com.yakcook.product.vo.TagVo;
 
+@MultipartConfig(
+		maxFileSize = 1024 * 1024 * 50,
+		maxRequestSize = 1024 * 1024 * 50 * 5
+		)
 @WebServlet("/updateProduct")
 public class UpdateProduct extends HttpServlet{
 	
@@ -80,11 +93,59 @@ public class UpdateProduct extends HttpServlet{
 		}
 		System.out.println("resultTag : " + resultTag);
 		
+		// 다중 파일 업로드
+		List<ProductImgVo> pImgList = new ArrayList<>();
+		
+		Collection<Part> parts = req.getParts(); // 모든 part들을 가져옴
+		ProductImgVo pImg = null;
+		
 		if(resultTag == 3) {
-			req.getRequestDispatcher("/WEB-INF/views/product/manageProduct.jsp").forward(req, resp);
+			for(Part file : parts) {
+				if(!file.getName().equals("f")) continue; // name이 f인 경우에 실행
+				
+				// 사용자가 업로드한 파일 이름 알아오기
+				String originName = file.getSubmittedFileName();
+				
+				// 사용자가 업로드한 파일에 input 스트림 연결
+				InputStream fis = file.getInputStream();
+				
+				// 파일 이름 변경
+				
+				String changeName = "" + UUID.randomUUID();
+				String ext = originName.substring(originName.lastIndexOf("."), originName.length());
+				
+				// 저장할 경로
+				String realPath = req.getServletContext().getRealPath("/upload/product");
+				
+				// 파일 경로
+				String filePath = realPath + File.separator + changeName + ext;
+				
+				// 파일 저장
+				FileOutputStream fos = new FileOutputStream(filePath);
+				
+				byte[] buf = new byte[1024];
+				int size = 0;
+				while((size = fis.read(buf)) != -1) {
+					fos.write(buf, 0, size);
+				}
+				fis.close();
+				fos.close();
+				
+				pImg = new ProductImgVo();
+				pImg.setProductImgName(changeName + ext);
+				
+				pImgList.add(pImg);
+			}
+		}
+		int resultImg = new ServiceProduct().updateProductImg(pv, pImgList);
+		System.out.println("resultImg : " + resultImg);
+		
+		if(resultTag == 3) {
+			req.setAttribute("msg", "제품 수정을 성공하였습니다.");
+			req.getRequestDispatcher("/WEB-INF/views/product/updateSuccessProduct.jsp").forward(req, resp);
 		} else {
-			req.setAttribute("msg", "제품 수정에 실패하였습니다. 태그 중복을 확인해주세요.");
-			req.getRequestDispatcher("/WEB-INF/views/product/registerErrorProduct.jsp").forward(req, resp);
+			req.setAttribute("msg", "제품 수정을 실패하였습니다. 태그 중복을 확인해주세요.");
+			req.getRequestDispatcher("/WEB-INF/views/product/updateErrorProduct.jsp").forward(req, resp);
 		}
 	}
 }

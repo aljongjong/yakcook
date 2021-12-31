@@ -41,13 +41,15 @@
                 
                 <div class="p_range">
                     <label for="panel-label">정렬 : </label>
-                    <select oninput="range();" name="range" id="range">
-                        <option value="1" selected="selected">등록순</option>
-                        <option value="2">최신순</option>
-                        <option value="3">가격 낮은 순</option>
-                        <option value="4">가격 높은 순</option>
-                        <option value="5">리뷰 많은 순</option>
-                    </select>
+                    <form action="searchProduct" style="display:inline;">
+	                    <select oninput="range();" name="range" id="range">
+	                        <option value="1">등록순</option>
+	                        <option value="2">최신순</option>
+	                        <option value="3">가격 낮은 순</option>
+	                        <option value="4">가격 높은 순</option>
+	                    </select>
+     					<button type="submit" class="rp_btn"><span>조회 </span><i class="fas fa-search"></i></button>
+                    </form>
                 </div>
             </div>
             
@@ -57,7 +59,11 @@
 	           		<c:forEach items="${nextPageList}" var="np" begin="0" end="16">
 			            	<div class="search_product">
 				                <div class="sp_photo">
-				                    <a href="#"><img src=""></a>
+				                <c:forEach items="${productImgList}" var="pi">
+				                	<c:if test="${np.productNo eq pi.productNo}">
+				                		<img src="upload/product/${pi.productImgName}">
+				                	</c:if>
+				                </c:forEach>
 				                </div>
 				                <div class="sb">
 				                    <a href="#"><i class="fas fa-cart-plus"></i><span> 장바구니 담기</span></a>
@@ -73,9 +79,9 @@
 				                	<input type="hidden" name="lasteditDate" value="${np.lasteditDate}">
 				                	<input type="hidden" name="inventory" value="${np.inventory}">
 				                	<input type="hidden" name="categoryNo" value="${np.categoryNo}">
-				                    <input type="submit" name="productName" value="${np.productName}">
+				                    <input type="submit" name="productName" value="${np.productName}" id="searchProductTodetails">
 				                </form>
-				                    <a href="#" style="float:right">${np.price}</a>
+				                    <a style="float:right">${np.price}</a>
 				                </div>
 				                <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 				                <c:forEach items="${tagProductList}" var="tp">
@@ -92,14 +98,28 @@
             		<c:forEach items="${nextPageList}" var="np" begin="0" end="16">
 			            	<div class="search_product">
 				                <div class="sp_photo">
-				                    <a href="#"><img src=""></a>
+				                    <c:forEach items="${productImgList}" var="pi">
+				                	<c:if test="${np.productNo eq pi.productNo}">
+				                		<img src="upload/product/${pi.productImgName}">
+				                	</c:if>
+				                </c:forEach>
 				                </div>
 				                <div class="sb">
 				                    <a href="#"><i class="fas fa-cart-plus"></i><span> 장바구니 담기</span></a>
 				                </div>
 				                <div class="sp_name_price">
-				                    <a href="#">${np.productName}</a>
-				                    <a href="#">${np.price}</a>
+			                    <form action="detailsProduct" method="POST" style="display:inline-block; float:left">
+				                	<input type="hidden" name="productNo" value="${np.productNo}">
+				                	<input type="hidden" name="price" value="${np.price}">
+				                	<input type="hidden" name="categoryDate" value="${np.categoryDate}">
+				                	<input type="hidden" name="productContents" value="${np.productContents}">
+				                	<input type="hidden" name="productDelete" value="${np.productDelete}">
+				                	<input type="hidden" name="lasteditDate" value="${np.lasteditDate}">
+				                	<input type="hidden" name="inventory" value="${np.inventory}">
+				                	<input type="hidden" name="categoryNo" value="${np.categoryNo}">
+				                    <input type="submit" name="productName" value="${np.productName}" id="searchProductTodetails">
+				                </form>
+				                    <a style="float:right">${np.price}</a>
 				                </div>
 				                <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 				                <c:forEach items="${tagProductList}" var="tp">
@@ -118,14 +138,28 @@
 	           	<c:forEach items="${categoryProductList}" var="cp" begin="0" end="16">
 	            	<div class="search_product">
 		                <div class="sp_photo">
-		                    <a href="#"><img src=""></a>
+		                    <c:forEach items="${productImgList}" var="pi">
+			                	<c:if test="${cp.productNo eq pi.productNo}">
+			                		<img src="upload/product/${pi.productImgName}">
+			                	</c:if>
+			                </c:forEach>
 		                </div>
 		                <div class="sb">
 		                    <a href="#"><i class="fas fa-cart-plus"></i><span> 장바구니 담기</span></a>
 		                </div>
 		                <div class="sp_name_price">
-		                    <a href="#">${cp.productName}</a>
-		                    <a href="#">${cp.price}</a>
+	                     <form action="detailsProduct" method="POST" style="display:inline-block; float:left">
+			                	<input type="hidden" name="productNo" value="${cp.productNo}">
+			                	<input type="hidden" name="price" value="${cp.price}">
+			                	<input type="hidden" name="categoryDate" value="${cp.categoryDate}">
+			                	<input type="hidden" name="productContents" value="${cp.productContents}">
+			                	<input type="hidden" name="productDelete" value="${cp.productDelete}">
+			                	<input type="hidden" name="lasteditDate" value="${cp.lasteditDate}">
+			                	<input type="hidden" name="inventory" value="${cp.inventory}">
+			                	<input type="hidden" name="categoryNo" value="${cp.categoryNo}">
+			                    <input type="submit" name="productName" value="${cp.productName}" id="searchProductTodetails">
+		                </form>
+		                    <a style="float:right">${cp.price}</a>
 		                </div>
 		                <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 		                <c:forEach items="${tagProductList}" var="tp" begin="0" end="1">
@@ -138,7 +172,6 @@
 	            	</div>
 	           	</c:forEach>
             </c:if>
-            
             <!-- fas아이콘 한페이지씩 이동 , 선택 페이지 넘버 fontweight 900, ...뒤 마지막 페이지 넘버 나오게, 선택 페이지 앞뒤 넘버 2개씩 보이게 하기  -->
             <div class="paging">
                 <ul>
@@ -184,7 +217,7 @@
     	/* 카테고리 메뉴 클릭시 배경 + 아이콘 생기게 */
     	
     	/* 정렬 */
-    	function range() {
+    	/* function range() {
     	 	$.ajax({
     	 		url : "/yakcook/searchProduct",
     	 		method : "GET",
@@ -193,7 +226,7 @@
     	 		}
     			
     		});
-    	}
+    	} */
     </script>
 </body>
 </html>

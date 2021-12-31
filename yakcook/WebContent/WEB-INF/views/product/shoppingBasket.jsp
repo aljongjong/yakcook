@@ -28,13 +28,13 @@
             <!-- 장바구니에 있는 제품 반복 db -->
             <div class="shoppingBasket_list_each">
                 <div class="shoppingBasket_list_each_photo">
-                    <img src="35.jpeg">
+                    <img src="">
                 </div>
                 <div class="shoppingBasket_list_each_name">
-                    <a href="#">ABCDEFGHIJKLMNOPQRSTUVWXYZ</a>
+                    <a href="#">${pv.productName}</a>
                 </div>
                 <div class="shoppingBasket_list_each_price">
-                    <span>W50,000</span>
+                    <span>${pv.price}</span><span> 원</span>
                 </div>
                 <div class="shoppingBasket_list_each_amount">
                     <select name="sb_amount" id="sb_amount">
@@ -45,7 +45,7 @@
                     </select>
                 </div>
                 <div class="shoppingBasket_list_each_total">
-                    <span>W200,000</span>
+                    <span>200,000</span><span> 원</span>
                 </div>
                 <div class="shoppingBasket_list_each_check">
                     <input type="checkbox" name="dt_check" id="dt_check">
@@ -85,7 +85,7 @@
             </div>
             <div class="shoppingBasket_forward_pay_delivery_price_details">
                 <div>
-                    <i class="fas fa-truck"></i> 총 상품 금액 10만원 이상 시 <span>무료배송</span>입니다.
+                    <i class="fas fa-truck"></i> 기본 배송비는 2,500원 입니다. 총 상품 금액 10만원 이상 시 <span>무료배송</span>입니다.
                 </div>
             </div>
             <div class="shoppingBasket_forward_pay_all_price">
@@ -93,14 +93,12 @@
                 <div>₩103,000</div>
             </div>
             <div class="shoppingBasket_forward_pay_gopay_btn">
-                <a href="#">결제하기</a>
+                <a href="#">주문 하기</a>
             </div>
             <div class="shoppingBasket_forward_pay_backshop_btn">
-                <a href="#">쇼핑 계속 하기</a>
+                <a href="searchProduct">쇼핑 계속 하기</a>
             </div>
         </div>
-        
-        
     </div>
 </body>
 </html>

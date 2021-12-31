@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>제품 등록 에러 페이지</title>
+<title>제품 삭제 실패 페이지</title>
 </head>
 <body>
 	<h1>${msg}</h1>
-	<h3><a href="manageProduct">돌아가기</a></h3>
+	<a href="manageProduct">돌아가기</a>
 </body>
 </html>

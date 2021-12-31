@@ -16,16 +16,17 @@
         </div>
 
         <div class="register_product">
-            <form action="updateProduct" method="POST" id="registerForm" enctype="application/x-www-form-urlencoded">
+            <form action="updateProduct" method="POST" id="registerForm" enctype="multipart/form-data">
                 <input type="hidden" name="productNo" value="${updateProuctNo}"> <!-- 업데이트를 위해 제품 번호 날려줌 -->
                 <table>
                     <tr>
                         <th>카테고리</th>
                         <td>
-                        	<span>기존 카테고리 : </span>
+                        	<label>기존 카테고리 : 
                         	<c:forEach items="${updateProductInfo}" var="u" begin="0" end="0">
                         		<span>${u.categoryName}</span>
                         	</c:forEach>
+                        	</label>
                             <select name="productCategory" id="productCategory">
                                 <!-- 카테고리 테이블에 있는 카테고리 불러오기 -->
 	                            <% int c = 1; %>
@@ -40,11 +41,11 @@
                         <th>태그 등록</th>
                         <td>
                             <!-- 태그 테이블에 있는 태그 불러오기 -->
-                            <span>기존 태그 : </span>
+                            <label>기존 태그 :
                             <c:forEach items="${updateProductInfo}" var="u">
-                  
                         		<span>${u.tagName}</span>
                         	</c:forEach>
+                        	 </label>
                             <select name="productTag1" id="productTag1">
 	                            <% int t1 = 1; %>
 	                           	<option value="0">----</option>
@@ -95,9 +96,12 @@
                     <tr>
                         <th>제품 이미지</th>
                         <td>
-                            <input type="file" name="productImg1" class="productImg">
-                            <input type="file" name="productImg2" class="productImg">
-                            <input type="file" name="productImg3" class="productImg">
+                            <label>제품 정면 사진 :
+                            	<input type="file" name="f" class="productImg" required="required">
+                            </label>
+                        	<label>제품 후면 사진 :
+                            	<input type="file" name="f" class="productImg" required="required">
+                            </label>
                         </td>
                     </tr>
                     <tr>

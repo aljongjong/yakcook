@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.yakcook.product.service.ServiceProduct;
 import com.yakcook.product.vo.CategoryVo;
+import com.yakcook.product.vo.ProductImgVo;
 import com.yakcook.product.vo.ProductVo;
 
 @WebServlet("/searchProduct")
@@ -20,8 +21,11 @@ public class SearchProduct extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		// 제품 이미지 불러오기
+		List<ProductImgVo> piList = new ServiceProduct().searchAllProductImg();
+		req.setAttribute("productImgList", piList);
 		
-		// 제품 조회 페이지 좌측 카테고리 불러 오기
+		// 제품 조회 페이지 좌측 카테고리 불러오기
 		List<CategoryVo> cList = new ServiceProduct().searchCategory();
 		req.setAttribute("categoryList", cList);
 		
@@ -66,6 +70,8 @@ public class SearchProduct extends HttpServlet{
 		}
 		req.setAttribute("range", range);
 		req.setAttribute("rangeList", rList);
+		
+		System.out.println(rList.size());
 		
 		System.out.println("range : " + range);
 		// 다음 페이지 

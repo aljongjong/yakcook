@@ -46,22 +46,20 @@
                             <i class="fas fa-edit"></i>
                         </a>
                     </div>
-                    <div class="p_delete">
-                        <a href="#">
-                            <span>선택 제품 삭제 </span>
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </div>
+                    
                     <div class="p_range">
                         <label for="panel-label">정렬 : </label>
-                        <select name="range" id="">
-                            <option value="1" selected="selected">제품 번호 순</option>
-                            <option value="2">제품 이름 순</option>
-                            <option value="3">가격 높은 순</option>
-                            <option value="4">가격 낮은 순</option>
-                            <option value="5">최근 등록 순</option>
-                            <option value="6">최근 수정 순</option>
-                        </select>
+                        <form action="manageProduct" style="display:inline;">
+	                        <select name="range" id="">
+	                            <option value="1" selected="selected">제품 번호 순</option>
+	                            <option value="2">제품 이름 순</option>
+	                            <option value="3">가격 높은 순</option>
+	                            <option value="4">가격 낮은 순</option>
+	                            <option value="5">최근 등록 순</option>
+	                            <option value="6">최근 수정 순</option>
+	                        </select>
+	     					<button type="submit" class="rp_btn"><span>조회 </span><i class="fas fa-search"></i></button>
+	                    </form>
                     </div>
                 </div>
 
@@ -77,7 +75,7 @@
                     <div class="mp_register_date">등록 일자</div>
                     <div class="mp_update_date">수정 일자</div>
                     <div class="mp_update">수정</div>
-                    <div class="mp_check">선택</div>
+                    <div class="mp_check">삭제</div>
                 </div>
                 
                 <!-- 여기부터 디비접근 반복문 -->
@@ -85,7 +83,11 @@
 	           		<c:forEach items="${nextPageList}" var="np" begin="0" end="12">
 		                <div class="manage_product">
 		                    <div class="mp_photo">
-		                        <a href="#"><img src=""></a>
+		                        <c:forEach items="${productImgList}" var="pi">
+				                	<c:if test="${np.productNo eq pi.productNo}">
+				                		<img src="upload/product/${pi.productImgName}">
+				                	</c:if>
+				                </c:forEach>
 		                    </div>
 		                    <div class="mp_no">${np.productNo}</div>
 		                    <div class="mp_name">${np.productName}</div>
@@ -100,6 +102,7 @@
 							</diV>
 		                    <div class="mp_register_date">${np.categoryDate}</div>
 		                    <div class="mp_update_date">${np.lasteditDate}</div>
+		                    
 		                    <form action="updateProduct" method="get" style="display:inline-block; float:left">
 		                    	<input type="hidden" name="updateProuctNo" value="${np.productNo}">
 			                    <div class="mp_update_button">
@@ -109,8 +112,16 @@
                             		</button>
 			                    </div>
 		                    </form>
-		
-		                    <div class="mp_check"><input type="checkbox" name="mp_check" id="mp_check"></div>
+							
+							<form action="deleteProduct" method="get" style="display:inline-block; float:left">
+								<input type="hidden" name="deleteProuctNo" value="${np.productNo}">
+								<div class="p_delete">
+									<button type="submit" class="rp_btn">
+										<span>삭제 </span>
+										<i class="fas fa-trash-alt"></i>
+									</button>
+								</div>
+							</form>
 		                </div>
 		        	</c:forEach>
 	            </c:if>
@@ -118,7 +129,11 @@
 		           	<c:forEach items="${categoryProductList}" var="cp" begin="0" end="12">
 		            	<div class="manage_product">
 			                <div class="mp_photo">
-		                        <a href="#"><img src=""></a>
+		                        <c:forEach items="${productImgList}" var="pi">
+				                	<c:if test="${cp.productNo eq pi.productNo}">
+				                		<img src="upload/product/${pi.productImgName}">
+				                	</c:if>
+				                </c:forEach>
 		                    </div>
 			                <div class="mp_no">${cp.productNo}</div>
 		                    <div class="mp_name">${cp.productName}</div>
@@ -135,7 +150,7 @@
 		                    <div class="mp_update_date">${cp.lasteditDate}</div>
 		                    
 		                    <form action="updateProduct" method="get" style="display:inline-block; float:left">
-		                    	<input type="hidden" name="updateProuctNo" value="${np.productNo}">
+		                    	<input type="hidden" name="updateProuctNo" value="${cp.productNo}">
 			                    <div class="mp_update_button">
 			                        <button type="submit" class="rp_btn">
                                 		<span>수정 하기</span>
@@ -144,7 +159,15 @@
 			                    </div>
 		                    </form>
 		
-		                    <div class="mp_check"><input type="checkbox" name="mp_check" id="mp_check"></div>
+		                    <form action="deleteProduct" method="get" style="display:inline-block; float:left">
+								<input type="hidden" name="deleteProuctNo" value="${cp.productNo}">
+								<div class="p_delete">
+									<button type="submit" class="rp_btn">
+										<span>삭제 </span>
+										<i class="fas fa-trash-alt"></i>
+									</button>
+								</div>
+							</form>
 		            	</div>
 		           	</c:forEach>
             	</c:if>
@@ -181,9 +204,6 @@
             	</div>
             </div>
 
-            
-            
-        
         </div>
     </body>
 </html>
