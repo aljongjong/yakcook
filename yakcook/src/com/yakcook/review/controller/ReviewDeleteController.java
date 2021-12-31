@@ -26,10 +26,10 @@ public class ReviewDeleteController extends HttpServlet {
 		int result = new ReviewService().deleteReview(titleNo);
 		if (result > 0) {
 			req.setAttribute("msg", "게시물삭제에 성공하였습니다");
-			req.getRequestDispatcher("WEB-INF/views/common/deleteSuccessPage.jsp").forward(req, resp);
+			req.getRequestDispatcher("WEB-INF/views/common/Review/deleteSuccessPage.jsp").forward(req, resp);
 		} else {
 			req.setAttribute("msg", "게시물삭제가 실패되었습니다.");
-			req.getRequestDispatcher("WEB-INF/views/common/deleteErrorPage.jsp").forward(req, resp);
+			req.getRequestDispatcher("WEB-INF/views/common/Review/deleteErrorPage.jsp").forward(req, resp);
 		}
 
 	}

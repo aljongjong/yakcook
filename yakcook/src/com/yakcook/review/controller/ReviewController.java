@@ -97,10 +97,10 @@ public class ReviewController extends HttpServlet {
 
 		if (result > 0) {
 			req.setAttribute("msg", "게시물등록에 성공하였습니다");
-			req.getRequestDispatcher("WEB-INF/views/common/successPage.jsp").forward(req, resp);
+			req.getRequestDispatcher("WEB-INF/views/common/Review/ReviewWriterSuccessPage.jsp").forward(req, resp);
 		} else {
 			req.setAttribute("msg", "게시물등록이 실패되었습니다.");
-			req.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(req, resp);
+			req.getRequestDispatcher("WEB-INF/views/common/Review/ReviewWriterErrorPage.jsp").forward(req, resp);
 		}
 
 	}
