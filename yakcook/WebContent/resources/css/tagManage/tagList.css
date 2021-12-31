@@ -83,10 +83,6 @@ td>input:hover{
     cursor: pointer;
 }
 
-.page-area{
-	width: 100%;
-	text-align: center;
-}
 #home{
 	font-weight: bold;
 	font-size: 25px;
@@ -98,6 +94,10 @@ td>input:hover{
 #home:visited{
 	color: rgb(171, 184, 104);
 	text-decoration:none;
+}
+.page-area{
+	width: 100%;
+	text-align: center;
 }
 .page{
 	display: inline-block;
