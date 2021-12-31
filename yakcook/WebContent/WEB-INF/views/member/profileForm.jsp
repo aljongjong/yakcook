@@ -32,6 +32,9 @@
 	      	<tr>
 	            <td> 이메일 : ${m.email}</td>
 	        </tr>
+	       	<tr>
+	            <td> 핸드폰 : ${m.phone}</td>
+	        </tr>
         </table>
     </div>
 	<a href = "deleteForm">회원탈퇴</a>
