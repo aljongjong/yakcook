@@ -26,7 +26,7 @@
 					<li class="review_li">
 						<div class="review_pro">
 
-							<a href="${path}/yakcook/detail?reviewNo=${r.reviewNo}">${r.reviewTitle}
+							<a href="${path}/yakcook/reviewDetail?reviewNo=${r.reviewNo}">${r.reviewTitle}
 							<br> (루테인)</a>
 							
 						</div>

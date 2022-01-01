@@ -75,11 +75,11 @@ public class ReviewController extends HttpServlet {
 				fos.close();
 				
 				if (count == 0) {
-					i.setServerFile1(serverFile);
+					i.setImgServerFile1(serverFile);
 				} else if (count == 1) {
-					i.setServerFile2(serverFile);
+					i.setImgServerFile2(serverFile);
 				} else if (count == 2) {
-					i.setServerFile3(serverFile);
+					i.setImgServerFile3(serverFile);
 				} else {
 					System.out.println("에러가 발생하였습니다");
 				}
@@ -91,8 +91,9 @@ public class ReviewController extends HttpServlet {
 		r.setTitle(title);
 		r.setContents(contents);
 		r.setWriter(writer);
-		
+		System.out.println("게시글 등록");
 		result = new ReviewService().writerReview(r);
+		System.out.println("이미지 등록");
 		imgResult = new ReviewService().imgReview(i);
 
 		if (result > 0) {
