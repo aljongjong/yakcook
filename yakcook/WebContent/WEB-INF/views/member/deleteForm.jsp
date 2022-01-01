@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="delete" method = "post">
+	<form action="memberdelete" method = "post">
 		<label>아이디  : <%=request.getAttribute("loginUserId") %></label>
 		<br>
 		<label>비밀번호 : </label> <input type="text" name="userPwd">
