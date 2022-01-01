@@ -19,9 +19,9 @@ public class ReviewDao {
 
 	// 작성한 리뷰의 제목, 내용 , 작성자 ,파일 이미지를 데이터베이스에 넣는메소드
 	public int writerReview(Connection conn, ReviewVo r) {
-		String sql = "INSERT INTO REVIEW (REVIEW_NO , REVIEW_TITLE , REVIEW_CONTENTS , REVIEW_DATE ,"
-				+ " WRITER , REVIEW_DECLARATION,REVIEW_DELETE)"
-				+ "VALUES (SEQ_REVIEW.NEXTVAL, ? , ? , SYSDATE , ? , ? , ?)";
+		String sql = "INSERT INTO REVIEW (REVIEW_NO , REVIEW_TITLE , REVIEW_CONTENTS , REVIEW_DATE,WRITER , REVIEW_LIKE ,"
+				+ "REVIEW_DECLARATION,REVIEW_VIEWS,REVIEW_DELETE) "
+				+ "VALUES (SEQ_REVIEW_NO.NEXTVAL, ? , ? , SYSDATE , ? , ? , ? , ?, ?)";
 		PreparedStatement pstmt = null;
 		int rs = 0;
 		try {
@@ -30,7 +30,9 @@ public class ReviewDao {
 			pstmt.setString(2, r.getContents());
 			pstmt.setString(3, r.getWriter());
 			pstmt.setInt(4, 0);
-			pstmt.setString(5, "N");
+			pstmt.setInt(5, 0);
+			pstmt.setInt(6, 0);
+			pstmt.setString(7, "N");
 
 			rs = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -46,16 +48,18 @@ public class ReviewDao {
 
 	// 리뷰의 이미지들을 테이블에 저장하는 메소드
 	public int imgReview(Connection conn, ReviewImgVo i) {
-		String sql = "INSERT INTO REVIEW_IMG (REVIEW_NO , SERVERFILE1 ,SERVERFILE2,SERVERFILE3) "
-				+ "	VALUES (SEQ_REVIEW_IMG.NEXTVAL, ?,?,?)";
+		String sql = "INSERT INTO REVIEW_IMG (REVIEW_IMG_NO, REVIEW_NO, REVIEW_IMG_SERVERFILE1, REVIEW_IMG_SERVERFILE2, REVIEW_IMG_SERVERFILE3,"
+				+ "REVIEW_IMG_DATE, REVIEW_IMG_DELETE) VALUES (SEQ_REVIEW_IMG_NO.NEXTVAL,(SELECT REVIEW_NO FROM(SELECT * FROM REVIEW ORDER BY REVIEW_NO DESC)WHERE ROWNUM =1)"
+				+ ", ? , ? , ? , SYSDATE, ?)";
+		System.out.println(sql);
 		PreparedStatement pstmt = null;
 		int rs = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, i.getServerFile1());
-			pstmt.setString(2, i.getServerFile2());
-			pstmt.setString(3, i.getServerFile3());
-
+			pstmt.setString(1, i.getImgServerFile1());
+			pstmt.setString(2, i.getImgServerFile2());
+			pstmt.setString(3, i.getImgServerFile3());
+			pstmt.setString(4, i.getImgDelete());
 			rs = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -87,14 +91,23 @@ public class ReviewDao {
 				String reviewTitle = rs.getString("REVIEW_TITLE");
 				String reviewContents = rs.getString("REVIEW_CONTENTS");
 				Timestamp reviewDate = rs.getTimestamp("REVIEW_DATE");
-				String reviewWriter = rs.getString("WRITER");
+				String userId = rs.getString("USER_ID");
+				int reviewLike = rs.getInt("REVIEW_LIKE");
+				int reviewDeclaration = rs.getInt("REVIEW_DECLARATION");
+				int reviewViews = rs.getInt("REVIEW_VIEWS");
+				String reviewDelete = rs.getString("REVIEW_DELETE");
 
 				r = new ReviewListVo();
 				r.setReviewNo(reviewNo);
 				r.setReviewTitle(reviewTitle);
 				r.setReviewContents(reviewContents);
 				r.setReviewDate(reviewDate);
-				r.setWriter(reviewWriter);
+				r.setUserId(userId);
+				r.setReviewLike(reviewLike);
+				r.setReviewDeclaration(reviewDeclaration);
+				r.setReviewViews(reviewViews);
+				r.setReviewDelete(reviewDelete);
+
 				Reviewlist.add(r);
 			}
 		} catch (SQLException e) {
@@ -149,15 +162,24 @@ public class ReviewDao {
 				int reviewNo = rs.getInt("REVIEW_NO");
 				String reviewTitle = rs.getString("REVIEW_TITLE");
 				String reviewContents = rs.getString("REVIEW_CONTENTS");
-				Timestamp reviewData = rs.getTimestamp("REVIEW_DATE");
-				String writer = rs.getString("WRITER");
+				Timestamp reviewDate = rs.getTimestamp("REVIEW_DATE");
+				String userId = rs.getString("USER_ID");
+				int reviewLike = rs.getInt("REVIEW_LIKE");
+				int reviewDeclaration = rs.getInt("REVIEW_DECLARATION");
+				int reviewViews = rs.getInt("REVIEW_VIEWS");
+				String reviewDelete = rs.getString("REVIEW_DELETE");
 
 				i = new ReviewListVo();
 				i.setReviewNo(reviewNo);
 				i.setReviewTitle(reviewTitle);
 				i.setReviewContents(reviewContents);
-				i.setReviewDate(reviewData);
-				i.setWriter(writer);
+				i.setReviewDate(reviewDate);
+				i.setUserId(userId);
+				i.setReviewLike(reviewLike);
+				i.setReviewDeclaration(reviewDeclaration);
+				i.setReviewViews(reviewViews);
+				i.setReviewDelete(reviewDelete);
+
 				Reviewlist.add(i);
 			}
 		} catch (SQLException e) {
@@ -174,8 +196,7 @@ public class ReviewDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		String sql = "SELECT I.SERVERFILE1 , I.SERVERFILE2 , I. SERVERFILE3 FROM REVIEW_IMG I INNER JOIN "
-				+ "REVIEW R ON (I.REVIEW_NO = R.REVIEW_NO) WHERE I.REVIEW_NO = ?";
+		String sql = "SELECT REVIEW_IMG_SERVERFILE1 , REVIEW_IMG_SERVERFILE2 , REVIEW_IMG_SERVERFILE3 FROM REVIEW_IMG WHERE REVIEW_NO = ?";
 		ReviewImgVo i = null;
 
 		List ReviewImgList = new ArrayList<ReviewListVo>();
@@ -186,14 +207,14 @@ public class ReviewDao {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				String serverFile1 = rs.getString("SERVERFILE1");
-				String serverFile2 = rs.getString("SERVERFILE2");
-				String serverFile3 = rs.getString("SERVERFILE3");
-				
+				String serverFile1 = rs.getString("REVIEW_IMG_SERVERFILE1");
+				String serverFile2 = rs.getString("REVIEW_IMG_SERVERFILE2");
+				String serverFile3 = rs.getString("REVIEW_IMG_SERVERFILE3");
+
 				i = new ReviewImgVo();
-				i.setServerFile1(serverFile1);
-				i.setServerFile2(serverFile2);
-				i.setServerFile3(serverFile3);
+				i.setImgServerFile1(serverFile1);
+				i.setImgServerFile2(serverFile2);
+				i.setImgServerFile3(serverFile3);
 				ReviewImgList.add(i);
 			}
 
@@ -225,6 +246,69 @@ public class ReviewDao {
 			close(pstmt);
 
 		}
+		return rs;
+	}
+
+	public int updateLike(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		int rs = 0;
+
+		String sql = "UPDATE REVIEW SET REVIEW_LIKE =REVIEW_LIKE+1 WHERE REVIEW_NO = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			commit(conn);
+			close(conn);
+			close(pstmt);
+		}
+
+		return rs;
+	}
+
+	public int viewsUpdate(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		int rs = 0;
+
+		String sql = "UPDATE REVIEW SET REVIEW_VIEWS =REVIEW_VIEWS+1 WHERE REVIEW_NO = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			commit(conn);
+			close(conn);
+			close(pstmt);
+		}
+
+		return rs;
+	}
+
+	public int declarationUp(Connection conn , int no) {
+		PreparedStatement pstmt = null;
+		int rs = 0;
+
+		String sql = "UPDATE REVIEW SET REVIEW_DECLARATION = REVIEW_DECLARATION+1 WHERE REVIEW_NO =?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			commit(conn);
+			close(conn);
+			close(pstmt);
+		}
+
 		return rs;
 	}
 
