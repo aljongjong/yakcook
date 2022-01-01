@@ -13,7 +13,7 @@ import com.yakcook.review.service.ReviewService;
 import com.yakcook.review.vo.ReviewImgVo;
 import com.yakcook.review.vo.ReviewListVo;
 
-@WebServlet("/detail")
+@WebServlet("/reviewDetail")
 public class ReviewDetailController extends HttpServlet {
 	
 	@Override

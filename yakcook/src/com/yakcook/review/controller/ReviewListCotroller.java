@@ -46,7 +46,7 @@ public class ReviewListCotroller extends HttpServlet {
 		List<ReviewListVo> reviewList = new ReviewService().selectReview(currentPage);
 		
 		req.setAttribute("data", reviewList);
-		req.getRequestDispatcher("WEB-INF/views/review/reviewList.jsp").forward(req, resp);
+		req.getRequestDispatcher("WEB-INF/views/review/reivewList.jsp").forward(req, resp);
 
 	}
 

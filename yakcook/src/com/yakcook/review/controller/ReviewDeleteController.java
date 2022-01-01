@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.yakcook.review.service.ReviewService;
 import com.yakcook.review.vo.deleteReviewVo;
 
-@WebServlet("/delete")
+@WebServlet("/reviewDelete")
 public class ReviewDeleteController extends HttpServlet {
 
 	@Override
