@@ -31,7 +31,7 @@ public class MemberService {
 	public int join(MemberVo m) {
 		m.setPwd(encrypt(m.getPwd()));
 		//DB Connection 가져오기
-		Connection conn = getConnection();
+		Connection conn = getConntection();
 		//쿼리 날리기 (insert 쿼리)
 		int result = 0;
 		try {
@@ -60,7 +60,7 @@ public class MemberService {
 	
 	public MemberVo login(MemberVo m) {
 		// 커넥션 가져오기
-		Connection conn = getConnection();
+		Connection conn = getConntection();
 		// id 가지고 그 아이디의 비번 조회
 		MemberVo selectedMember = selectMember(conn,m);
 		close(conn);
@@ -78,7 +78,7 @@ public class MemberService {
 		return new MemberDao().selectMemberAll(conn, startNo, endNo);
 	}
 	public List<MemberVo> search(String type, String value, String currentPage) {
-		Connection conn = getConnection();
+		Connection conn = getConntection();
 		int totalBoardCount = countMemberAll(conn);
 		int pageLimit = 5;
 		int boardLimit = 10;
@@ -111,7 +111,7 @@ public class MemberService {
 		return new MemberDao().selectMemberBySearch(conn, type, value);
 	}
 	public int dupCheck(String id) {
-		Connection conn = getConnection();
+		Connection conn = getConntection();
 		int result = selectMemberById(conn,id);
 		close(conn);
 		return result;
@@ -121,15 +121,16 @@ public class MemberService {
 	}
 	
 	public MemberVo myInfotmation(String loginUserId) {
-		Connection conn = getConnection();
+		Connection conn = getConntection();
 		return new MemberDao().myInfotmation(conn,loginUserId);
 	}
 
 	
 	 public int deleteMember(String userPwd, String userId) {
-		 Connection conn = getConnection();
+		 Connection conn = getConntection();
 		 MemberDao mDao = new MemberDao();
-		 int result = mDao.deleteMember(conn, encrypt(userPwd), userId);	 
+		 int result = mDao.deleteMember(conn, encrypt(userPwd), userId);
+	 
 		 if(result > 0) {
 			 commit(conn); 
 		 }else {
@@ -139,7 +140,7 @@ public class MemberService {
 	 }
 
 	public String findId(String name, String email) {
-		 Connection conn = getConnection();
+		 Connection conn = getConntection();
 		 MemberDao mDao = new MemberDao();
 		 String id = mDao.findId(conn,name, email);
 		 close(conn);
@@ -147,7 +148,7 @@ public class MemberService {
 	}
 	
 	public int findPwd(String name, String id, String email) {
-		Connection conn = getConnection();
+		Connection conn = getConntection();
 		MemberDao mDao = new MemberDao();
 		int result = mDao.findPwd(conn, name, id, email);
 		close(conn);
@@ -155,7 +156,7 @@ public class MemberService {
 	}
 
 	public int myPwdCheck(String userId, String oldPwd) {
-		Connection conn = getConnection();
+		Connection conn = getConntection();
 		MemberDao mDao = new MemberDao();
 		int result = mDao.myPwdCheck(conn, userId, encrypt(oldPwd));
 		close(conn);
@@ -163,7 +164,7 @@ public class MemberService {
 	}
 
 	public int myPwdUpdate(String userId, String newPwd) {
-		Connection conn = getConnection();
+		Connection conn = getConntection();
 		MemberDao mDao = new MemberDao();
 		int result = mDao.myPwdUpdate(conn, userId, encrypt(newPwd));
 		close(conn);
@@ -176,7 +177,7 @@ public class MemberService {
 	}
 
 	public int myfindPwdUpdate(String id, String pwd) {
-		Connection conn = getConnection();
+		Connection conn = getConntection();
 		MemberDao mDao = new MemberDao();
 		int result = mDao.myfindPwdUpdate(conn, id, encrypt(pwd));
 		close(conn);

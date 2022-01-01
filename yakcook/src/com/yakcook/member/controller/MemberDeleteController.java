@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import com.yakcook.member.model.service.MemberService;
 import com.yakcook.member.model.vo.MemberVo;
 
-@WebServlet("/memberdelete")
+@WebServlet("/delete")
 public class MemberDeleteController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
