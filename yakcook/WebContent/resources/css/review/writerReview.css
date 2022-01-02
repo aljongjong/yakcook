@@ -1,0 +1,80 @@
+body *{
+    /* border: 1px solid black; */
+}
+#wrap{
+    width: 1200px;
+    height: 1100px;
+    margin: auto;
+    padding: auto;
+
+}
+
+header{
+    height: 20%;
+}
+
+section{
+    height: 70%;
+}
+footer{
+    height: 10%;
+}
+
+.review_Wrap{
+    height: 100%;
+    width: 100%;
+}
+
+.review_table{
+    height: 400px;
+    width: 100%;
+    border-spacing: 10px;
+    border:2px solid rgb(214, 211, 211);
+    border-radius: 6px;
+}
+.review_table tr{
+    font-size: 20px;
+    color: #06553e;
+}
+
+.review_table td{
+    height: 30px;
+}
+
+.review_table input{
+    height: 100%;
+    width: 85%;
+    margin-left: 60px;
+}
+.review_table input[type=text]{
+    border:1px solid #05956c;
+}
+.review_table textarea{
+    margin-left: 60px;
+    border:1px solid #05956c;
+}
+.review_table input[type=file]{
+    color: #05956c;
+}
+.review_contents{
+    width: 85%;
+    height: 300px;
+}
+.writer_button{
+   text-align: center;
+   height:40px;
+}
+.writer_button input{
+    width: 130px;
+    height: 35px;
+    margin-left: 30px;  
+    background-color: #0CD49C;
+    color: whitesmoke;
+    font-size: 1.0em;
+    border-radius: 6px;
+    border: white;
+}
+hr{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}

@@ -8,6 +8,6 @@
 </head>
 <body>
 	<h1>${msg}</h1>
-	<button type="button" onclick="location.href='reviewList'">리뷰목록 돌아가기</button>
+	<button type="button" onclick="location.replace('reviewList')">리뷰목록 돌아가기</button>
 </body>
 </html>

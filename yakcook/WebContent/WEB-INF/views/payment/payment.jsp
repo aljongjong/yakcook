@@ -11,7 +11,17 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://js.tosspayments.com/v1"></script>
+<script>
 
+test2 = null;
+function test2323(test) {
+	test2 = test;
+	alert(test);
+	var options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
+	window.open("reviewList","popup",options);
+}
+
+</script>
 </head>
 
 <body>
@@ -28,11 +38,10 @@
 					</div>
 					<div id="order-info">
 
-						<label>이름</label> <br> <input type="text" name="order"
-							id="order"> <br> <label>연락처</label> <br> <input
-							type="text" name="phone1" class="phone" maxlength="3"> -
+						<label>이름</label> <br> <input type="text" name="order"id="order"> <br> <label>연락처</label> <br> 
+						<input type="text" name="phone1" class="phone" maxlength="3">
 						<input type="text" name="phone2" class="phone" maxlength="4">
-						- <input type="text" name="phone3" class="phone" maxlength="4">
+						<input type="text" name="phone3" class="phone" maxlength="4">
 						<br>
 					</div>
 
@@ -41,12 +50,12 @@
 					</div>
 
 					<div id="orderaddress">
-						<input type="text" id="sample6_postcode" name="postcode" placeholder="우편번호">
-						<input type="button" onclick="sample6_execDaumPostcode()"
+						<input type="text" id="postcode" name="postcode" placeholder="우편번호">
+						<input type="button" onclick="execDaumPostcode()"
 							value="우편번호 찾기"><br> <input type="text"
-							id="sample6_address" name = "address" placeholder="주소"><br> <input
-							type="text" id="sample6_detailAddress" name ="detailaddress" placeholder="상세주소">
-						<input type="text" id="sample6_extraAddress" name="extra" placeholder="참고항목">
+							id="address" name = "address" placeholder="주소"><br> <input
+							type="text" id="detailAddress" name ="detailaddress" placeholder="상세주소">
+						<input type="text" id="extraAddress" name="extra" placeholder="참고항목">
 					</div>
 
 					<div id="delivery_memo">
@@ -182,16 +191,55 @@
 					</select> <br> <input type="text" name="AccountHolder" placeholder="예금주"> <br>
 					<input type="text" name="AccountNumber" placeholder="계좌번호">
 				</div>
-
-				<input type="submit" id="submit" value="결제하러가기">
+				<button type="button" onclick='test2323(this.form);'>test</button>
+				<!--<input type="submit" id="submit" value="결제하러가기">-->
+				
 			</form>
 		</section>
-
+		<button type="button" onclick='test2324();'>test</button>
+		<div><h1>구매하기</h1>
+    <img src="/images/toss-tee.png" style="max-width: 100%" />
+    <h3>토스 티셔츠</h3>
+    <span>19,000 원</span>
+    <p>----------------------</p>
+    <div><label><input type="radio" name="method" value="카드" checked/>신용카드</label></div>
+    <div><label><input type="radio" name="method" value="가상계좌"/>가상계좌</label></div>
+    <p>----------------------</p>
+    <button id="payment-button">결제하기</button></div>
 		<footer> </footer>
 	</div>
 	
 	<script>
-	function sample6_execDaumPostcode() {
+	
+	
+	
+	 var tossPayments = TossPayments("test_ck_JQbgMGZzorzzXdypGB7rl5E1em4d");
+	    var button = document.getElementById("payment-button");
+	    var orderId = new Date().getTime();
+
+	    button.addEventListener("click", function () {
+	    	
+	        var method = document.querySelector('input[name=method]:checked').value; // "카드" 혹은 "가상계좌"
+
+	        var paymentData = {
+	            amount: 19000,
+	            orderId: orderId,
+	            orderName: "토스 티셔츠",
+	            customerName: "이토페",
+	            successUrl: window.location.origin + "/success",
+	            failUrl: window.location.origin + "/fail",
+	        };
+
+	        if (method === '가상계좌') {
+	            paymentData.virtualAccountCallbackUrl = window.location.origin + '/virtual-account/callback'
+	        }
+
+	        tossPayments.requestPayment(method, paymentData);
+	    });
+	    
+	    
+	    
+	function execDaumPostcode() {
 		new daum.Postcode({
 			oncomplete: function(data) {
 				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -224,20 +272,23 @@
 						extraAddr = ' (' + extraAddr + ')';
 					}
 					// 조합된 참고항목을 해당 필드에 넣는다.
-					document.getElementById("sample6_extraAddress").value = extraAddr;
+					document.getElementById("extraAddress").value = extraAddr;
 
 				} else {
-					document.getElementById("sample6_extraAddress").value = '';
+					document.getElementById("extraAddress").value = '';
 				}
 
 				// 우편번호와 주소 정보를 해당 필드에 넣는다.
-				document.getElementById('sample6_postcode').value = data.zonecode;
-				document.getElementById("sample6_address").value = addr;
+				document.getElementById('postcode').value = data.zonecode;
+				document.getElementById("address").value = addr;
 				// 커서를 상세주소 필드로 이동한다.
-				document.getElementById("sample6_detailAddress").focus();
+				document.getElementById("detailAddress").focus();
 			}
-		}).open();
-	}</script>
+		}).open();	
+	}
+	
+	
+	</script>
 
 	<script src="${pageContext.request.contextPath}/resources/js/payment/payment.js"></script>
 </body>

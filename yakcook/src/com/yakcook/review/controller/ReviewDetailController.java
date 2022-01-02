@@ -20,16 +20,19 @@ public class ReviewDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String reviewNo = req.getParameter("reviewNo");
 		
-
-		
 		int views = new ReviewService().upReivewViews(reviewNo);
 		
+		//List를 이용해서 List형식으로 여러개를 뽑아온다.
 		List<ReviewListVo> detailList = new ReviewService().detailReviewAll(reviewNo);
 		List<ReviewImgVo> imgList = new ReviewService().getReviewImgList(reviewNo);
 		
+		//RdatailList에서 reivewNo만 넘겨준다.
 		req.setAttribute("reviewNo",(detailList.get(0).getReviewNo()));
 		
+		//deatailList에서 뽑아온 내용을 넘겨준다.
 		req.setAttribute("detailList", detailList);
+	
+		//imgList에서 뽑아온 내용을 넘겨준다.
 		req.setAttribute("imgList", imgList);
 		
 		req.getRequestDispatcher("WEB-INF/views/review/detailReview.jsp").forward(req, resp);

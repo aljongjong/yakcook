@@ -7,11 +7,10 @@ import java.util.List;
 import com.yakcook.review.dao.ReviewDao;
 import com.yakcook.review.vo.ReviewImgVo;
 import com.yakcook.review.vo.ReviewListVo;
-import com.yakcook.review.vo.ReviewVo;
 
 public class ReviewService {
 
-	public int writerReview(ReviewVo r) {
+	public int writerReview(ReviewListVo r) {
 		Connection conn = getConnection();
 		return new ReviewDao().writerReview(conn, r);
 
@@ -57,40 +56,55 @@ public class ReviewService {
 		return new ReviewDao().countreviewAll(conn);
 	}
 	
-
+	// 상세 페이지에 넣기위해 리뷰 리스트에서 하나씩 데이터를 꺼내오는 메소드
 	public List<ReviewListVo> detailReviewAll(String reviewNo) {
 		int no = Integer.parseInt(reviewNo);
 		Connection conn = getConnection();
 		return new ReviewDao().detailReview(conn, no);
 	}
 
-	public static int deleteReview(String titleNo) {
-		int no = Integer.parseInt(titleNo);
-		Connection conn = getConnection();
-		return new ReviewDao().deleteReview(conn , no);
-	}
 	
+	//해당 게시물 번호에 맞춰 리뷰 이미지들을 받아오는 메소드
 	public List<ReviewImgVo> getReviewImgList(String reviewNo) {
 		int no = Integer.parseInt(reviewNo);
 		Connection conn = getConnection();
 		return new ReviewDao().getReviewImgList(conn, no);
 	}
+
+	//리뷰 삭제를 위해 리뷰 넘버를 넘긴 후 해당하는 게시물을 찾아온 후 , 리뷰를 삭제하는 메소드
+	public static int deleteReview(String titleNo, String userId) {
+		int no = Integer.parseInt(titleNo);
+		Connection conn = getConnection();
+		return new ReviewDao().deleteReview(conn , no, userId);
+	}
+	
+	//리뷰좋아요를 누를경우 리뷰의 좋아요 수를 증가시키는 메소드
 	public int upReivewLike(String reviewNo) {
 		int no = Integer.parseInt(reviewNo);
 		Connection conn = getConnection();
 		return new ReviewDao().updateLike(conn, no);
 	}
+
+	//리뷰좋아요 개수를 불러오는 메소드
+	public int reviewLikeCount(String reviewNo) {
+		int no = Integer.parseInt(reviewNo);
+		Connection conn = getConnection();
+		return new ReviewDao().selectLike(conn, no);
+	}
+	
+	//리뷰의 조회수를 증가시키는 메소드
 	public int upReivewViews(String reviewNo) {
 		int no = Integer.parseInt(reviewNo);
 		Connection conn = getConnection();
 		return new ReviewDao().viewsUpdate(conn, no);
 	}
 	
-	
+	//리뷰게시물의 신고횟수를 증가시키는 메소드
 	public int upDeclaration(String reviewNo) {
 		int no = Integer.parseInt(reviewNo);
 		Connection conn = getConnection();
 		return new ReviewDao().declarationUp(conn, no);
 	}
+
 
 }

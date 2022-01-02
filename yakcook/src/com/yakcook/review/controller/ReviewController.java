@@ -17,7 +17,7 @@ import javax.servlet.http.Part;
 
 import com.yakcook.review.service.ReviewService;
 import com.yakcook.review.vo.ReviewImgVo;
-import com.yakcook.review.vo.ReviewVo;
+import com.yakcook.review.vo.ReviewListVo;
 
 @MultipartConfig(maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 @WebServlet("/review")
@@ -27,16 +27,17 @@ public class ReviewController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String title = req.getParameter("review_title");
-		String contents = req.getParameter("review_contents");
-		String writer = req.getParameter("writer_name");
+		
+		String title = req.getParameter("review_title"); //리뷰제목 받아오기
+		String contents = req.getParameter("review_contents");//리뷰내용 받아오기
+		String userId = req.getParameter("userId");//회원 아이디 받아오기
 		int result = 0;
 		int imgResult = 0;
 		
-		
-		ReviewVo r = new ReviewVo();
+		ReviewListVo r = new ReviewListVo();
 		ReviewImgVo i = new ReviewImgVo();
 		
+		//jsp에 있는 모든 parts들을 가져온다.
 		Collection<Part> parts = req.getParts();
 		
 	
@@ -73,27 +74,28 @@ public class ReviewController extends HttpServlet {
 				// 파일 inputstream,outputstream닫아주기
 				fis.close();
 				fos.close();
-				
+				//count가 0번째일시 첫번째 이미지만 저장함.
 				if (count == 0) {
 					i.setImgServerFile1(serverFile);
 				} else if (count == 1) {
+					//count가 1번째일시 두번째 이미지까지 저장함.
 					i.setImgServerFile2(serverFile);
 				} else if (count == 2) {
+					//count가 2번째일시 세번째 이미지까지 저장함.
 					i.setImgServerFile3(serverFile);
 				} else {
 					System.out.println("에러가 발생하였습니다");
 				}
+				//카운트는 전체 코드가 돌때마다 1번씩 증가한다.
 				count += 1;
 				// System.out.println(result);
 			}
 		}
 		
-		r.setTitle(title);
-		r.setContents(contents);
-		r.setWriter(writer);
-		System.out.println("게시글 등록");
+		r.setReviewTitle(title);
+		r.setReviewContents(contents);
+		r.setUserId(userId);
 		result = new ReviewService().writerReview(r);
-		System.out.println("이미지 등록");
 		imgResult = new ReviewService().imgReview(i);
 
 		if (result > 0) {

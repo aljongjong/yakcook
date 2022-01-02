@@ -13,22 +13,22 @@ import static com.yakcook.common.JDBCTemplate.*;
 import com.yakcook.review.service.ReviewService;
 import com.yakcook.review.vo.ReviewImgVo;
 import com.yakcook.review.vo.ReviewListVo;
-import com.yakcook.review.vo.ReviewVo;
+
 
 public class ReviewDao {
 
 	// 작성한 리뷰의 제목, 내용 , 작성자 ,파일 이미지를 데이터베이스에 넣는메소드
-	public int writerReview(Connection conn, ReviewVo r) {
-		String sql = "INSERT INTO REVIEW (REVIEW_NO , REVIEW_TITLE , REVIEW_CONTENTS , REVIEW_DATE,WRITER , REVIEW_LIKE ,"
+	public int writerReview(Connection conn, ReviewListVo r) {
+		String sql = "INSERT INTO REVIEW (REVIEW_NO , REVIEW_TITLE , REVIEW_CONTENTS , REVIEW_DATE,USER_ID , REVIEW_LIKE ,"
 				+ "REVIEW_DECLARATION,REVIEW_VIEWS,REVIEW_DELETE) "
 				+ "VALUES (SEQ_REVIEW_NO.NEXTVAL, ? , ? , SYSDATE , ? , ? , ? , ?, ?)";
 		PreparedStatement pstmt = null;
 		int rs = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, r.getTitle());
-			pstmt.setString(2, r.getContents());
-			pstmt.setString(3, r.getWriter());
+			pstmt.setString(1, r.getReviewTitle());
+			pstmt.setString(2, r.getReviewContents());
+			pstmt.setString(3, "wlgus");
 			pstmt.setInt(4, 0);
 			pstmt.setInt(5, 0);
 			pstmt.setInt(6, 0);
@@ -51,7 +51,6 @@ public class ReviewDao {
 		String sql = "INSERT INTO REVIEW_IMG (REVIEW_IMG_NO, REVIEW_NO, REVIEW_IMG_SERVERFILE1, REVIEW_IMG_SERVERFILE2, REVIEW_IMG_SERVERFILE3,"
 				+ "REVIEW_IMG_DATE, REVIEW_IMG_DELETE) VALUES (SEQ_REVIEW_IMG_NO.NEXTVAL,(SELECT REVIEW_NO FROM(SELECT * FROM REVIEW ORDER BY REVIEW_NO DESC)WHERE ROWNUM =1)"
 				+ ", ? , ? , ? , SYSDATE, ?)";
-		System.out.println(sql);
 		PreparedStatement pstmt = null;
 		int rs = 0;
 		try {
@@ -74,8 +73,9 @@ public class ReviewDao {
 	// 리뷰목록의 페이징처리를 위한 메소드 : 리뷰목록을 전부 뽑아오는 메소드
 	public List<ReviewListVo> getReviewList(Connection conn, int startNo, int endNo) {
 
-		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM, r.* FROM REVIEW r ) WHERE REVIEW_DELETE = 'N' AND"
-				+ " RNUM BETWEEN ? AND ? ORDER BY REVIEW_DATE DESC ";
+		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM, r.* FROM REVIEW r ) "
+				+ "WHERE RNUM BETWEEN ? AND ? AND REVIEW_DELETE='N' "
+				+ "ORDER BY REVIEW_DATE DESC ";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -191,7 +191,8 @@ public class ReviewDao {
 		return Reviewlist;
 
 	}
-
+	
+	//해당 게시물 번호에 맞춰 리뷰 이미지들을 받아오는 메소드
 	public List<ReviewImgVo> getReviewImgList(Connection conn, int no) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -226,35 +227,61 @@ public class ReviewDao {
 		}
 		return ReviewImgList;
 	}
-
-	public int deleteReview(Connection conn, int no) {
+	
+	//리뷰 삭제를 위해 리뷰 넘버를 넘긴 후 해당하는 게시물을 찾아온 후 , 리뷰를 삭제하는 메소드
+	public int deleteReview(Connection conn, int no, String userId) {
 		PreparedStatement pstmt = null;
-		int rs = 0;
-
-		String sql = "UPDATE REVIEW SET REVIEW_DELETE = 'Y' WHERE REVIEW_NO =?";
+		int result = 0;
+		String server_userId = null;
+		ResultSet rs = null;
+		String sql= "SELECT USER_ID FROM REVIEW WHERE REVIEW_NO=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
-			rs = pstmt.executeUpdate();
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				server_userId = rs.getString("USER_ID");
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} 
+		System.out.println(server_userId+"  "+ userId);
+		if(server_userId.equals(userId)) {
+			
+			sql = "UPDATE REVIEW SET REVIEW_DELETE = 'Y' WHERE REVIEW_NO =?";
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, no);
+				result = pstmt.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
 
-			commit(conn);
+				commit(conn);
+				close(conn);
+				close(pstmt);
+
+			}
+	
+		}
+		else {
 			close(conn);
 			close(pstmt);
-
 		}
-		return rs;
+
+	
+		return result;
 	}
 
+	//리뷰좋아요를 누를경우 리뷰의 좋아요 수를 증가시키는 메소드
 	public int updateLike(Connection conn, int no) {
 		PreparedStatement pstmt = null;
 		int rs = 0;
 
 		String sql = "UPDATE REVIEW SET REVIEW_LIKE =REVIEW_LIKE+1 WHERE REVIEW_NO = ?";
-
+		//리뷰테이블에서 RIEVEW_LIKE(좋아요)를 불러올때 마다 REVIEW_RIKE에 +1을 해서 불러온다.
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
@@ -270,12 +297,40 @@ public class ReviewDao {
 		return rs;
 	}
 
+	//리뷰좋아요 개수를 불러오는 메소드
+	public int selectLike(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int rtn = 0;
+		
+		String sql = "SELECT REVIEW_LIKE FROM REVIEW WHERE REVIEW_NO = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				rtn = rs.getInt("REVIEW_LIKE");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(conn);
+			close(pstmt);
+		}
+		
+		
+		return rtn;
+		
+	}
+	
+	//리뷰의 조회수를 증가시키는 메소드
 	public int viewsUpdate(Connection conn, int no) {
 		PreparedStatement pstmt = null;
 		int rs = 0;
 
 		String sql = "UPDATE REVIEW SET REVIEW_VIEWS =REVIEW_VIEWS+1 WHERE REVIEW_NO = ?";
-
+		//리뷰테이블에서 RIEVEW_VIEWS(조회수)를 불러올때 마다 REVIEW_VIEWS +1을 해서 불러온다.
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
@@ -291,12 +346,14 @@ public class ReviewDao {
 		return rs;
 	}
 
+	
+	//리뷰게시물의 신고횟수를 증가시키는 메소드
 	public int declarationUp(Connection conn , int no) {
 		PreparedStatement pstmt = null;
 		int rs = 0;
 
 		String sql = "UPDATE REVIEW SET REVIEW_DECLARATION = REVIEW_DECLARATION+1 WHERE REVIEW_NO =?";
-
+		//리뷰테이블에서 REVIEW_DECLARATION(신고횟수)를 불러올때 마다 REVIEW_DECLARATION +1을 해서 불러온다.
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
@@ -311,5 +368,6 @@ public class ReviewDao {
 
 		return rs;
 	}
+
 
 }

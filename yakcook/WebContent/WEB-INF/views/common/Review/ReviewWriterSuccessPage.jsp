@@ -8,5 +8,6 @@
 </head>
 <body>
 	<h1>${msg}</h1>
+	<button type="button" onclick="location.href='reviewList'">목록으로 돌아가기
 </body>
 </html>

@@ -33,17 +33,7 @@ $('input[type=radio][name=method_pay]').on('click', function() {
 });
 
 
-$("#submit").click(function() {
-
-	// 첫번째 체크박스가 체크되어 있는경우
-	if ($("#agreement_check").is(":checked")) {
-
-	} else { // 첫번째 체크박스가 체크 되어있지 않은 있는경우
-		alert("개인 정보 제공에 동의하여 주세요.")
-		return false;
-	}
 
 
-});
 
-console.log(document.getElementsByName("method_pay"));
+
