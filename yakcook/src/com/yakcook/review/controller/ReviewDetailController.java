@@ -20,12 +20,18 @@ public class ReviewDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String reviewNo = req.getParameter("reviewNo");
 		
+
+		
+		int views = new ReviewService().upReivewViews(reviewNo);
 		
 		List<ReviewListVo> detailList = new ReviewService().detailReviewAll(reviewNo);
 		List<ReviewImgVo> imgList = new ReviewService().getReviewImgList(reviewNo);
 		
+		req.setAttribute("reviewNo",(detailList.get(0).getReviewNo()));
+		
 		req.setAttribute("detailList", detailList);
 		req.setAttribute("imgList", imgList);
+		
 		req.getRequestDispatcher("WEB-INF/views/review/detailReview.jsp").forward(req, resp);
 	}
 	

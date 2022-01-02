@@ -75,5 +75,22 @@ public class ReviewService {
 		Connection conn = getConnection();
 		return new ReviewDao().getReviewImgList(conn, no);
 	}
+	public int upReivewLike(String reviewNo) {
+		int no = Integer.parseInt(reviewNo);
+		Connection conn = getConnection();
+		return new ReviewDao().updateLike(conn, no);
+	}
+	public int upReivewViews(String reviewNo) {
+		int no = Integer.parseInt(reviewNo);
+		Connection conn = getConnection();
+		return new ReviewDao().viewsUpdate(conn, no);
+	}
+	
+	
+	public int upDeclaration(String reviewNo) {
+		int no = Integer.parseInt(reviewNo);
+		Connection conn = getConnection();
+		return new ReviewDao().declarationUp(conn, no);
+	}
 
 }
