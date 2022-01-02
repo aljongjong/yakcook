@@ -61,7 +61,7 @@
                     <div class="dp_info_review">
                         <a href="#">
                             <i class="far fa-comments"></i>
-                            <span>리뷰 : 99개</span>
+                            <span>리뷰 : 13개</span>
                         </a>
                     </div>
                 </div>
@@ -86,11 +86,7 @@
                         수량 :
                     </div>
                     <div>
-                        <select oninput="totalPrice()" name="dp_info_go_pay_sb_amount" id="dpAmount">
-                        <c:forEach var="i" begin="1" end="${detailsProduct.inventory}">
-                       		<option value="${i}">${i}</option>                      
-                        </c:forEach>
-                        </select>
+                        <input onchange="totalPrice()" oninput="maxLengthCheck(this)" type="number" name="dp_info_go_pay_sb_amount" id="dpAmount" min=1 max=${detailsProduct.inventory} value="1" maxlength="2">
                     </div>
                 </div>
                 <div class="dp_info_go_pay_sb_total">
@@ -112,7 +108,7 @@
                     <a href="#">주문 하기</a>
                 </div>
                 <div class="dp_info_forward_pay_backshop_btn">
-                <form action="shoppingBasket" method="GET" style="display:inline">
+                <form action="shoppingBasket" method="POST" style="display:inline">
                 	<input type="hidden" name="productNo" value="${detailsProduct.productNo}">
                 	<input type="hidden" name="price" value="${detailsProduct.price}">
                 	<input type="hidden" name="amount" value="" id="toSBamount">
@@ -128,33 +124,64 @@
         <div class="detailsProduct_notice">
             <div class="detailsProduct_notice_tab_btn">
                 <ul>
-                    <li class="active">
-                        <a href="#">제품 상세 정보</a>
+                    <li class="active" style="border-left: 1px solid rgb(171, 184, 101);">
+                        <a href="#">주문 주의 사항</a>
                     </li>
                     <li>
-                        <a href="#">주문 주의사항</a>
+                        <a href="#">배송 주의 사항</a>
                     </li>
                     <li>
-                        <a href="#">배송 주의사항</a>
-                    </li>
-                    <li>
-                        <a href="#">반품 / 환불 안내</a>
+                        <a href="#">교환/반품/환불 안내</a>
                     </li>
                 </ul>
             </div>
 
-            <div class="detailsProduct_notice_tab_cont">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+            <div class="detailsProduct_notice_tab_cont" style="border-bottom: 1px solid gainsboro;">
+                <div style="width: 1200px; height: 600px;"><img src="resources/images/product/orderNotice.png" style="width: 100%; height: 100%;"></div>
+                <div style="width: 1200px; height: 600px;"><img src="resources/images/product/delieveryNotice.png" style="width: 100%; height: 100%;"></div>
+                <div style="width: 1200px; height: 600px;"><img src="resources/images/product/refundNotice.png" style="width: 100%; height: 100%;"></div>
             </div>
         </div>
-        
-        </div>
     </div>
-    
+</div>
     <script>
+        // 탭 메뉴
+        var tabBtn = $(".detailsProduct_notice_tab_btn > ul > li");
+        var tabCont = $(".detailsProduct_notice_tab_cont > div");
+
+        tabCont.hide().eq(0).show(); // 변수 tabCont를 숨기고, 첫번째 박스만 보여준다. 
+
+        tabBtn.click(function (e) {
+            e.preventDefault();
+            var target = $(this);
+            var index = target.index();
+            // alert(index); 인덱스 설정 잘 되었는지 중간 점검
+
+            tabBtn.removeClass("active");
+            target.addClass("active");
+            tabCont.css("display", "none");
+            tabCont.eq(index).css("display", "block");
+        });
+        // 슬라이드
+        var prevBtn = $(".fa-chevron-left");
+        var nextBtn = $(".fa-chevron-right");
+
+        prevBtn.click(function () {
+            $(".dp_productImg>div>img").eq(0).css("display", "block");
+            $(".dp_productImg>div>img").eq(1).css("display", "none");
+            $("#dp_bean > i").eq(1).css("color", "gray");
+            $("#dp_bean > i").eq(0).css("color", "rgb(81, 112, 197)");
+
+
+        })
+        nextBtn.click(function () {
+            $(".dp_productImg>div>img").eq(1).css("display", "block");
+            $(".dp_productImg>div>img").eq(0).css("display", "none");
+            $("#dp_bean > i").eq(0).css("color", "gray");
+            $("#dp_bean > i").eq(1).css("color", "rgb(81, 112, 197)");
+        })
+        
+        // 수량에 따라 가격 변하게
     	function totalPrice() {
     		$.ajax ({
     			url : "",
@@ -172,8 +199,17 @@
     		let amount = document.getElementById("dpAmount");
             let tosbamount = document.getElementById("toSBamount");
             tosbamount.value = amount.value;
+            console.log(tosbamount.value);
     	}
     	
+        function maxLengthCheck(object) {
+   	    if (object.value.length > object.maxLength) {
+   	        object.value = object.value.slice(0, object.maxLength);
+   	    }
+   	    
+   	}
+
+
     </script>
 </body>
 </html>

@@ -118,7 +118,7 @@ public class RegisterProduct extends HttpServlet{
 				pImgList.add(pImg);
 			}
 		}
-		int resultImg = new ServiceProduct().registerProductImg(pImgList);
+		int resultImg = new ServiceProduct().registerProductImg(pImgList); // 이미지테이블에 이미지 인서트하는 메소
 		System.out.println("resultImg : " + resultImg);
 		
 		if(resultTag == 3) {

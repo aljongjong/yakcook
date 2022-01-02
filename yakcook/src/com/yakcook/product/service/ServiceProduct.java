@@ -516,11 +516,11 @@ public class ServiceProduct {
 	}
 	
 	// 가져온 장바구니에 제품 넣기
-	public List<ShoppingBasketProVo> putShoopingBasket(ShoppingBasketVo sv, ProductVo pv) {
+	public List<ShoppingBasketProVo> putShoppingBasket(ShoppingBasketVo sv, ProductVo pv) {
 		
 		Connection conn = getConnection();
 		
-		List<ShoppingBasketProVo> list = new DaoProduct().putShoopingBasket(conn, sv, pv);
+		List<ShoppingBasketProVo> list = new DaoProduct().putShoppingBasket(conn, sv, pv);
 		
 		try {
 			commit(conn);
@@ -532,16 +532,88 @@ public class ServiceProduct {
 		
 		return list;
 	}
+	// 장바구니에 담긴 총 상품 금액 불러오기
+	public int totalProductPrcie(ShoppingBasketVo sv) {
+		
+		Connection conn = getConnection();
+		
+		int result = new DaoProduct().totalProductPrcie(conn, sv);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
 
-	
+	// 장바구니에 담긴 상푸 삭제 후 장바구니 제품 리턴
+	public List<ShoppingBasketProVo> deleteShoppingBasket(ShoppingBasketProVo sbp) {
+		
+		Connection conn = getConnection();
+		
+		List<ShoppingBasketProVo> list = new DaoProduct().deleteShoppingBasket(conn, sbp);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return list;
+	}
+	// 장바구니 안에 전체 제품 삭제
+	public int deleteAllShoppingBasket(int shoppingBasketNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new DaoProduct().deleteAllShoppingBasket(conn, shoppingBasketNo);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return result;
+	}
 
-	
-	
-
-
-	
-
-	
-	
-	
+	// 장바구니 안에 제품 수량 변경
+	public List<ShoppingBasketProVo> updateShoppingBasket(ShoppingBasketProVo sbp) {
+		
+		Connection conn = getConnection();
+		
+		List<ShoppingBasketProVo> list = new DaoProduct().updateShoppingBasket(conn, sbp);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return list;
+	}
+/*-------------------------------------태그 검색 결과----------------------------------------*/
+	public List<ProductVo> tagSearchProduct(String tagName) {
+		
+		Connection conn = getConnection();
+		List<ProductVo> list = new DaoProduct().tagSearchProduct(conn, tagName);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		return list;
+	}
 }
