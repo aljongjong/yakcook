@@ -58,7 +58,7 @@ public class customerServiceDao {
 
 	public ArrayList<FAQVo> getFAQAll(Connection conn, pagingVo pv) {
 		PreparedStatement pstmt = null;
-		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , f.* FROM FAQ f)WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , F.*, C.CATEGORY_NAME FROM FAQ F JOIN CUSTOMER_CATEGORY C ON (F.CATEGORY_NUMBER = C.CATEGORY_NUMBER) )WHERE RNUM BETWEEN ? AND ?";
 		ResultSet rs = null;
 		ArrayList<FAQVo> faqList = new ArrayList<FAQVo>();
 		
@@ -68,8 +68,8 @@ public class customerServiceDao {
 			pstmt.setInt(2, pv.getEndNo());
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				faqList.add(new FAQVo(rs.getInt("FAQ_NUMBER"), rs.getInt("MANAGER_NUMBER"), rs.getString("CATEGORY"),
-						rs.getString("FAQ_TITLE"), rs.getString("FAQ_CONTENT"), rs.getTimestamp("WRITE_DATE"), rs.getTimestamp("MODIFY_DATE"), rs.getString("DELETE_YN")));
+				faqList.add(new FAQVo(rs.getInt("FAQ_NUMBER"), rs.getInt("MANAGER_NUMBER"), rs.getString("CATEGORY_NAME"),
+						rs.getString("FAQ_TITLE"), rs.getString("FAQ_CONTENT"), rs.getString("DELETE_YN")));
 			}
 			
 			commit(conn);
@@ -83,7 +83,7 @@ public class customerServiceDao {
 
 	public ArrayList<FAQVo> getFAQ(Connection conn, String value, pagingVo pv) {
 		PreparedStatement pstmt = null;
-		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , f.* FROM FAQ f WHERE CATEGORY = ?)WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , F.*, C.CATEGORY_NAME FROM FAQ F JOIN CUSTOMER_CATEGORY C ON (F.CATEGORY_NUMBER = C.CATEGORY_NUMBER) WHERE CATEGORY = ?)WHERE RNUM BETWEEN ? AND ?";
 		ResultSet rs = null;
 		ArrayList<FAQVo> faqList = new ArrayList<FAQVo>();
 		
@@ -94,8 +94,8 @@ public class customerServiceDao {
 			pstmt.setInt(3, pv.getEndNo());
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				faqList.add(new FAQVo(rs.getInt("FAQ_NUMBER"), rs.getInt("MANAGER_NUMBER"), rs.getString("CATEGORY"),
-						rs.getString("FAQ_TITLE"), rs.getString("FAQ_CONTENT"), rs.getTimestamp("WRITE_DATE"), rs.getTimestamp("MODIFY_DATE"), rs.getString("DELETE_YN")));
+				faqList.add(new FAQVo(rs.getInt("FAQ_NUMBER"), rs.getInt("MANAGER_NUMBER"), rs.getString("CATEGORY_NAME"),
+						rs.getString("FAQ_TITLE"), rs.getString("FAQ_CONTENT"), rs.getString("DELETE_YN")));
 			}
 			
 			commit(conn);

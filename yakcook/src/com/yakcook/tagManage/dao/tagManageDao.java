@@ -15,7 +15,7 @@ public class tagManageDao {
 
 	public int tagAdd(Connection conn, String name) {
 		PreparedStatement pstmt = null;
-		String sql = "INSERT INTO TAG_KEYWORD(TAG_NUMBER, TAG_NAME) VALUES(SEQ_TAG_KEYWORD.NEXTVAL, ?)";
+		String sql = "INSERT INTO TAG_KEYWORD(TAG_NUMBER, TAG_NAME) VALUES(SEQ_TAG_NO.NEXTVAL, ?)";
 		int result = 0;
 		
 		try {
