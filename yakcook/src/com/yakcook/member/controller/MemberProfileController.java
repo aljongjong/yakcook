@@ -19,7 +19,7 @@ public class MemberProfileController extends HttpServlet{
 		HttpSession session = req.getSession();
 		
 		//현재 로그인 한 회원의 세션 정보 가져오기
-		String loginUserId = ((MemberVo)session.getAttribute("loginUser")).getId();
+		String loginUserId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();
 		System.out.println("현재 로그인 아이디 : "+ loginUserId);
 		
 		MemberVo m = new MemberService().myInfotmation(loginUserId);

@@ -26,8 +26,8 @@ public class LoginController extends HttpServlet{
 		
 		// 데이터 담기
 		MemberVo m = new MemberVo();
-		m.setId(id);
-		m.setPwd(pwd);
+		m.setUser_id(id);
+		m.setUser_pwd(pwd);
 		
 
 		

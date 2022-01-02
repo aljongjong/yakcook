@@ -14,7 +14,7 @@ let emailCheckNum = 0; // 이메일 인증 성공시 넘어가도록 관리하�
 let nameCheckNum = 0; // 이름 정규식 만족하면 넘어가도록 관리하는 변수
 let correctColor = "#00ff00";	//맞았을 때 출력되는 색깔.
 let wrongColor ="#ff0000";	//틀렸을 때 출력되는 색깔
-let userIdCheck = false;
+let userIdCheck = true;
 
 //아이디 중복 체크 + 정규식 처리 동시에!
 $('#idBox').keyup(function(){
@@ -28,9 +28,20 @@ $('#idBox').keyup(function(){
 				id : $('#idBox').val()
 			},
 			success : function(data){
-				$("#idspan").text(data);
-				$("#idBox").focus();
-				console.log(userIdCheck);
+				if(data =="true"){
+					$("#idspan").text("사용 가능한 아이디 입니다.");
+					$('input').attr('readonly', false);
+					$("#idBox").focus();
+					userIdCheck = data;
+					console.log(data)
+					console.log(userIdCheck)
+				} else{
+					if(data != true){
+						alert("중복된 아이디 입니다.")
+						$("#idspan").text("아이디를 다시 입력 한 후 비번 입력하셈");
+						$('input').not('#idBox').attr('readonly', true);
+					}
+				}
 			},
 			error : function(err){
 				alert('error');
@@ -40,7 +51,7 @@ $('#idBox').keyup(function(){
 		idspan.innerHTML = "반드시 영문으로 시작 숫자+언더바/하이픈 허용 4~20자리";
 	}
 });
-console.log(userIdCheck);
+
 //비밀번호 정규식
 //비밀번호 일치 불일치
 function passConfirm() {
@@ -115,17 +126,19 @@ function confirmemail(emailconfirm_value, authNum){
 	}
 }
 
+console.log(userIdCheck);
 //sumbit버튼 눌렀을 때 일어나는 함수
 function Check(){
 	// 중복된 아이디면 넘어가지 않도록 
-	if(userIdCheck != true){
-		alert("중복된 아이디 입니다.");
+	if(userIdCheck == false){
+	  alert("중복된 아이디 입니다.");
 	  document.getElementById('idBox').focus();
 	  return false;
 	}
 	
+	
 	// 비밀번호 정규식 만족하지 않았을 경우 넘어가지 않도록
-/*	if(passwordCheckNum === 0){
+	if(passwordCheckNum === 0){
 		console.log(passwordCheckNum)
 		alert("비밀번호 정규식을 만족하지 않습니다.");
 	  	document.getElementById('password').focus();
@@ -145,7 +158,7 @@ function Check(){
 		alert("이름이 맞지 않습니다.");
 	  	document.getElementById('userName').focus();
 	 	return false;
-	}*/
+	}
 	
 	//이메일 인증성공하지 못하면 넘어가지 않도록
 /* 	if(emailCheckNum === 0){

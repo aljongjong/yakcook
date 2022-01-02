@@ -17,7 +17,7 @@ public class MemberDeleteController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		String userId = ((MemberVo)session.getAttribute("loginUser")).getId();
+		String userId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();
 		String userPwd = req.getParameter("userPwd");
 		//String userId = (String) session.getAttribute("loginUserId");
 		System.out.println(userPwd);

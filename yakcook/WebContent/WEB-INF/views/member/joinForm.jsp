@@ -94,7 +94,7 @@
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-						<input class="input100" type="password" name="pwd" id = "password"  onkeyup="passConfirm()" onpaste="return false;" oncopy="return false;"/>
+						<input class="input100" type="password" name="pwd" id = "password" class = "none"  onkeyup="passConfirm()" onpaste="return false;" oncopy="return false;"/>
 						<span class="focus-input100"></span>
 					</div>
 					<br>
@@ -107,7 +107,7 @@
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-						<input class="input100" type="password" id="passwordConfirm" onkeyup="passConfirm()">
+						<input class="input100" type="password" id="passwordConfirm" class = "none" onkeyup="passConfirm()">
 						<span class="focus-input100"></span>
 					</div>
 					<br>
@@ -118,7 +118,7 @@
 						UserName
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="UserName is required">
-						<input class="input100" type="text" name="name" id="userName">
+						<input class="input100" type="text" name="name" id="userName" class = "none">
 						<span class="focus-input100"></span>
 					</div>
 					<br>
@@ -129,7 +129,7 @@
 						Email
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Email is required">
-						<input class="input100"  type="email" name="email" id="email">
+						<input class="input100"  type="email" name="email" id="email" class = "none">
 						<span class="focus-input100"></span>
 					</div>
 						<br>
@@ -141,7 +141,7 @@
 						Phone
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Phone is required">
-						<input class="input100" type="text" name="phone">
+						<input class="input100" type="text" name="phone" class = "none">
 						<span class="focus-input100"></span>
 					</div>
 					

@@ -17,7 +17,7 @@ public class MemberPwdUpdateForm extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		System.out.println("여기와ㅕ따!");
-		String userId = ((MemberVo)session.getAttribute("loginUser")).getId();
+		String userId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();
 		req.setAttribute("id", userId);
 		System.out.println(userId);
 		req.getRequestDispatcher("/WEB-INF/views/member/pwdUpdateForm.jsp").forward(req, resp);

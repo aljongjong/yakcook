@@ -24,20 +24,21 @@
     <div id="div-wrap">
         <table border="1">
 	        <tr>
-	            <td> 아이디 : ${m.id}</td>
+	            <td> 아이디 : ${m.user_id}</td>
 	        </tr>
 	       	<tr>
-	            <td> 이름 : ${m.name}</td>
+	            <td> 이름 : ${m.user_name}</td>
 	        </tr>
 	      	<tr>
-	            <td> 이메일 : ${m.email}</td>
+	            <td> 이메일 : ${m.user_email}</td>
 	        </tr>
 	       	<tr>
-	            <td> 핸드폰 : ${m.phone}</td>
+	            <td> 핸드폰 : ${m.user_phone}</td>
 	        </tr>
         </table>
     </div>
 	<a href = "deleteForm">회원탈퇴</a>
 	<a href = "pwdUpdateForm">비밀번호변경</a>
+	<a href = "memberReview">내 리뷰</a>
 </body>
 </html>

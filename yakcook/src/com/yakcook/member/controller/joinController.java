@@ -61,11 +61,11 @@ public class joinController extends HttpServlet{
 		
 		
 		MemberVo m = new MemberVo();
-		m.setId(id);
-		m.setPwd(pwd);
-		m.setName(name);
-		m.setEmail(email);
-		m.setPhone(phone);
+		m.setUser_id(id);
+		m.setUser_pwd(pwd);
+		m.setUser_name(name);
+		m.setUser_email(email);
+		m.setUser_phone(phone);
 		
 		int result = new MemberService().join(m);
 		
