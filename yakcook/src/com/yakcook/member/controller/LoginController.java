@@ -23,10 +23,13 @@ public class LoginController extends HttpServlet{
 		String id = req.getParameter("id");
 		String pwd = req.getParameter("pwd");
 		
+		
 		// 데이터 담기
 		MemberVo m = new MemberVo();
 		m.setId(id);
 		m.setPwd(pwd);
+		
+
 		
 		MemberVo loginUser = new MemberService().login(m);
 		

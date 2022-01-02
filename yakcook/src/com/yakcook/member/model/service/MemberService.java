@@ -64,7 +64,7 @@ public class MemberService {
 		// id 가지고 그 아이디의 비번 조회
 		MemberVo selectedMember = selectMember(conn,m);
 		close(conn);
-		if(selectedMember.getPwd() .equals(encrypt(m.getPwd()))) {
+		if(selectedMember.getPwd().equals(encrypt(m.getPwd()))) {
 			return selectedMember;
 		}else {
 			return null;

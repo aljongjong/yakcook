@@ -8,56 +8,82 @@
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="/yakcook/resources/css/review/reviewList.css">
+<link
+	href="https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&display=swap"
+	rel="stylesheet">
+
 </head>
 <body>
 	<div id="wrap">
 		<header>
 			<div id="title_img"></div>
-			<div id="title">상품후기</div>
+			<div id="title">PRODUCT REVIEW</div>
+
+
+			<hr>
 			<h3>Yakcook 상품에 대해 가득한 이야기들을 확인해보세요!</h3>
 		</header>
-		
+
 
 		<section>
-			
+
 			<ul id="review_ul">
-				<c:forEach items="${data}" var="r">	
+				<c:forEach items="${data}" var="r">
 
 					<li class="review_li">
 						<div class="review_pro">
-
-							<a href="${path}/yakcook/reviewDetail?reviewNo=${r.reviewNo}">${r.reviewTitle}
-							<br> (루테인)</a>
-							
+							<a href="${path}/yakcook/reviewDetail?reviewNo=${r.reviewNo}">${r.reviewTitle}</a>
 						</div>
+
 						<div class="review_img">
 							<img src="/yakcook/upload/" alt="">
 						</div>
+
 						<div class="review_contents">
-							<div class="contents">${r.reviewContents}</div>
+							<div class="contents">${r.reviewContents}
+								<a href="javascript:moreList();"> </a>
+							</div>
 							<div class="review_date">2012.20.21</div>
+							<div class="userId">작성자 : ${r.userId }</div>
 						</div>
+
 					</li>
 				</c:forEach>
 
 			</ul>
 
-	
+			<hr>
 			<div class="page_area">
 				<c:forEach var="i" begin="1" end="5">
 					<c:if test="${i le maxPage}">
 						<a href="reviewList?currentPage=${i}">${i}</a>
 					</c:if>
 				</c:forEach>
-				<button type="button" onclick="location.href='reviewWrite'">글쓰기</button>
+				<button onclick="write_btn()" id="writer">글쓰기</button>
 			</div>
 
-			
+
 
 
 		</section>
 
 
 		<footer> </footer>
+
+		<c:forEach items="${data}" var="r">
+			<%String id = (String)session.getAttribute("userId"); %>
+<script>
+	function write_btn() {
+	    if("<%=id%>" !=null){
+	    	location.href='reviewWrite';
+	    }
+	    else{
+	    	alert("회원만 가능한 기능입니다. \n로그인 하시기 바랍니다.")
+	    }
+	}
+</script>
+
+		</c:forEach>
 </body>
+
 </html>

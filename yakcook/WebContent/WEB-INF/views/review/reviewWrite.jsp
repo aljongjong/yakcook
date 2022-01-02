@@ -6,8 +6,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<%String id = (String)session.getAttribute("userId"); %>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/review/review.css">
+	href="/yakcook/resources/css/review/writerReview.css">
 <body>
 
     <div id="wrap">
@@ -26,7 +27,7 @@
 
                         <tr>
                             <th colspan="2">내용</th>
-                            <td colspan="2"><textarea name="review_contents" class="review_contents" maxlength="4000"></textarea>
+                            <td colspan="2"><textarea name="review_contents" class="review_contents" maxlength="1000"></textarea>
                             </td>
                         </tr>
 
@@ -42,12 +43,13 @@
                             <th colspan="2">사진3</th>
                             <td> <input type="file" name="review_img" accept=".gif, .jpg, .png"></td>
                         </tr>
-                        <input type="hidden" name="writer_name" value="작성자">
+                        <input type="hidden" name="userId" value="<%=id%>">
 						<!-- 	<input type="hidden" name="writer_name"><%=session.getAttribute("id")%></td> -->
                     </table>
                     <div class="writer_button">
                             <input type="submit" value="등록">
-                            <input type="button" value="취소">
+                            <input type="button" value="취소" onclick="location.href='reviewList'">
+                            
                     </div>
                 </form>
             </div>

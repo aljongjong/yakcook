@@ -1,44 +1,80 @@
-package com.yakcook.payment.controller;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.*;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.client.ResponseErrorHandler;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import javax.annotation.PostConstruct;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+	@@ -43,7 +46,8 @@ public String confirmPayment(
+            Model model) throws Exception {
 
+        HttpHeaders headers = new HttpHeaders();
+        // headers.setBasicAuth(SECRET_KEY, ""); // spring framework 5.2 이상 버전에서 지원
+        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
+        Map<String, String> payloadMap = new HashMap<>();
+	@@ -58,6 +62,7 @@ public String confirmPayment(
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            JsonNode successNode = responseEntity.getBody();
+            model.addAttribute("orderId", successNode.get("orderId").asText());
+            String secret = successNode.get("secret").asText(); // 가상계좌의 경우 입금 callback 검증을 위해서 secret을 저장하기를 권장함
+            return "success";
+        } else {
+            JsonNode failNode = responseEntity.getBody();
+	@@ -73,4 +78,44 @@ public String failPayment(@RequestParam String message, @RequestParam String cod
+        model.addAttribute("code", code);
+        return "fail";
+    }
 
+    @RequestMapping("/virtual-account/callback")
+    @ResponseStatus(HttpStatus.OK)
+    public void handleVirtualAccountCallback(@RequestBody CallbackPayload payload) {
+        if (payload.getStatus().equals("DONE")) {
+            // handle deposit result
+        }
+    }
 
-@WebServlet("/testjava")
-public class test extends HttpServlet{
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String orderId = req.getParameter("orderId");
-		String paymentKey = req.getParameter("paymentKey");
-		String amount = req.getParameter("amount");
-		
+    private static class CallbackPayload {
+        public CallbackPayload() {}
 
-	try {
-		HttpRequest request = HttpRequest.newBuilder()
-			    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey))
-			    .header("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==")
-			    .header("Content-Type", "application/json")
-			    .method("POST", HttpRequest.BodyPublishers.ofString("{\"amount\":"+amount+",\"orderId\":\""+orderId+"\"}"))
-			    .build();
-			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-			var body_data = response.body();
-			System.out.println(body_data);	
-		}catch (IOException | InterruptedException e) {
-			System.out.println(e);
-		}
-	}
-	
-	
-	
+        private String secret;
+        private String status;
+        private String orderId;
+
+        public String getSecret() {
+            return secret;
+        }
+
+        public void setSecret(String secret) {
+            this.secret = secret;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
+        }
+    }
 }
