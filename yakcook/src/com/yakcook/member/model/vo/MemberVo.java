@@ -3,76 +3,63 @@ package com.yakcook.member.model.vo;
 import java.sql.Timestamp;
 
 public class MemberVo {
-	private int memberNo;
-	private String id;
-	private String pwd;
-	private String name;
-	private int detail;
-	private Timestamp enrollDate;
-	private Timestamp modifyDate;
-	private String openYn;
-	private String email;
-	private String phone;
+	private int user_no;
+	private String user_id;
+	private String user_pwd;
+	private String user_name;
+	private String user_phone;
+	private String user_email;
+	private Timestamp join_date;
+	private Timestamp modify_date;
 	
-	public int getMemberNo() {
-		return memberNo;
+	public int getUser_no() {
+		return user_no;
 	}
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
+	public void setUser_no(int user_no) {
+		this.user_no = user_no;
 	}
-	public String getId() {
-		return id;
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
-	public String getPwd() {
-		return pwd;
+	public String getUser_pwd() {
+		return user_pwd;
 	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setUser_pwd(String user_pwd) {
+		this.user_pwd = user_pwd;
 	}
-	public String getName() {
-		return name;
+	public String getUser_name() {
+		return user_name;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
-	public int getDetail() {
-		return detail;
+	public String getUser_phone() {
+		return user_phone;
 	}
-	public void setDetail(int detail) {
-		this.detail = detail;
+	public void setUser_phone(String user_phone) {
+		this.user_phone = user_phone;
 	}
-	public Timestamp getEnrollDate() {
-		return enrollDate;
+	public String getUser_email() {
+		return user_email;
 	}
-	public void setEnrollDate(Timestamp enrollDate) {
-		this.enrollDate = enrollDate;
+	public void setUser_email(String user_email) {
+		this.user_email = user_email;
 	}
-	public Timestamp getModifyDate() {
-		return modifyDate;
+	public Timestamp getJoin_date() {
+		return join_date;
 	}
-	public void setModifyDate(Timestamp modifyDate) {
-		this.modifyDate = modifyDate;
+	public void setJoin_date(Timestamp join_date) {
+		this.join_date = join_date;
 	}
-	public String getOpenYn() {
-		return openYn;
+	public Timestamp getModify_date() {
+		return modify_date;
 	}
-	public void setOpenYn(String openYn) {
-		this.openYn = openYn;
+	public void setModify_date(Timestamp modify_date) {
+		this.modify_date = modify_date;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	} 
 	
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	} 
+	
 }

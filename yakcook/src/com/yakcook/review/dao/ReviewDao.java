@@ -94,7 +94,6 @@ public class ReviewDao {
 				r.setReviewTitle(reviewTitle);
 				r.setReviewContents(reviewContents);
 				r.setReviewDate(reviewDate);
-				r.setWriter(reviewWriter);
 				Reviewlist.add(r);
 			}
 		} catch (SQLException e) {
@@ -157,7 +156,6 @@ public class ReviewDao {
 				i.setReviewTitle(reviewTitle);
 				i.setReviewContents(reviewContents);
 				i.setReviewDate(reviewData);
-				i.setWriter(writer);
 				Reviewlist.add(i);
 			}
 		} catch (SQLException e) {

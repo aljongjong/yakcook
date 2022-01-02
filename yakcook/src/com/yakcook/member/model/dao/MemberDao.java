@@ -16,18 +16,17 @@ import com.yakcook.member.model.vo.MemberVo;
 public class MemberDao {
 	public int insertMember(Connection conn, MemberVo m) throws SQLException {
 		// 쿼리 날리기?
-		String sql = "INSERT INTO MEMBER(MEMBER_NO, ID, PWD, NAME, PHONE, EMAIL, DETAIL, MODIFY_DATE) "
-				+ "VALUES(SEQ_MEMBER.NEXTVAL, ?, ?, ?, ?, ?, ?, SYSDATE)";
+		String sql = "INSERT INTO MEMBER(USER_NO, USER_ID, USER_PWD, USER_NAME, USER_PHONE, USER_EMAIL, USER_JOIN_DATE, USER_MODIFY_DATE) "
+				+ "VALUES(SEQ_MEMBER.NEXTVAL, ?, ?, ?, ?, ?, SYSDATE, SYSDATE)";
 		PreparedStatement pstmt = null;
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m.getId());
-			pstmt.setString(2, m.getPwd());
-			pstmt.setString(3, m.getName());
-			pstmt.setString(4, m.getPhone());
-			pstmt.setString(5, m.getEmail());
-			pstmt.setInt(6, -1);
+			pstmt.setString(1, m.getUser_id());
+			pstmt.setString(2, m.getUser_pwd());
+			pstmt.setString(3, m.getUser_name());
+			pstmt.setString(4, m.getUser_phone());
+			pstmt.setString(5, m.getUser_email());
 			result = pstmt.executeUpdate();
 		} finally {
 			JDBCTemplate.close(pstmt);
@@ -36,34 +35,31 @@ public class MemberDao {
 	}
 
 	public MemberVo selectMember(Connection conn, MemberVo m) {
-		
-		String query = "SELECT * FROM MEMBER WHERE ID = ? AND QUIT_YN ='N' "; 
-		
+		String query = "SELECT * FROM MEMBER WHERE USER_ID = ? AND QUIT_YN ='N' "; 
 		PreparedStatement pstmt = null;
 		MemberVo selectedMember = null;
 		ResultSet rs = null;
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, m.getId());
+			pstmt.setString(1, m.getUser_id());
 			//결과를 가지고 와야하기 때문에 쿼리이다.
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				int memberNo = rs.getInt("MEMBER_NO");
-				String id = rs.getString("ID");
-				String pwd = rs.getString("PWD");
-				String name = rs.getString("NAME");
-				int detail = rs.getInt("DETAIL");
-				Timestamp modifyDate = rs.getTimestamp("MODIFY_DATE");
-				String openYn = rs.getString("OPEN_YN");
+				int userNo = rs.getInt("USER_NO");
+				String id = rs.getString("USER_ID");
+				String pwd = rs.getString("USER_PWD");
+				String name = rs.getString("USER_NAME");
+				String phone = rs.getString("USER_PHONE");
+				String eamil = rs.getString("USER_EMAIL");
 
 				selectedMember = new MemberVo();
-				selectedMember.setMemberNo(memberNo);
-				selectedMember.setId(id);
-				selectedMember.setPwd(pwd);
-				selectedMember.setName(name);
-				selectedMember.setDetail(detail);
-				selectedMember.setOpenYn(openYn);
+				selectedMember.setUser_no(userNo);
+				selectedMember.setUser_id(id);
+				selectedMember.setUser_pwd(pwd);
+				selectedMember.setUser_name(name);
+				selectedMember.setUser_phone(phone);
+				selectedMember.setUser_email(eamil);
 				
 			}
 		} catch (SQLException e) {
@@ -75,60 +71,11 @@ public class MemberDao {
 		return selectedMember;
 	}
 
-	public List<MemberVo> selectMemberAll(Connection conn, int startNo, int endNo) {
-		String sql = "SELECT * "
-				+ "FROM "
-				+ "( "
-				+ "SELECT ROWNUM AS RNUM , m.* FROM MEMBER m WHERE QUIT_YN = 'N' AND OPEN_YN = 'Y' "
-				+ ") "
-				+ "WHERE RNUM BETWEEN ? AND ?";
-
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		List<MemberVo> list = new ArrayList<MemberVo>();
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, startNo);
-			pstmt.setInt(2, endNo);
-			rs = pstmt.executeQuery();
-			MemberVo selectedMember = null;
-			while(rs.next()) {
-				int memberNo = rs.getInt("MEMBER_NO");
-				String id = rs.getString("ID");
-				String pwd = rs.getString("PWD");
-				String name = rs.getString("NAME");
-				int detail = rs.getInt("DETAIL");
-				Timestamp enrollDate = rs.getTimestamp("ENROLL_DATE");
-				Timestamp modifyDate = rs.getTimestamp("MODIFY_DATE");
-				String openYn = rs.getString("OPEN_YN");
-				//String quitYn = rs.getString("QUIT_YN");
-
-				selectedMember = new MemberVo();
-				selectedMember.setMemberNo(memberNo);
-				selectedMember.setId(id);
-				selectedMember.setPwd(pwd);
-				selectedMember.setName(name);
-				selectedMember.setDetail(detail);
-				selectedMember.setEnrollDate(enrollDate);
-				selectedMember.setOpenYn(openYn);
-				
-				list.add(selectedMember);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rs);
-			close(pstmt);
-		}
-		return list;
-	}
-
 	public int selectMemberById(Connection conn, String id) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int result = 0;
-		String sql = "SELECT COUNT(*) FROM MEMBER WHERE ID = ?";
+		String sql = "SELECT COUNT(*) FROM MEMBER WHERE USER_ID = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -145,50 +92,11 @@ public class MemberDao {
 		return result;
 	}
 
-	public List<MemberVo> selectMemberBySearch(Connection conn, String type, String value) {
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		List<MemberVo> list = new ArrayList<MemberVo>();
-		String sql = "SELECT * FROM MEMBER WHERE %s LIKE ?";
-		sql = String.format(sql, type);
-		try {
-		    pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, "%"+value+"%");
-			MemberVo selectedMember = null;
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				MemberVo m = new MemberVo();
-				int memberNo = rs.getInt("MEMBER_NO");
-				String id = rs.getString("ID");
-				String pwd = rs.getString("PWD");
-				String name = rs.getString("NAME");
-				int detail = rs.getInt("DETAIL");
-				Timestamp enrollDate = rs.getTimestamp("ENROLL_DATE");
-				Timestamp modifyDate = rs.getTimestamp("MODIFY_DATE");
-				String openYn = rs.getString("OPEN_YN");
-				
-				selectedMember = new MemberVo();
-				selectedMember.setMemberNo(memberNo);
-				selectedMember.setId(id);
-				selectedMember.setPwd(pwd);
-				selectedMember.setName(name);
-				selectedMember.setDetail(detail);
-				selectedMember.setEnrollDate(enrollDate);
-				selectedMember.setOpenYn(openYn);
-				
-				list.add(selectedMember);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
 
 	public int countMemberAll(Connection conn) {
-		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT COUNT(MEMBER_NO) FROM MEMBER WHERE QUIT_YN = 'N' AND OPEN_YN = 'Y'";
+		String sql = "SELECT COUNT(USER_NO) FROM MEMBER WHERE QUIT_YN = 'N'";
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -208,7 +116,7 @@ public class MemberDao {
 	public MemberVo myInfotmation(Connection conn, String loginUserId) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM MEMBER WHERE ID = ?";
+		String sql = "SELECT * FROM MEMBER WHERE USER_ID = ?";
 		MemberVo m = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -216,13 +124,12 @@ public class MemberDao {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				m = new MemberVo();
-				m.setMemberNo(rs.getInt("MEMBER_NO"));
-				m.setId(rs.getString("ID"));
-				m.setPwd(rs.getString("PWD"));
-				m.setName(rs.getString("NAME"));
-				m.setDetail(rs.getInt("DETAIL"));
-				m.setEmail(rs.getString("EMAIL"));
-				m.setPhone(rs.getString("PHONE"));
+				m.setUser_no(rs.getInt("USER_NO"));
+				m.setUser_id(rs.getString("USER_ID"));
+				m.setUser_pwd(rs.getString("USER_PWD"));
+				m.setUser_name(rs.getString("USER_NAME"));
+				m.setUser_email(rs.getString("USER_EMAIL"));
+				m.setUser_phone(rs.getString("USER_PHONE"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -239,7 +146,7 @@ public class MemberDao {
 		 int result = 0;
 		 String userid = userId;
 	  
-	 String query = "UPDATE MEMBER SET QUIT_YN = 'Y' WHERE PWD = ? AND ID = ?";
+	 String query = "UPDATE MEMBER SET QUIT_YN = 'Y' WHERE USER_PWD = ? AND USER_ID = ?";
 	  
 	 try { 
 		 // 화면에 있는 아이디랑 찾는 아이디랑 비교!
@@ -259,14 +166,14 @@ public class MemberDao {
 		String id = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String query = "SELECT ID FROM MEMBER WHERE NAME = ? AND EMAIL = ?";
+		String query = "SELECT USER_ID FROM MEMBER WHERE USER_NAME = ? AND USER_EMAIL = ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, name);
 			pstmt.setString(2, email);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				id = rs.getString("id");
+				id = rs.getString("USER_ID");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -279,7 +186,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int result = 0;
-		String query = "SELECT * FROM MEMBER WHERE NAME = ? AND ID = ? AND EMAIL = ?";
+		String query = "SELECT * FROM MEMBER WHERE USER_NAME = ? AND USER_ID = ? AND USER_EMAIL = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -303,7 +210,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int result = 0;
-		String query = "SELECT * FROM MEMBER WHERE ID = ? AND PWD = ?";
+		String query = "SELECT * FROM MEMBER WHERE USER_ID = ? AND USER_PWD = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -326,7 +233,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int result = 0;
-		String query = "UPDATE MEMBER SET PWD = ? WHERE ID = ?";
+		String query = "UPDATE MEMBER SET USER_PWD = ? WHERE USER_ID = ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, newPwd);
@@ -345,7 +252,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int result = 0;
-		String query = "UPDATE MEMBER SET PWD = ? WHERE ID = ?";
+		String query = "UPDATE MEMBER SET USER_PWD = ? WHERE USER_ID = ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, pwd);

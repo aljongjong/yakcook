@@ -48,11 +48,11 @@
 				<tr>
 					<td><a href="notice">공지사항</a></td>
 					<td><a href="search">탐색</a></td>
-					<td>${loginUser.name}<a href="profile">내 프로필</a></td>
+					<td>${loginUser.user_name}<a href="profile">내 프로필</a></td>
 					<% if(request.getSession().getAttribute("loginUser") == null){ %>
 					<td><a href="login">로그인</a></td>
 					<%} else{%>
-					<td>${loginUser.name}<a href="logout">로그아웃</a></td>
+					<td>${loginUser.user_name}<a href="logout">로그아웃</a></td>
 					<%} %>
 				</tr>
 			</table>

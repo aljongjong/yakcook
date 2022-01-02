@@ -29,7 +29,7 @@ public class MemberService {
 	}
 
 	public int join(MemberVo m) {
-		m.setPwd(encrypt(m.getPwd()));
+		m.setUser_pwd(encrypt(m.getUser_pwd()));
 		//DB Connection 가져오기
 		Connection conn = getConnection();
 		//쿼리 날리기 (insert 쿼리)
@@ -64,7 +64,7 @@ public class MemberService {
 		// id 가지고 그 아이디의 비번 조회
 		MemberVo selectedMember = selectMember(conn,m);
 		close(conn);
-		if(selectedMember.getPwd() .equals(encrypt(m.getPwd()))) {
+		if(selectedMember.getUser_pwd() .equals(encrypt(m.getUser_pwd()))) {
 			return selectedMember;
 		}else {
 			return null;
@@ -74,42 +74,11 @@ public class MemberService {
 	public MemberVo selectMember(Connection conn, MemberVo m) {
 		return new MemberDao().selectMember(conn, m);
 	}
-	public List<MemberVo> selectMemberAll(Connection conn, String currentPag, int startNo, int endNo) {
-		return new MemberDao().selectMemberAll(conn, startNo, endNo);
-	}
-	public List<MemberVo> search(String type, String value, String currentPage) {
-		Connection conn = getConnection();
-		int totalBoardCount = countMemberAll(conn);
-		int pageLimit = 5;
-		int boardLimit = 10;
-		int maxPage = 0;
-		
-		maxPage = totalBoardCount / boardLimit;
-		if(totalBoardCount % boardLimit != 0) {
-			maxPage++;
-		}
-		
-		int p = Integer.parseInt(currentPage);
-		int endNo = p * boardLimit;
-		int startNo = endNo - boardLimit + 1;
-		
-		List<MemberVo> memberList;
-		if(type == null || value == null) {
-			memberList = selectMemberAll(conn,currentPage, startNo, endNo);
-		}else {
-			memberList = selectMember(conn, type, value);
-		}
-		close(conn);
-		
-		return memberList;
-	}
+
 	private int countMemberAll(Connection conn) {
 		return new MemberDao().countMemberAll(conn);
 	}
 
-	private List<MemberVo> selectMember(Connection conn, String type, String value) {
-		return new MemberDao().selectMemberBySearch(conn, type, value);
-	}
 	public int dupCheck(String id) {
 		Connection conn = getConnection();
 		int result = selectMemberById(conn,id);

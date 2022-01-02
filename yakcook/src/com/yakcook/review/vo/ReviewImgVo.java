@@ -6,9 +6,6 @@ public class ReviewImgVo {
 	private String serverFile2;
 	private String serverFile3;
 	
-
-
-	
 	public ReviewImgVo() {
 		this.serverFile1 = serverFile1;
 		this.serverFile2 = serverFile2;
