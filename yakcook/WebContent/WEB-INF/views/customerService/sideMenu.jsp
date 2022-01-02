@@ -13,7 +13,6 @@
 		<hr>
 		<a href="/yakcook/notice" class="link">공지사항</a> <br>
 		<a href="/yakcook/FAQ" class="link">자주 찾는 질문 FAQ</a> <br>
-		<a href="/yakcook/inquiry" class="link">1 대 1 질문</a>
     </div>
 </body>
 </html>

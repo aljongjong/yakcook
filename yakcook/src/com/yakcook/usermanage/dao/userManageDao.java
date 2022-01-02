@@ -15,7 +15,7 @@ public class userManageDao {
 	public int countUserAll(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT COUNT(USER_NUMBER) FROM MEMBER WHERE SECESSION = 'N'";
+		String sql = "SELECT COUNT(USER_NO) FROM MEMBER WHERE QUIT_YN = 'N'";
 		int count = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -35,7 +35,7 @@ public class userManageDao {
 	public int countUser(Connection conn, String value) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT COUNT(USER_NUMBER) FROM MEMBER WHERE SECESSION = 'N' AND USER_ID LIKE ?";
+		String sql = "SELECT COUNT(USER_NO) FROM MEMBER WHERE QUIT_YN = 'N' AND USER_ID LIKE ?";
 		int count = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -56,7 +56,7 @@ public class userManageDao {
 
 	public ArrayList<userVo> getUserListAll(Connection conn, pagingVo pv) {
 		PreparedStatement pstmt = null;
-		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , m.* FROM MEMBER m WHERE SECESSION = 'N')WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , m.* FROM MEMBER m WHERE QUIT_YN = 'N')WHERE RNUM BETWEEN ? AND ?";
 		ResultSet rs = null;
 		ArrayList<userVo> userList = new ArrayList<userVo>();
 		userVo uv = null;
@@ -68,7 +68,7 @@ public class userManageDao {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				uv = new userVo();
-				uv.setUserNo(rs.getInt("USER_NUMBER"));
+				uv.setUserNo(rs.getInt("USER_NO"));
 				uv.setUserId(rs.getString("USER_ID"));
 				uv.setUserName(rs.getString("USER_NAME"));
 				uv.setUserEmail(rs.getString("USER_EMAIL"));
@@ -87,7 +87,7 @@ public class userManageDao {
 
 	public ArrayList<userVo> getUserList(Connection conn, String value, pagingVo pv) {
 		PreparedStatement pstmt = null;
-		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , m.* FROM MEMBER m WHERE SECESSION = 'N' AND USER_ID LIKE ?)WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , m.* FROM MEMBER m WHERE QUIT_YN = 'N' AND USER_ID LIKE ?)WHERE RNUM BETWEEN ? AND ?";
 		ResultSet rs = null;
 		ArrayList<userVo> userList = new ArrayList<userVo>();
 		userVo uv = null;
@@ -101,7 +101,7 @@ public class userManageDao {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				uv = new userVo();
-				uv.setUserNo(rs.getInt("USER_NUMBER"));
+				uv.setUserNo(rs.getInt("USER_NO"));
 				uv.setUserId(rs.getString("USER_ID"));
 				uv.setUserName(rs.getString("USER_NAME"));
 				uv.setUserEmail(rs.getString("USER_EMAIL"));
@@ -120,7 +120,7 @@ public class userManageDao {
 
 	public int userDel(Connection conn, int userNum) {
 		PreparedStatement pstmt = null;
-		String sql = "UPDATE MEMBER SET SECESSION='Y' WHERE USER_NUMBER = ?" ;
+		String sql = "UPDATE MEMBER SET QUIT_YN ='Y' WHERE USER_NO = ?" ;
 		int result = 0;
 		
 		try {

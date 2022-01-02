@@ -8,8 +8,6 @@ public class FAQVo {
 	private String category;
 	private String faqTitle;
 	private String faqContent;
-	private Timestamp writeDate;
-	private Timestamp modifyDate;
 	private String DELETE_YN;
 	
 	public FAQVo() {
@@ -18,15 +16,12 @@ public class FAQVo {
 	
 	
 	
-	public FAQVo(int faqNumber, int managerNumber, String category, String faqTitle, String faqContent,
-			Timestamp writeDate, Timestamp modifyDate, String dELETE_YN) {
+	public FAQVo(int faqNumber, int managerNumber, String category, String faqTitle, String faqContent, String dELETE_YN) {
 		this.faqNumber = faqNumber;
 		this.managerNumber = managerNumber;
 		this.category = category;
 		this.faqTitle = faqTitle;
 		this.faqContent = faqContent;
-		this.writeDate = writeDate;
-		this.modifyDate = modifyDate;
 		this.DELETE_YN = dELETE_YN;
 	}
 
@@ -61,18 +56,6 @@ public class FAQVo {
 	}
 	public void setFaqContent(String faqContent) {
 		this.faqContent = faqContent;
-	}
-	public Timestamp getWriteDate() {
-		return writeDate;
-	}
-	public void setWriteDate(Timestamp writeDate) {
-		this.writeDate = writeDate;
-	}
-	public Timestamp getModifyDate() {
-		return modifyDate;
-	}
-	public void setModifyDate(Timestamp modifyDate) {
-		this.modifyDate = modifyDate;
 	}
 	public String getDELETE_YN() {
 		return DELETE_YN;
