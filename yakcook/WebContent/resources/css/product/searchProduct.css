@@ -13,6 +13,13 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+.wrapTagSearch
+{
+    width: 1200px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 .category
 {
     width: 240px;
@@ -84,6 +91,13 @@
     color: #262626;
     padding-left: 10px;
 }
+.category_content>ul>li>a.active
+{
+	color: #fff;
+    background: rgb(171, 184, 104);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
 .category_content>ul>li>a:hover
 {
     color: #fff;
@@ -111,9 +125,27 @@
     width: 23%;
     height: 260px;
     margin-top: 10px;
-    margin-left: 19px;
+    margin-left: 9.5px;
+    margin-right: 9.5px;
     float: left;
     position: relative;
+    border-right: 1px solid gainsboro;
+}
+.tagSearch_product
+{
+	width: 23%;
+    height: 260px;
+    margin-top: 10px;
+    margin-left: 9.5px;
+    margin-right: 9.5px;
+    float: left;
+    position: relative;
+    border-right: 1px solid gainsboro;
+    padding-right: 5px;
+}
+.tagSearch_product:nth-child(5n+1)
+{
+	border-right: none;
 }
 .sb
 {
@@ -122,26 +154,39 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 130px;
-    height: 40px;
-    background: rgb(250, 174, 88);
     text-align: center;
-    border-radius: 5px;
-    box-shadow: 1px 1px 1px 1px gainsboro;
+    border-radius: 10px;
 }
 /* 장바구니 추가버튼 */
-.sb>a
+#searchToShoppingBasketBtn
 {
+	display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border-radius: 10px;
+	cursor: pointer;
+    background: rgb(250, 174, 88);
+    border:none;
     display: block;
     line-height: 2.5;
     font-weight: 600;
     color: #fff;
     text-decoration: none;
+    width: 130px;
+    height: 40px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px gainsboro;
 }
 .sb:hover
 {
-    background: rgb(177, 122, 60);
     display: block;
+}
+#searchToShoppingBasketBtn:hover
+{
+	background: rgb(177, 122, 60);
 }
 .sp_photo
 {
@@ -171,6 +216,7 @@
 {
     height: 40px;
     text-align: center;
+    padding-right: 10px;
 }
 .sp_name_price a
 {
@@ -205,14 +251,15 @@
     width: 67px;
     float: left;
     margin: 3px;
-}
-.sp_tag a
-{
-    float: left;
-    line-height: 2;
+    margin-left: 0;
+    border: none;
     color: #fff;
-    font-size: 14px;
-    text-decoration: none;
+    line-height: 2;
+    cursor: pointer;
+}
+.sp_tag:hover *
+{
+	background: rgb(108, 128, 75);
 }
 /* 정렬 */
 .p_title_range
@@ -274,6 +321,11 @@ label
     color: #262626;
     font-size: 15px;
 }
+.paging>ul>li>a.active
+{
+	color: rgb(250, 174, 88);
+	font-weight: 900;
+}
 .paging .fas
 {
     color: rgb(250, 174, 88);
@@ -286,41 +338,49 @@ label
 /* 제품 조회 페이지 line */
 .col
 {
+	display:none;
     height: 1080px;
     border-right: 1px solid gainsboro;
 }
 .row
 {
+	display:none;
     width: 948px;
     border-top: 1px solid gainsboro;
 }
 .col1
 {
+	display:none;
     position: absolute;
     transform: translate(487px, 60px);
 }
 .col2
 {
+	display:none;
     position: absolute;
     transform: translate(727px, 60px);
 }
 .col3
 {
+	display:none;
     position: absolute;
     transform: translate(966px, 60px);
 }
 .row1
 {
+	display:none;
     position: absolute;
     transform: translate(250px, 324px);
 }
 .row2
 {
+	display:none;
     position: absolute;
     transform: translate(250px, 595px);
 }
 .row3
 {
+	display:none;
     position: absolute;
     transform: translate(250px, 864px);
 }
@@ -500,14 +560,12 @@ td, th
 .shoppingBasket_forward_pay
 {
     width: 28%;
-    height: 90%;
     float: left;
     border: 1px solid gainsboro;
     border-radius: 5px;
     margin-left: 12px;
     margin-top: 12px;
     padding: 25px;
-    height: 400px;
     margin-top: 0;
 }
 .shoppingBasket_header
@@ -541,19 +599,19 @@ td, th
 }
 .shoppingBasket_header>ul>li:nth-child(3)
 {
-    transform: translateX(410px);
+    transform: translateX(390px);
 }
 .shoppingBasket_header>ul>li:nth-child(4)
 {
-    transform: translateX(475px);
+    transform: translateX(460px);
 }
 .shoppingBasket_header>ul>li:nth-child(5)
 {
-    transform: translateX(540px);
+    transform: translateX(516px);
 }
 .shoppingBasket_header>ul>li:nth-child(6)
 {
-    transform: translateX(600px);
+    transform: translateX(570px);
 }
 .shoppingBasket_list_each
 {
@@ -568,7 +626,11 @@ td, th
     position: relative;
     float: left;
 }
-.shoppingBasket_list_each_photo>img
+.shoppingBasket_list_each_photo>div:nth-child(2)
+{
+	display:none;
+}
+.shoppingBasket_list_each_photo img
 {
     width: 80%;
     height: 90%;
@@ -579,7 +641,7 @@ td, th
 }
 .shoppingBasket_list_each_name
 {
-    width: 350px;
+    width: 330px;
     float: left;
     text-align: center;
     font-size: 14px;
@@ -599,11 +661,21 @@ td, th
 .shoppingBasket_list_each_total,
 .shoppingBasket_list_each_check
 {
-    width: 90px;
+    width: 95px;
     float: left;
     text-align: center;
     font-size: 14px;
 }
+.shoppingBasket_list_each_total_btn
+{
+	border: none;
+	background: rgb(250, 174, 88);
+	color: #fff;
+	padding: 3px;
+	cursor: pointer;
+	margin: 10px;
+}
+
 .shoppingBasket_selected_delete>a,
 .shoppingBasket_all_delete>a
 {
@@ -670,7 +742,7 @@ td, th
     text-align: center;
     background: rgb(250, 174, 88);
     line-height: 2.5;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 .shoppingBasket_forward_pay_gopay_btn>a
 {
@@ -717,7 +789,7 @@ td, th
 }
 .dp_productImg
 {
-    width: 900px;
+    width: 300px;
     height: 80%;
     margin: 20px;
 }
@@ -726,6 +798,10 @@ td, th
     width: 300px;
     height: 300px;
     float: left;
+}
+.dp_productImg>div:nth-child(2)>img
+{
+    display: none;
 }
 #dp_prev
 {
@@ -756,6 +832,10 @@ td, th
     position: absolute;
     font-size: 5px;
     transform: translate(130px, 330px);
+}
+#dp_bean>i:nth-child(1) 
+{
+    color: rgb(81, 112, 197);
 }
 #dp_bean>i
 {
@@ -932,7 +1012,7 @@ td, th
 .detailsProduct_notice_tab_btn li
 {
     float: left;
-    width: 25%;
+    width: 33.3%;
     text-align: center;
     list-style: none;
 }

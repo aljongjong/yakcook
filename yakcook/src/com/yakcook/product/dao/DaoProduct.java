@@ -1380,13 +1380,56 @@ public int updateProductTag1(Connection conn, ProductVo pv, int tagNo1, int tagN
 		return result;
 	}
 	// 가져온 장바구니에 제품 넣기
-	public List<ShoppingBasketProVo> putShoopingBasket(Connection conn, ShoppingBasketVo sv, ProductVo pv) {
+	public List<ShoppingBasketProVo> putShoppingBasket(Connection conn, ShoppingBasketVo sv, ProductVo pv) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		int result = 0;
+		List<ShoppingBasketProVo> list = new ArrayList<>();
 		
-		// 이미 존재하는 제품일수도 있는데... 삭제하고?
+		// 이미 존재하는 제품일수도 있는데... 삭제하고? --> 셀렉트해서 0개행이면 바로 인서트, 1개행이면 딜리트 후 인서트
+		String sql = "SELECT * FROM SHOPPINGBAG_PRO WHERE SHOPPINGBAG_NO = ? AND PRODUCT_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sv.getShoppingBasketNo());
+			pstmt.setInt(2, pv.getProductNo());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		if(result == 1) {
+			String sql1 = "DELETE FROM SHOPPINGBAG_PRO WHERE SHOPPINGBAG_NO = ? AND PRODUCT_NO = ?";
+			
+			try {
+				pstmt = conn.prepareStatement(sql1);
+				pstmt.setInt(1, sv.getShoppingBasketNo());
+				pstmt.setInt(2, pv.getProductNo());
+				pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			list = insertShoppingBasket(conn, sv, pv);
+		} else {
+			list = insertShoppingBasket(conn, sv, pv);
+		}
+		return list;
+	}
+
+	// 지금 장바구니에 추가한 상품 인서트하고 그 장바구니별제품 전부 셀렉트에서 리스트로 반환
+	private List<ShoppingBasketProVo> insertShoppingBasket(Connection conn, ShoppingBasketVo sv, ProductVo pv) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		String sql = "INSERT INTO SHOPPINGBAG_PRO VALUES (?, ?, ?)";
+		int result = 0;
 		ShoppingBasketProVo spv = null;
 		List<ShoppingBasketProVo> list = new ArrayList<>();
 		
@@ -1395,15 +1438,245 @@ public int updateProductTag1(Connection conn, ProductVo pv, int tagNo1, int tagN
 			pstmt.setInt(1, sv.getShoppingBasketNo());
 			pstmt.setInt(2, pv.getProductNo());
 			pstmt.setInt(3, pv.getInventory());
-			
-			
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstmt);
 		}
 		
+		if(result == 1) {
+			String sql1 = "SELECT * FROM SHOPPINGBAG_PRO WHERE SHOPPINGBAG_NO = ?";
+			
+			try {
+				pstmt = conn.prepareStatement(sql1);
+				pstmt.setInt(1, sv.getShoppingBasketNo());
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					int shoppingbagNo = rs.getInt("SHOPPINGBAG_NO");
+					int productNo = rs.getInt("PRODUCT_NO");
+					int inventory = rs.getInt("INVENTORY");
+					
+					spv = new ShoppingBasketProVo();
+					
+					spv.setShoppingBasketNo(shoppingbagNo);
+					spv.setProductNo(productNo);
+					spv.setInventory(inventory);
+					
+					list.add(spv);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+		}
 		
+		return list;
+	}
+
+	// 장바구니에 담긴 총 상품 금액 불러오기
+	public int totalProductPrcie(Connection conn, ShoppingBasketVo sv) {
 		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT SP.SHOPPINGBAG_NO, SUM(P.PRICE * SP.INVENTORY) SUM "
+				+ "FROM SHOPPINGBAG_PRO SP "
+				+ "INNER JOIN PRODUCT P ON(SP.PRODUCT_NO = P.PRODUCT_NO) "
+				+ "GROUP BY SP.SHOPPINGBAG_NO";
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int shoppingbagNo = rs.getInt("SHOPPINGBAG_NO");
+				int sum = rs.getInt("SUM");
+				
+				if(sv.getShoppingBasketNo() == shoppingbagNo) {
+					result = sum;
+				}
+			}
+			System.out.println(result);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return result;
+	}
+
+	// 장바구니에 담긴 상푸 삭제 후 장바구니 제품 리턴
+	public List<ShoppingBasketProVo> deleteShoppingBasket(Connection conn, ShoppingBasketProVo sbp) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "DELETE FROM SHOPPINGBAG_PRO WHERE SHOPPINGBAG_NO = ? AND PRODUCT_NO = ?";
+		String sql1 = "SELECT * FROM SHOPPINGBAG_PRO WHERE SHOPPINGBAG_NO = ?";
+		ShoppingBasketProVo sb = null;
+		List<ShoppingBasketProVo> list = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sbp.getShoppingBasketNo());
+			pstmt.setInt(2, sbp.getProductNo());
+			pstmt.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql1);
+			pstmt.setInt(1, sbp.getShoppingBasketNo());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int shoppingBasketNo = rs.getInt("SHOPPINGBAG_NO");
+				int productNo = rs.getInt("PRODUCT_NO");
+				int inventory = rs.getInt("INVENTORY");
+				
+				sb = new ShoppingBasketProVo();
+				
+				sb.setShoppingBasketNo(shoppingBasketNo);
+				sb.setProductNo(productNo);
+				sb.setInventory(inventory);
+				
+				list.add(sb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return list;
+	}
+	// 장바구니 안에 전체 제품 삭제
+	public int deleteAllShoppingBasket(Connection conn, int shoppingBasketNo) {
+
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "DELETE FROM SHOPPINGBAG_PRO WHERE SHOPPINGBAG_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, shoppingBasketNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	// 장바구니 안에 제품 수량 변경 후 제품들 리턴
+	public List<ShoppingBasketProVo> updateShoppingBasket(Connection conn, ShoppingBasketProVo sbp) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "UPDATE SHOPPINGBAG_PRO SET INVENTORY = ? WHERE SHOPPINGBAG_NO = ? AND PRODUCT_NO = ?";
+		String sql1 = "SELECT * FROM SHOPPINGBAG_PRO WHERE SHOPPINGBAG_NO = ?";
+		ShoppingBasketProVo sb = null;
+		List<ShoppingBasketProVo> list = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sbp.getInventory());
+			pstmt.setInt(2, sbp.getShoppingBasketNo());
+			pstmt.setInt(3, sbp.getProductNo());
+			pstmt.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql1);
+			pstmt.setInt(1, sbp.getShoppingBasketNo());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int shoppingBasketNo = rs.getInt("SHOPPINGBAG_NO");
+				int productNo = rs.getInt("PRODUCT_NO");
+				int inventory = rs.getInt("INVENTORY");
+				
+				sb = new ShoppingBasketProVo();
+				
+				sb.setShoppingBasketNo(shoppingBasketNo);
+				sb.setProductNo(productNo);
+				sb.setInventory(inventory);
+				
+				list.add(sb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return list;
+	}
+	
+/*-------------------------------------태그 검색 결과----------------------------------------*/
+	public List<ProductVo> tagSearchProduct(Connection conn, String tagName) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM "
+				+ "( "
+				+ "SELECT * FROM PRODUCT P "
+				+ "INNER JOIN TAG T ON(P.PRODUCT_NO = T.PRODUCT_NO) "
+				+ "INNER JOIN TAG_KEYWORD TK ON(T.TAG_NUMBER = TK.TAG_NUMBER) "
+				+ ") "
+				+ "WHERE TAG_NAME = ? AND TAG_DELETE = 'N' AND PRODUCT_DELETE = 'N'";
+		ProductVo pv = null;
+		List<ProductVo> list = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, tagName);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int productNo = rs.getInt("PRODUCT_NO");
+				String productName = rs.getString("PRODUCT_NAME");
+				int price = rs.getInt("PRICE");
+				int inventory = rs.getInt("INVENTORY");
+				int categoryNo = rs.getInt("CATEGORY_NO");
+				String tag = rs.getString("TAG_NAME");
+				
+				pv = new ProductVo();
+				
+				pv.setProductNo(productNo);
+				pv.setProductName(productName);
+				pv.setPrice(price);
+				pv.setInventory(inventory);
+				pv.setCategoryNo(categoryNo);
+				pv.setTagName(tag);
+				
+				list.add(pv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
 		
 		return list;
 	}

@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.yakcook.product.service.ServiceProduct;
 import com.yakcook.product.vo.MemberVo;
@@ -18,42 +17,27 @@ import com.yakcook.product.vo.ProductVo;
 import com.yakcook.product.vo.ShoppingBasketProVo;
 import com.yakcook.product.vo.ShoppingBasketVo;
 
-@WebServlet("/shoppingBasket")
-public class ShoppingBasket extends HttpServlet {
+@WebServlet("/updateShoppingBasket")
+public class UpdateShoppingBasket extends HttpServlet {
 	
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		// 총 금액 변경 ajax
-		int dpPrice = Integer.parseInt(req.getParameter("price"));	
-		int dpAmount = Integer.parseInt(req.getParameter("amount"));
-		
-		int totalPrice = dpPrice * dpAmount;
-		int totalPriceD = totalPrice + 2500;
-		if(totalPrice >= 100000) {
-			resp.getWriter().print(totalPrice);	
-		} else {
-			resp.getWriter().print(totalPriceD);	
-		}
-	}
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String productNo = req.getParameter("productNo");
-		String price = req.getParameter("price");
-		String categoryNo = req.getParameter("categoryNo");
-		String productName = req.getParameter("productName");
-		String amount = req.getParameter("amount");
-		System.out.println(amount);
+		int shoppingBasketNo = Integer.parseInt(req.getParameter("shoppingBasketNo"));
+		int productNo = Integer.parseInt(req.getParameter("productNo"));
+		int changeInventory = Integer.parseInt(req.getParameter("changeInventory"));
 		
-		ProductVo pv = new ProductVo();
-		pv.setProductNo(Integer.parseInt(productNo));
-		pv.setPrice(Integer.parseInt(price));
-		pv.setCategoryNo(Integer.parseInt(categoryNo));
-		pv.setProductName(productName);
-		pv.setInventory(Integer.parseInt(amount));
+		System.out.println("수정한 장바구니번호 : " + shoppingBasketNo);
+		System.out.println("수정한 제품번호 : " + productNo);
+		System.out.println("수정한 제품수량 : " + changeInventory);
+		
+		ShoppingBasketProVo sbp = new ShoppingBasketProVo();
+		sbp.setProductNo(productNo);
+		sbp.setShoppingBasketNo(shoppingBasketNo);
+		sbp.setInventory(changeInventory);
+		
+		List<ShoppingBasketProVo> list = new ArrayList<>();
+		list = new ServiceProduct().updateShoppingBasket(sbp);
 		
 		int memberNo = 1;
 		String name = "YC";
@@ -67,15 +51,6 @@ public class ShoppingBasket extends HttpServlet {
 //		나중에 합칠때 미리님 서블릿으로 이용 회원 확인 회원 정보가져와서 그 회원에 대한 장바구니 생성
 		ShoppingBasketVo sv = new ServiceProduct().shoppingBasket(mv);
 		
-//		장바구니에 이미 있는 제품인지 확인 (있으면 메시지도 날려주기)
-		int result = new ServiceProduct().checkMyShoppingBasket(sv, pv);
-		
-//		가져온 장바구니 번호에 제품 넣기 , 장바구니에 그 제품이 없을때
-		List<ShoppingBasketProVo> list = new ArrayList<>();
-//		if(result == 0) {
-			list = new ServiceProduct().putShoppingBasket(sv, pv);
-//		}
-		System.out.println("result : " + result);
 		// 제품 이미지 불러오기
 		List<ProductImgVo> piList = new ServiceProduct().searchAllProductImg();
 		req.setAttribute("productImgList", piList);
@@ -89,10 +64,8 @@ public class ShoppingBasket extends HttpServlet {
 		req.setAttribute("totalProductPrice", totalProductPrice);
 		
 		req.setAttribute("shoppingBasket", list);
-		req.setAttribute("pv", pv);
 		req.setAttribute("sv", sv);
-		
+
 		req.getRequestDispatcher("/WEB-INF/views/product/shoppingBasket.jsp").forward(req, resp);
 	}
-	
 }

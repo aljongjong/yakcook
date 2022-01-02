@@ -68,7 +68,7 @@ public class SearchProduct extends HttpServlet{
 			range = Integer.parseInt(req.getParameter("range"));
 			rList = new ServiceProduct().searchRangeProduct(range);
 		}
-		req.setAttribute("range", range);
+		req.setAttribute("range", range);			
 		req.setAttribute("rangeList", rList);
 		
 		System.out.println(rList.size());
@@ -87,12 +87,12 @@ public class SearchProduct extends HttpServlet{
 		
 		if(range == 0) {
 			nextPageList = new ServiceProduct().nextPageList(currentPage);
+			req.setAttribute("nextPageList", nextPageList);
 		} else {
 			nextPageList = new ServiceProduct().nextPageListRange(currentPage, range);
+			req.setAttribute("nextPageList", nextPageList);
 		}
-		System.out.println(nextPageList.get(0).getProductName());
 		
-		req.setAttribute("nextPageList", nextPageList);
 		
 		// 이전 페이지, 다음 페이지 버튼
 		req.setAttribute("cp", currentPage);
