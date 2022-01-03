@@ -8,13 +8,14 @@ import java.util.ArrayList;
 
 import com.yakcook.customerService.dao.customerServiceDao;
 import com.yakcook.customerService.model.vo.FAQVo;
+import com.yakcook.customerService.model.vo.noticeVo;
 import com.yakcook.customerService.model.vo.pagingVo;
 
 public class customerService {
 
 	public ArrayList<FAQVo> getFAQList(String value, pagingVo pv) {
 		Connection conn = getConnection();
-		ArrayList<FAQVo> tagList = null;
+		ArrayList<FAQVo> FAQList = null;
 		int totalBoardCount=0;
 		if(value == null) {
 			totalBoardCount = new customerServiceDao().countFAQAll(conn);
@@ -34,12 +35,44 @@ public class customerService {
 		pv.setEndNo(endNo);
 		
 		if(value == null) {
-			tagList = new customerServiceDao().getFAQAll(conn, pv);
+			FAQList = new customerServiceDao().getFAQAll(conn, pv);
 		} else {
-			tagList = new customerServiceDao().getFAQ(conn, value, pv);
+			FAQList = new customerServiceDao().getFAQ(conn, value, pv);
 		}
 		close(conn);
-		return tagList;
+		return FAQList;
+	}
+
+	public ArrayList<noticeVo> getNoticeList(pagingVo pv) {
+		Connection conn = getConnection();
+		ArrayList<noticeVo> noticeList = null;
+		int totalBoardCount=0;
+		totalBoardCount = new customerServiceDao().countNotice(conn);
+
+		
+		int maxPage = totalBoardCount / pv.getBoardLimit();
+		if((totalBoardCount % pv.getBoardLimit())!=0) {
+			maxPage++;
+		}
+		pv.setMaxPage(maxPage);
+		int p = pv.getCurrentPage();
+		int startNo = ((p *pv.getBoardLimit()) - pv.getBoardLimit()) +1 ;
+		int endNo = p * pv.getBoardLimit();
+		pv.setStartNo(startNo);
+		pv.setEndNo(endNo);
+		
+		noticeList = new customerServiceDao().getNotice(conn, pv);
+		close(conn);
+		return noticeList;
+	}
+
+	public noticeVo getNoticeDetail(int noticeNumber) {
+		Connection conn = getConnection();
+		noticeVo NV = null;
+		
+		NV = new customerServiceDao().getNoticeDetail(conn, noticeNumber);
+		close(conn);
+		return NV;
 	}
 
 }
