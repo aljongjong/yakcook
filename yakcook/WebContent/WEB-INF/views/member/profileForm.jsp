@@ -40,5 +40,6 @@
 	<a href = "deleteForm">회원탈퇴</a>
 	<a href = "pwdUpdateForm">비밀번호변경</a>
 	<a href = "memberReview">내 리뷰</a>
+	<a href = "memberquestion">내 문의</a>
 </body>
 </html>
