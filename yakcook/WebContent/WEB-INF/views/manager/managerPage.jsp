@@ -10,6 +10,14 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/manager/managerHeader.jsp" %>
 	
+	 <script>
+    window.onload=()=>{
+		$('.logoutbtn').on('click', function(){
+			window.location = "/yakcook/managerlogout";
+        });  	
+	}
+    </script>
 </body>
 </html>

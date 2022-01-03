@@ -5,14 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
-<link rel="stylesheet" href="/yakcook/resources/css/customerService/noticeDetail.css">
+<link rel="stylesheet" href="/yakcook/resources/css/serviceManage/manageNoticeDetail.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/manager/managerHeader.jsp" %>
-	
-	
 	<section>
 	<div id="tableWrap">
             <span class="title">공지사항</span>

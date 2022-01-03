@@ -11,6 +11,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/manager/managerHeader.jsp" %>
  	<section>
         <a href="/yakcook/taglist" id="home">태그 목록</a>
         <div id="search_tap">
@@ -26,15 +27,24 @@
             <tr>
                 <th class="t1">태그 번호</th>
                 <th class="t2">태그 이름</th>
-                <th class="t3">수정</th>
-                <th class="t4">삭제</th>
+                <c:if test="${manager.managerLevel ge 2}">
+					<th class="t3">수정</th>
+				</c:if>
+				<c:if test="${manager.managerLevel ge 3}">
+					<th class="t4">삭제</th>
+				</c:if>
+                
             </tr>
             <c:forEach items="${tagList}" var="t">
 			<tr>
 				<td>${t.tagNo}</td>
 				<td>${t.tagName}</td>
-				<td><input type="button" class="modiTag" value="수정"></td>
-                <td><input type="button" class="delTag" value="삭제"></td>
+				<c:if test="${manager.managerLevel ge 2}">
+					<td><input type="button" class="modiTag" value="수정"></td>
+				</c:if>
+				<c:if test="${manager.managerLevel ge 3}">
+					 <td><input type="button" class="delTag" value="삭제"></td>
+				</c:if>
 			</tr>
 			</c:forEach>
 
@@ -111,6 +121,9 @@
 	        			alert("error");
 	        		}
 	        	});
+	        });  
+			$('.logoutbtn').on('click', function(){
+				window.location = "/yakcook/managerlogout";
 	        });  
 			
 			

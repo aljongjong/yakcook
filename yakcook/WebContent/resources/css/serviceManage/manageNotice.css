@@ -1,0 +1,94 @@
+@charset "UTF-8";
+section {
+    width:1200px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+h1 {
+    margin-left: 30px;
+}
+
+table {
+    width: 100%;
+    border-top: 2px solid black;
+    border-bottom:1px solid rgba(201, 199, 199, 0.823);
+    border-collapse: collapse;
+}
+#tableWrap{
+    width: 60%;
+    margin: auto;
+}
+
+tr{
+    border-top: 1px solid rgba(201, 199, 199, 0.823);
+    height: 40px;
+}
+th{
+    font-size: 18px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.content{
+    display:none;
+}
+.content>td{
+    text-align: left;
+    padding: 20px;
+}
+.title{
+    color: rgb(108, 128, 075);
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    margin: 10px;
+    margin-top: 43px;
+    margin-left: 30px;
+}
+
+.t1{
+    width: 10%;
+}
+.t2{
+    width: 70%;
+    text-align: left;
+}
+.t3{
+	width: 20%;
+}
+
+.view>td:first-child{
+    text-align: center;
+}
+
+.view:hover{
+	cursor: pointer;
+}
+
+
+.view>td:last-child{
+	text-align: center;
+}
+
+.page-area{
+	width: 100%;
+	text-align: center;
+}
+
+.page{
+	display: inline-block;
+	color: white;
+	text-decoration:none;
+	width: 100%;
+}
+.page:hover{
+	background-color:rgb(250, 174, 088);
+}
+.paging{
+	display: inline-block;
+	background-color: rgb(171, 184, 104);
+	width : 3%;
+}
+.paging:hover{
+	background-color: rgb(250, 174, 088);
+}
