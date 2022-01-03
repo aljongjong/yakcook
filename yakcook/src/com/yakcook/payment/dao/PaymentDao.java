@@ -17,16 +17,15 @@ public class PaymentDao {
 	//입력한 주문정보(주문번호, 이름 , 휴대폰 , 주소 , 배송메세지)를 DB에 저장하는 메소드
 	public int insertOrder(Connection conn, PaymentVo p) {
 		
-		String sql = "INSERT INTO ORDER_INFO(ORDER_NO , USER_ID , ORDER_NAME, ORDER_PHONE , POST_NO , ADDRESS ,DETAILADDRESS"
-				+ ",EXTRAADDRESS,MEMO_OPTION,INPUT_MEMO,ORDER_DATE , COMPLEATE)"
-				+"VALUES(SEQ_ORDER.NEXTVAL, ? ,  ? , ? , ? , ? ,  ? ,  ? ,  ? , ? ,SYSDATE , ? )";
+		String sql = "INSERT INTO ORDER_INFO(ORDER_NO , USER_ID , ORDER_NAME, ORDER_PHONE , POST_NO , ADDRESS ,DETAILADDRESS,EXTRAADDRESS,MEMO_OPTION,INPUT_MEMO,ORDER_DATE , COMPLEATE) VALUES(SEQ_ORDER.NEXTVAL, ? ,  ? , ? , ? , ? ,  ? ,  ? ,  ? , ? ,SYSDATE , ? )";
 		PreparedStatement pstmt = null;
 	
 		
 		int rs = 0 ;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, p.getUserId());
+
+			pstmt.setString(1, "wlgus12");
 			pstmt.setString(2, p.getOrder());
 			pstmt.setString(3, p.getPhone1()+p.getPhone2()+p.getPhone3());
 			pstmt.setString(4, p.getPostcode());
