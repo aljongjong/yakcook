@@ -17,7 +17,7 @@
 
         <div class="register_product">
         
-            <form action="registerProduct" method="POST" id="registerForm" enctype="multipart/form-data">
+            <form action="registerProduct" method="POST" onsubmit="return registerCheck();" id="registerForm" enctype="multipart/form-data">
                 <table>
                     <tr>
                         <th>카테고리</th>
@@ -92,6 +92,7 @@
                         	<label>제품 후면 사진 :
                             	<input type="file" name="f" class="productImg" required="required">
                             </label>
+                        </td>
                     </tr>
                     <tr>
                         <th colspan="2" style="border: none;">
@@ -111,5 +112,15 @@
         </div>
         
     </div>
+    
+    <script>
+    	function registerCheck() {
+    		if(confirm("제품을 등록하시겠습니까?")) {
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	}
+    </script>
 </body>
 </html>

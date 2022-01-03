@@ -189,6 +189,207 @@ public class DaoProduct {
 		return list;
 	}
 
+	// 카테고리 중 등록순
+	public List<ProductVo> pagingCategoryRangeDateO(Connection conn, int categoryNo, int startNo, int endNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM PRODUCT p WHERE CATEGORY_NO = ? AND PRODUCT_DELETE = 'N' ORDER BY CATEGORY_DATE ASC) WHERE RNUM BETWEEN ? AND ?";
+		ProductVo pv = null;
+		List<ProductVo> list = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryNo);
+			pstmt.setInt(2, startNo);
+			pstmt.setInt(3, endNo);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int productNo = rs.getInt("PRODUCT_NO");
+				String productName = rs.getString("PRODUCT_NAME");
+				int price = rs.getInt("PRICE");
+				Date categoryDate = rs.getDate("CATEGORY_DATE");
+				String productContents = rs.getString("PRODUCT_CONTENTS");
+				String productDelete = rs.getString("PRODUCT_DELETE");
+				Date lasteditDate = rs.getDate("LASTEDIT_DATE");
+				int inventory = rs.getInt("INVENTORY");
+				int categoryno = rs.getInt("CATEGORY_NO");
+				
+				pv = new ProductVo();
+				
+				pv.setProductNo(productNo);
+				pv.setProductName(productName);
+				pv.setPrice(price);
+				pv.setCategoryDate(categoryDate);
+				pv.setProductContents(productContents);
+				pv.setProductDelete(productDelete);
+				pv.setLasteditDate(lasteditDate);
+				pv.setInventory(inventory);
+				pv.setCategoryNo(categoryno);
+				
+				list.add(pv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return list;
+	}
+	// 카테고리 중 최신순
+	public List<ProductVo> pagingCategoryRangeDateN(Connection conn, int categoryNo, int startNo, int endNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM PRODUCT p WHERE CATEGORY_NO = ? AND PRODUCT_DELETE = 'N' ORDER BY P.CATEGORY_DATE DESC) WHERE RNUM BETWEEN ? AND ?";
+		ProductVo pv = null;
+		List<ProductVo> list = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryNo);
+			pstmt.setInt(2, startNo);
+			pstmt.setInt(3, endNo);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int productNo = rs.getInt("PRODUCT_NO");
+				String productName = rs.getString("PRODUCT_NAME");
+				int price = rs.getInt("PRICE");
+				Date categoryDate = rs.getDate("CATEGORY_DATE");
+				String productContents = rs.getString("PRODUCT_CONTENTS");
+				String productDelete = rs.getString("PRODUCT_DELETE");
+				Date lasteditDate = rs.getDate("LASTEDIT_DATE");
+				int inventory = rs.getInt("INVENTORY");
+				int categoryno = rs.getInt("CATEGORY_NO");
+				
+				pv = new ProductVo();
+				
+				pv.setProductNo(productNo);
+				pv.setProductName(productName);
+				pv.setPrice(price);
+				pv.setCategoryDate(categoryDate);
+				pv.setProductContents(productContents);
+				pv.setProductDelete(productDelete);
+				pv.setLasteditDate(lasteditDate);
+				pv.setInventory(inventory);
+				pv.setCategoryNo(categoryno);
+				
+				list.add(pv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return list;
+	}
+	// 카테고리 중 가격 낮은 순
+	public List<ProductVo> pagingCategoryRangePriceL(Connection conn, int categoryNo, int startNo, int endNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM PRODUCT p WHERE CATEGORY_NO = ? AND PRODUCT_DELETE = 'N' ORDER BY P.PRICE ASC) WHERE RNUM BETWEEN ? AND ?";
+		ProductVo pv = null;
+		List<ProductVo> list = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryNo);
+			pstmt.setInt(2, startNo);
+			pstmt.setInt(3, endNo);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int productNo = rs.getInt("PRODUCT_NO");
+				String productName = rs.getString("PRODUCT_NAME");
+				int price = rs.getInt("PRICE");
+				Date categoryDate = rs.getDate("CATEGORY_DATE");
+				String productContents = rs.getString("PRODUCT_CONTENTS");
+				String productDelete = rs.getString("PRODUCT_DELETE");
+				Date lasteditDate = rs.getDate("LASTEDIT_DATE");
+				int inventory = rs.getInt("INVENTORY");
+				int categoryno = rs.getInt("CATEGORY_NO");
+				
+				pv = new ProductVo();
+				
+				pv.setProductNo(productNo);
+				pv.setProductName(productName);
+				pv.setPrice(price);
+				pv.setCategoryDate(categoryDate);
+				pv.setProductContents(productContents);
+				pv.setProductDelete(productDelete);
+				pv.setLasteditDate(lasteditDate);
+				pv.setInventory(inventory);
+				pv.setCategoryNo(categoryno);
+				
+				list.add(pv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return list;
+	}
+	// 카테고리 중 가격 높은 순
+	public List<ProductVo> pagingCategoryRangePriceH(Connection conn, int categoryNo, int startNo, int endNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM, p.* FROM PRODUCT p WHERE CATEGORY_NO = ? AND PRODUCT_DELETE = 'N' ORDER BY P.PRICE DESC) WHERE RNUM BETWEEN ? AND ?";
+		ProductVo pv = null;
+		List<ProductVo> list = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryNo);
+			pstmt.setInt(2, startNo);
+			pstmt.setInt(3, endNo);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int productNo = rs.getInt("PRODUCT_NO");
+				String productName = rs.getString("PRODUCT_NAME");
+				int price = rs.getInt("PRICE");
+				Date categoryDate = rs.getDate("CATEGORY_DATE");
+				String productContents = rs.getString("PRODUCT_CONTENTS");
+				String productDelete = rs.getString("PRODUCT_DELETE");
+				Date lasteditDate = rs.getDate("LASTEDIT_DATE");
+				int inventory = rs.getInt("INVENTORY");
+				int categoryno = rs.getInt("CATEGORY_NO");
+				
+				pv = new ProductVo();
+				
+				pv.setProductNo(productNo);
+				pv.setProductName(productName);
+				pv.setPrice(price);
+				pv.setCategoryDate(categoryDate);
+				pv.setProductContents(productContents);
+				pv.setProductDelete(productDelete);
+				pv.setLasteditDate(lasteditDate);
+				pv.setInventory(inventory);
+				pv.setCategoryNo(categoryno);
+				
+				list.add(pv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return list;
+	}
+
 	// 페이징
 	public int countProductAll(Connection conn) {
 		
@@ -831,7 +1032,7 @@ public class DaoProduct {
 //		return result;
 //	}
 
-	// 태그 등록
+	// 제품 등록
 	public int registerProductTag1(Connection conn, ProductVo pv, int tagNo1, int tagNo2, int tagNo3) {
 		
 		PreparedStatement pstmt = null;
@@ -1074,8 +1275,8 @@ public class DaoProduct {
 		return list;
 	}
 	// 제품 수정 메소드
-public int updateProductTag1(Connection conn, ProductVo pv, int tagNo1, int tagNo2, int tagNo3) {
-		
+	public int updateProductTag1(Connection conn, ProductVo pv, int tagNo1, int tagNo2, int tagNo3) {
+			
 		PreparedStatement pstmt = null;
 		String sql1 = "UPDATE PRODUCT "
 				+ "SET CATEGORY_NO = ?, "

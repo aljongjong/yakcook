@@ -115,6 +115,38 @@ public class ServiceProduct {
 		
 		return list;
 	}
+	
+	public List<ProductVo> searchSelectedCategoryProduct(int categoryNo, String currentPage, int range) {
+		
+		Connection conn = getConnection();
+		
+		int p = Integer.parseInt(currentPage);
+		int boardLimit = 16;
+		int endNo = p * boardLimit;
+		int startNo = endNo - boardLimit + 1;
+		
+		List<ProductVo> pagingList = new ArrayList<>();
+		
+		if(range == 1) { // 등록순
+			pagingList = new DaoProduct().pagingCategoryRangeDateO(conn, categoryNo, startNo, endNo);			
+		} else if(range == 2) { // 최신순
+			pagingList = new DaoProduct().pagingCategoryRangeDateN(conn, categoryNo, startNo, endNo);						
+		} else if(range == 3) { // 가격 낮은 순
+			pagingList = new DaoProduct().pagingCategoryRangePriceL(conn, categoryNo, startNo, endNo);									
+		} else if(range == 4) { // 가격 높은 순
+			pagingList = new DaoProduct().pagingCategoryRangePriceH(conn, categoryNo, startNo, endNo);												
+		}
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return pagingList;
+	}
 
 	// 맥스 페이지
 	public int maxPage() {
@@ -616,4 +648,6 @@ public class ServiceProduct {
 		}
 		return list;
 	}
+
+	
 }
