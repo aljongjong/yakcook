@@ -1,3 +1,4 @@
+<%@page import="com.yakcook.member.model.vo.MemberVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -8,12 +9,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="/yakcook/resources/css/review/reviewList.css">
-<link
-	href="https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&display=swap"
+<link href="https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&display=swap"
 	rel="stylesheet">
 
 </head>
 <body>
+
 	<div id="wrap">
 		<header>
 			<div id="title_img"></div>
@@ -59,7 +60,7 @@
 						<a href="reviewList?currentPage=${i}">${i}</a>
 					</c:if>
 				</c:forEach>
-				<button onclick="write_btn()" id="writer">글쓰기</button>
+				<button onclick="write_btn();" id="writer">글쓰기</button>
 			</div>
 
 
@@ -70,20 +71,26 @@
 
 		<footer> </footer>
 
-		<c:forEach items="${data}" var="r">
-			<%String id = (String)session.getAttribute("userId"); %>
-<script>
+		<%
+		String loginUserId = null;
+		try {
+			loginUserId = ((MemberVo) session.getAttribute("loginUser")).getUser_id();
+		} catch (Exception e) {
+			loginUserId = null;
+		}
+		%>
+		<script>
+		
 	function write_btn() {
-	    if("<%=id%>" !=null){
-	    	location.href='reviewWrite';
-	    }
-	    else{
-	    	alert("회원만 가능한 기능입니다. \n로그인 하시기 바랍니다.")
-	    }
-	}
-</script>
-
-		</c:forEach>
+					var x = <%=loginUserId%>;
+					alert(x);
+					 if("<%=loginUserId%>" != null) {
+						location.href = 'reviewWrite';
+				} else {
+					alert("회원만 가능한 기능입니다. \n로그인 하시기 바랍니다.")
+				}
+			}
+		</script>
 </body>
 
 </html>

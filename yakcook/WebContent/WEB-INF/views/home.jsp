@@ -8,6 +8,7 @@
 </head>
 <body>
 	<%@ include file = "common/header.jsp" %>
+	
 	<h1>home</h1>
 	<h1>${msg}</h1>
 	<h1>${id}</h1>

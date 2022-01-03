@@ -19,40 +19,38 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.yakcook.common.JDBCTemplate;
+import com.yakcook.member.model.vo.MemberVo;
 import com.yakcook.review.service.ReviewService;
 import com.yakcook.review.vo.ReviewImgVo;
 import com.yakcook.review.vo.ReviewListVo;
 
 @WebServlet("/reviewList")
 public class ReviewListCotroller extends HttpServlet {
-	
-	@Override//리뷰목록 페이지를 보여줄 메소드
+
+	@Override // 리뷰목록 페이지를 보여줄 메소드
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	HttpSession session = req.getSession(); 
-	session.setAttribute("userId", "wlgus");
 
-		
-		
-		
 
-		
 		// currentPage 선언
 		String currentPage = req.getParameter("currentPage");
-		if (currentPage == null) currentPage = "1";
+		if (currentPage == null)
+			currentPage = "1";
 		// 조회해온 리뷰데이터를 ReviewList(리뷰목록에 넘겨줌)
 		int maxPage = 4;
 		req.setAttribute("maxPage", maxPage);
-		
+
 		int startPage = Integer.parseInt(currentPage) - 2;
 
-		if (startPage <= 0)startPage = 1;
+		if (startPage <= 0)
+			startPage = 1;
 		int endPage = startPage + 5;// pageLimit
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
-		//page 갯수 정하는 코드
-		List<ReviewListVo> reviewList = new ReviewService().selectReview(currentPage);
 		
-		//reviewList로 data(reviewList)를 전송해줌.
+		
+		// page 갯수 정하는 코드
+		List<ReviewListVo> reviewList = new ReviewService().selectReview(currentPage);
+		// reviewList로 data(reviewList)를 전송해줌.
 		req.setAttribute("data", reviewList);
 		req.getRequestDispatcher("WEB-INF/views/review/reviewList.jsp").forward(req, resp);
 	}

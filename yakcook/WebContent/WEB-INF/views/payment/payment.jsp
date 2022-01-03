@@ -1,3 +1,4 @@
+<%@page import="com.yakcook.member.model.vo.MemberVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -5,27 +6,46 @@
 <head>
 <meta charset="UTF-8">
 <title>결제페이지</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/payment/payment.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/payment/payment.css">
 <script
 	src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://js.tosspayments.com/v1"></script>
 <script>
+	function toss_popup() {
+		var tossPayments = TossPayments("test_sk_YoEjb0gm23Pd17W2qek3pGwBJn5e");
+		var button = document.getElementById("payment-button");
 
-test2 = null;
-function test2323(test) {
-	test2 = test;
-	alert(test);
-	var options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
-	window.open("reviewList","popup",options);
-}
+		var orderId = new Date().getTime();
 
+		var method = document.querySelector('input[name=method]:checked').value; // "카드" 혹은 "가상계좌"
+
+		var paymentData = {
+			amount : 19000,
+			orderId : "asdfhi123saq23498asdaf",
+			orderName : "토스 티셔츠",
+			customerName : "이토페",
+			successUrl : window.location.origin + "/yakcook/paymentSuccess",
+			failUrl : window.location.origin + "/yakcook/paymentFail",
+		};
+
+		if (method === '가상계좌') {
+			paymentData.virtualAccountCallbackUrl = window.location.origin
+					+ '/virtual-account/callback'
+		}
+
+		tossPayments.requestPayment(method, paymentData);
+
+	}
 </script>
+
 </head>
 
 <body>
-	<div id="wrap">	
+
+	<div id="wrap">
 		<header> </header>
 
 		<section>
@@ -38,10 +58,11 @@ function test2323(test) {
 					</div>
 					<div id="order-info">
 
-						<label>이름</label> <br> <input type="text" name="order"id="order"> <br> <label>연락처</label> <br> 
-						<input type="text" name="phone1" class="phone" maxlength="3">
+						<label>이름</label> <br> <input type="text" name="order"
+							id="order"> <br> <label>연락처</label> <br> <input
+							type="text" name="phone1" class="phone" maxlength="3"> -
 						<input type="text" name="phone2" class="phone" maxlength="4">
-						<input type="text" name="phone3" class="phone" maxlength="4">
+						- <input type="text" name="phone3" class="phone" maxlength="4">
 						<br>
 					</div>
 
@@ -50,12 +71,13 @@ function test2323(test) {
 					</div>
 
 					<div id="orderaddress">
-						<input type="text" id="postcode" name="postcode" placeholder="우편번호">
-						<input type="button" onclick="execDaumPostcode()"
-							value="우편번호 찾기"><br> <input type="text"
-							id="address" name = "address" placeholder="주소"><br> <input
-							type="text" id="detailAddress" name ="detailaddress" placeholder="상세주소">
-						<input type="text" id="extraAddress" name="extra" placeholder="참고항목">
+						<input type="text" id="postcode" name="postcode"
+							placeholder="우편번호"> <input type="button"
+							onclick="execDaumPostcode()" value="우편번호 찾기"><br> <input
+							type="text" id="address" name="address" placeholder="주소"><br>
+						<input type="text" id="detailAddress" name="detailaddress"
+							placeholder="상세주소"> <input type="text" id="extraAddress"
+							name="extra" placeholder="참고항목">
 					</div>
 
 					<div id="delivery_memo">
@@ -64,7 +86,8 @@ function test2323(test) {
 							<option value="부재 시 경비실에 맡겨주세요">부재 시 경비실에 맡겨주세요</option>
 							<option value="부재 시 집 앞에 놔주세요">부재 시 집 앞에 놔주세요</option>
 							<option value="배송 전 연락 바랍니다">배송 전 연락 바랍니다</option>
-							<option value="파손위험이 있는 상품입니다. 배송시 주의해주세요.">파손의 위험이 있는 상품입니다 배송시 주의해주세요</option>
+							<option value="파손위험이 있는 상품입니다. 배송시 주의해주세요.">파손의 위험이 있는
+								상품입니다 배송시 주의해주세요</option>
 							<option value="직접입력">직접입력</option>
 						</select> <br>
 						<textarea name="input_memo" id="input_memo" cols="60" rows="5"
@@ -80,7 +103,7 @@ function test2323(test) {
 				<div id="info-list">
 					<!--결제정보-->
 					<div id="info-prod">
-						<li> </li>
+						<li>제품</li>
 						<li>가격</li>
 						<li>수량</li>
 					</div>
@@ -188,109 +211,133 @@ function test2323(test) {
 						<option value="신협">신협</option>
 						<option value="케이뱅크">케이뱅크</option>
 						<option value="카카오뱅크">카카오뱅크</option>
-					</select> <br> <input type="text" name="AccountHolder" placeholder="예금주"> <br>
-					<input type="text" name="AccountNumber" placeholder="계좌번호">
+					</select> <br> <input type="text" name="AccountHolder"
+						placeholder="예금주"> <br> <input type="text"
+						name="AccountNumber" placeholder="계좌번호">
 				</div>
-				<button type="button" onclick='test2323(this.form);'>test</button>
-				<!--<input type="submit" id="submit" value="결제하러가기">-->
+
+				<button type="button" onclick="form_object_save(this.form);">test
+
 				
 			</form>
 		</section>
-		<button type="button" onclick='test2324();'>test</button>
-		<div><h1>구매하기</h1>
-    <img src="/images/toss-tee.png" style="max-width: 100%" />
-    <h3>토스 티셔츠</h3>
-    <span>19,000 원</span>
-    <p>----------------------</p>
-    <div><label><input type="radio" name="method" value="카드" checked/>신용카드</label></div>
-    <div><label><input type="radio" name="method" value="가상계좌"/>가상계좌</label></div>
-    <p>----------------------</p>
-    <button id="payment-button">결제하기</button></div>
+		<p>----------------------</p>
+		<div>
+			<label><input type="radio" name="method" value="카드" checked />신용카드</label>
+		</div>
+		<div>
+			<label><input type="radio" name="method" value="가상계좌" />가상계좌</label>
+		</div>
+		<p>----------------------</p>
+		<button id="payment-button">결제하기</button>
+		
+		<%
+		String loginUserId = null;
+		try {
+			String	loginString = ((MemberVo)session.getAttribute("loginUser")).getUser_id();
+		} catch (Exception e) {
+			loginUserId = null;
+		}
+		%>
+		
+		<input type="hidden" name="userId" value="<%=loginUserId%>">
+		
+		
 		<footer> </footer>
 	</div>
-	
+
 	<script>
-	
-	
-	
-	 var tossPayments = TossPayments("test_ck_JQbgMGZzorzzXdypGB7rl5E1em4d");
-	    var button = document.getElementById("payment-button");
-	    var orderId = new Date().getTime();
+		function execDaumPostcode() {
+			new daum.Postcode(
+					{
+						oncomplete : function(data) {
+							// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-	    button.addEventListener("click", function () {
-	    	
-	        var method = document.querySelector('input[name=method]:checked').value; // "카드" 혹은 "가상계좌"
+							// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+							// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+							var addr = ''; // 주소 변수
+							var extraAddr = ''; // 참고항목 변수
 
-	        var paymentData = {
-	            amount: 19000,
-	            orderId: orderId,
-	            orderName: "토스 티셔츠",
-	            customerName: "이토페",
-	            successUrl: window.location.origin + "/success",
-	            failUrl: window.location.origin + "/fail",
-	        };
+							//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+							if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+								addr = data.roadAddress;
+							} else { // 사용자가 지번 주소를 선택했을 경우(J)
+								addr = data.jibunAddress;
+							}
 
-	        if (method === '가상계좌') {
-	            paymentData.virtualAccountCallbackUrl = window.location.origin + '/virtual-account/callback'
-	        }
+							// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+							if (data.userSelectedType === 'R') {
+								// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+								// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+								if (data.bname !== ''
+										&& /[동|로|가]$/g.test(data.bname)) {
+									extraAddr += data.bname;
+								}
+								// 건물명이 있고, 공동주택일 경우 추가한다.
+								if (data.buildingName !== ''
+										&& data.apartment === 'Y') {
+									extraAddr += (extraAddr !== '' ? ', '
+											+ data.buildingName
+											: data.buildingName);
+								}
+								// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+								if (extraAddr !== '') {
+									extraAddr = ' (' + extraAddr + ')';
+								}
+								// 조합된 참고항목을 해당 필드에 넣는다.
+								document.getElementById("extraAddress").value = extraAddr;
 
-	        tossPayments.requestPayment(method, paymentData);
-	    });
-	    
-	    
-	    
-	function execDaumPostcode() {
-		new daum.Postcode({
-			oncomplete: function(data) {
-				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+							} else {
+								document.getElementById("extraAddress").value = '';
+							}
 
-				// 각 주소의 노출 규칙에 따라 주소를 조합한다.
-				// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-				var addr = ''; // 주소 변수
-				var extraAddr = ''; // 참고항목 변수
-
-				//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-				if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-					addr = data.roadAddress;
-				} else { // 사용자가 지번 주소를 선택했을 경우(J)
-					addr = data.jibunAddress;
-				}
-
-				// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-				if (data.userSelectedType === 'R') {
-					// 법정동명이 있을 경우 추가한다. (법정리는 제외)
-					// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-					if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-						extraAddr += data.bname;
-					}
-					// 건물명이 있고, 공동주택일 경우 추가한다.
-					if (data.buildingName !== '' && data.apartment === 'Y') {
-						extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-					}
-					// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-					if (extraAddr !== '') {
-						extraAddr = ' (' + extraAddr + ')';
-					}
-					// 조합된 참고항목을 해당 필드에 넣는다.
-					document.getElementById("extraAddress").value = extraAddr;
-
-				} else {
-					document.getElementById("extraAddress").value = '';
-				}
-
-				// 우편번호와 주소 정보를 해당 필드에 넣는다.
-				document.getElementById('postcode').value = data.zonecode;
-				document.getElementById("address").value = addr;
-				// 커서를 상세주소 필드로 이동한다.
-				document.getElementById("detailAddress").focus();
-			}
-		}).open();	
-	}
-	
-	
+							// 우편번호와 주소 정보를 해당 필드에 넣는다.
+							document.getElementById('postcode').value = data.zonecode;
+							document.getElementById("address").value = addr;
+							// 커서를 상세주소 필드로 이동한다.
+							document.getElementById("detailAddress")
+									.focus();
+						}
+					}).open();
+		}
 	</script>
 
-	<script src="${pageContext.request.contextPath}/resources/js/payment/payment.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/payment/payment.js"></script>
+
+	<script>
+		var data = null;
+		function form_object_save(form_object_save) {
+			data = form_object_save;
+			$.ajax({
+				type : "post",
+				url : "orderInfo",
+				data : {
+					order : data.order.value,
+					phone1 : data.phone1.value,
+					phone2 : data.phone2.value,
+					phone3 : data.phone3.value,
+					postcode : data.postcode.value,
+					address : data.address.value,
+					detailaddress : data.detailaddress.value,
+					extra : data.extra.value,
+					memo_option : data.memo_option.value,
+					input_memo : data.input_memo.value
+				},
+				success : function(data) {
+					if (data > 0) {
+						toss_popup();
+					} else {
+
+					}
+				},
+				error : function() {
+
+				}
+			})
+		}
+	</script>
+
 </body>
 
 </html>

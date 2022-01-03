@@ -19,20 +19,20 @@ public class ReviewDao {
 
 	// 작성한 리뷰의 제목, 내용 , 작성자 ,파일 이미지를 데이터베이스에 넣는메소드
 	public int writerReview(Connection conn, ReviewListVo r) {
-		String sql = "INSERT INTO REVIEW (REVIEW_NO , REVIEW_TITLE , REVIEW_CONTENTS , REVIEW_DATE,USER_ID , REVIEW_LIKE ,"
-				+ "REVIEW_DECLARATION,REVIEW_VIEWS,REVIEW_DELETE) "
-				+ "VALUES (SEQ_REVIEW_NO.NEXTVAL, ? , ? , SYSDATE , ? , ? , ? , ?, ?)";
+		String sql = "INSERT INTO REVIEW (REVIEW_NO , REVIEW_TITLE , REVIEW_CONTENTS , REVIEW_DATE, REVIEW_LIKE ,REVIEW_VIEWS, "
+				+ "REVIEW_DECLARATION,REVIEW_DELETE,USER_ID)"
+				+ "VALUES (SEQ_REVIEW.NEXTVAL, ? , ? , SYSDATE , ? , ? , ? , ?,?)";
 		PreparedStatement pstmt = null;
 		int rs = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, r.getReviewTitle());
 			pstmt.setString(2, r.getReviewContents());
-			pstmt.setString(3, "wlgus");
+			pstmt.setInt(3, 0);
 			pstmt.setInt(4, 0);
 			pstmt.setInt(5, 0);
-			pstmt.setInt(6, 0);
-			pstmt.setString(7, "N");
+			pstmt.setString(6, "N");
+			pstmt.setString(7, r.getUserId());
 
 			rs = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -74,8 +74,8 @@ public class ReviewDao {
 	public List<ReviewListVo> getReviewList(Connection conn, int startNo, int endNo) {
 
 		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM, r.* FROM REVIEW r ) "
-				+ "WHERE RNUM BETWEEN ? AND ? AND REVIEW_DELETE='N' "
-				+ "ORDER BY REVIEW_DATE DESC ";
+				+ "WHERE RNUM BETWEEN ? AND ? "
+				+ "AND REVIEW_DECLARATION <5 ORDER BY REVIEW_DATE DESC ";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -91,24 +91,25 @@ public class ReviewDao {
 				String reviewTitle = rs.getString("REVIEW_TITLE");
 				String reviewContents = rs.getString("REVIEW_CONTENTS");
 				Timestamp reviewDate = rs.getTimestamp("REVIEW_DATE");
-				String userId = rs.getString("USER_ID");
 				int reviewLike = rs.getInt("REVIEW_LIKE");
 				int reviewDeclaration = rs.getInt("REVIEW_DECLARATION");
 				int reviewViews = rs.getInt("REVIEW_VIEWS");
 				String reviewDelete = rs.getString("REVIEW_DELETE");
-
+				String userId = rs.getString("USER_ID");
+				
 				r = new ReviewListVo();
 				r.setReviewNo(reviewNo);
 				r.setReviewTitle(reviewTitle);
 				r.setReviewContents(reviewContents);
 				r.setReviewDate(reviewDate);
-				r.setUserId(userId);
 				r.setReviewLike(reviewLike);
 				r.setReviewDeclaration(reviewDeclaration);
 				r.setReviewViews(reviewViews);
 				r.setReviewDelete(reviewDelete);
-
+				r.setUserId(userId);
+				
 				Reviewlist.add(r);
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

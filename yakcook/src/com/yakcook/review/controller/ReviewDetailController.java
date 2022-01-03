@@ -8,7 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.yakcook.member.model.vo.MemberVo;
 import com.yakcook.review.service.ReviewService;
 import com.yakcook.review.vo.ReviewImgVo;
 import com.yakcook.review.vo.ReviewListVo;
@@ -35,6 +37,10 @@ public class ReviewDetailController extends HttpServlet {
 		//imgList에서 뽑아온 내용을 넘겨준다.
 		req.setAttribute("imgList", imgList);
 		
+		HttpSession session = req.getSession();
+	        
+	    String loginUserId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();
+	    req.setAttribute("loginUserId",loginUserId);
 		req.getRequestDispatcher("WEB-INF/views/review/detailReview.jsp").forward(req, resp);
 	}
 	

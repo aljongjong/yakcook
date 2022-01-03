@@ -3,6 +3,7 @@ package com.yakcook.payment.vo;
 public class PaymentVo {
 	
 	private String order;
+	private String userId;
 	private String phone1;
 	private String phone2;
 	private String phone3;
@@ -15,8 +16,10 @@ public class PaymentVo {
 	
 	
 	
+	
 	public PaymentVo() {
 		this.order = order;
+		this.userId = userId;
 		this.phone1 = phone1;
 		this.phone2 = phone2;
 		this.phone3 = phone3;
@@ -32,6 +35,12 @@ public class PaymentVo {
 	}
 	public void setOrder(String order) {
 		this.order = order;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getPhone1() {
 		return phone1;
@@ -87,5 +96,6 @@ public class PaymentVo {
 	public void setInput_memo(String input_memo) {
 		this.input_memo = input_memo;
 	}
+
 	
 }
