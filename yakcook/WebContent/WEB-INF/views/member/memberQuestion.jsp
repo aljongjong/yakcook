@@ -19,7 +19,7 @@
 		</tr>
 		<a href = "memberquestionwriter">글쓰기</a>
  		<c:forEach items="${data}" var = "q">
-			<tr onclick="location.href='QnAList?reviewNo=${q.qna_no}'" style = "cursor:pointer;">
+			<tr onclick="location.href='QnADetail?qna_no=${q.qna_no}'" style = "cursor:pointer;">
 					<td>${q.qna_no}</td>
 					<td>${q.user_id}</td>
 					<td>${q.qna_title}</td>
