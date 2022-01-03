@@ -13,26 +13,29 @@
 	<body>
         <div class="wrapper">
             <div class="search-input">
-                <input type="text" placeholder="태그 키워드를 검색해보세요!">
+            <form action="tagSearchProduct" method="GET">
+                <input type="text" placeholder="태그 키워드를 검색해보세요!" name="tagName">            
                 <div class="autocom-box">
                 </div>
-                <div class="icon"><i class="fas fa-search"></i></div>
+                <div class="icon"><button type="submit" id="searchBtn"><i class="fas fa-search"></i></button></div>
+            </form>
             </div>
         </div>
+        
+        
+        <div id="layer_bg"></div>
+        
         <% int i = 0; %>
         <c:forEach items="${tagList}" var="tl">
         	<input type="hidden" id="tN<%=i%>" value="${tl.tagName}">
         	<% i++; %>
         </c:forEach>
         
-
         <script>
-        	
-        	
 	        let suggestions = [];
 	        for ( let i = 0; i < "<c:out value='${tagList.size()}'/>"; i++) {
-	        	
-	        	suggestions.push()
+	        	let TagNo = document.getElementById("tN" + i);
+	        	suggestions.push(TagNo.value);
 			}
         </script>
         <script src="/yakcook/resources/js/tagSearchBar/script.js"></script>

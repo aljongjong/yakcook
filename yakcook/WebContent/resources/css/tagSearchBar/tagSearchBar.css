@@ -6,14 +6,11 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-body
-{
-    background: #644bff;
-}
 .wrapper
 {
     max-width: 450px;
     margin: 150px auto;
+    z-index: 1000;
 }
 .wrapper .search-input
 {
@@ -77,4 +74,21 @@ body
 .autocom-box li:hover
 {
     background: #efefef;
+}
+#searchBtn
+{
+    border: none;
+    background: #fff;
+    cursor: pointer;
+    font-size: 20px;
+}
+#layer_bg
+{
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .3);
+    position: absolute;
 }
