@@ -436,7 +436,8 @@ label
 }
 .mp_tag>a
 {
-    
+    text-decoration:none;
+    color: #262626;
 }
 .mp_register_date
 {
@@ -484,7 +485,7 @@ label
 .p_register
 {
     position: absolute;
-    transform: translateX(90px);
+    right:15px;
 }
 .p_register>a
 {

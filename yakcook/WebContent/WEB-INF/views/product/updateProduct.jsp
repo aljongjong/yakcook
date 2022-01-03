@@ -16,7 +16,7 @@
         </div>
 
         <div class="register_product">
-            <form action="updateProduct" method="POST" id="registerForm" enctype="multipart/form-data">
+            <form action="updateProduct" method="POST" onsubmit="return updateCheck()" id="registerForm" enctype="multipart/form-data">
                 <input type="hidden" name="productNo" value="${updateProuctNo}"> <!-- 업데이트를 위해 제품 번호 날려줌 -->
                 <table>
                     <tr>
@@ -122,8 +122,17 @@
 
             </form>
         </div>
-        
-        <div></div>
     </div>
+    
+    <script>
+    	function updateCheck() {
+    		if(confirm("제품을 수정하시겠습니까?")) {
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	}
+    
+    </script>
 </body>
 </html>

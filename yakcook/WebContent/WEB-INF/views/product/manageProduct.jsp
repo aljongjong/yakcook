@@ -17,9 +17,19 @@
             <div class="category_content">
                 <ul>
                     <!-- 반복문, 카테고리 테이블에서 데이터 가져옴 -->
-                    	<li><a href="manageProduct">전체 상품<i class="far fa-check-circle"></i></a></li>
+                    <c:if test="${categoryNo == null}">
+                    	<li><a class="active" href="manageProduct">전체 상품<i class="far fa-check-circle"></i></a></li>                    
+                    </c:if>
+                    <c:if test="${categoryNo != null}">
+                    	<li><a class="" href="manageProduct">전체 상품<i class="far fa-check-circle"></i></a></li>                    
+                    </c:if>
                     <c:forEach items="${categoryList}" var="c">
-                    	<li><a href="manageProduct?categoryNo=${c.categoryNo}">${c.categoryName}<i class="far fa-check-circle"></i></a></li>
+	   					<c:if test="${c.categoryNo == categoryNo}">
+	                 		<li><a class="active" href="manageProduct?categoryNo=${c.categoryNo}">${c.categoryName}<i class="far fa-check-circle"></i></a></li>
+	   					</c:if>
+	   					<c:if test="${c.categoryNo != categoryNo}">
+	                 		<li><a href="manageProduct?categoryNo=${c.categoryNo}">${c.categoryName}</a></li>
+	   					</c:if>
                     </c:forEach>
                 </ul>
             </div>
@@ -47,7 +57,7 @@
                         </a>
                     </div>
                     
-                    <div class="p_range">
+                    <!-- <div class="p_range">
                         <label for="panel-label">정렬 : </label>
                         <form action="manageProduct" style="display:inline;">
 	                        <select name="range" id="">
@@ -60,7 +70,7 @@
 	                        </select>
 	     					<button type="submit" class="rp_btn"><span>조회 </span><i class="fas fa-search"></i></button>
 	                    </form>
-                    </div>
+                    </div> -->
                 </div>
 
 
@@ -96,7 +106,7 @@
 							<div class="mp_tag">
 			                <c:forEach items="${tagProductList}" var="tp">
 								<c:if test="${np.productName eq tp.productName}">
-									<a href="#">#${tp.tagName}</a>
+									<a>#${tp.tagName}</a>
 								</c:if>		                
 			                </c:forEach>
 							</diV>
@@ -113,7 +123,7 @@
 			                    </div>
 		                    </form>
 							
-							<form action="deleteProduct" method="get" style="display:inline-block; float:left">
+							<form action="deleteProduct" method="POST" onsubmit="return deleteCheck();" style="display:inline-block; float:left">
 								<input type="hidden" name="deleteProuctNo" value="${np.productNo}">
 								<div class="p_delete">
 									<button type="submit" class="rp_btn">
@@ -142,7 +152,7 @@
 							<div class="mp_tag">
 			                <c:forEach items="${tagProductList}" var="tp">
 			                	<c:if test="${cp.productName eq tp.productName}">
-					                    <a href="#">#${tp.tagName}</a>
+					                    <a>#${tp.tagName}</a>
 									</c:if>		                
 								</c:forEach>
 							</diV>
@@ -159,7 +169,7 @@
 			                    </div>
 		                    </form>
 		
-		                    <form action="deleteProduct" method="get" style="display:inline-block; float:left">
+		                    <form action="deleteProduct" method="POST" onsubmit="return deleteCheck();" style="display:inline-block; float:left;">
 								<input type="hidden" name="deleteProuctNo" value="${cp.productNo}">
 								<div class="p_delete">
 									<button type="submit" class="rp_btn">
@@ -186,10 +196,20 @@
 	                    <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
 		                    <c:if test="${i <= maxPage}">
 			                    <c:if test="${categoryNo == null}">
-			                    	<li><a href="manageProduct?currentPage=${i}">${i}</a></li>	                    
+			                    	<c:if test="${cp == i}">
+			                    		<li><a class="active" href="manageProduct?currentPage=${i}">${i}</a></li>
+			                    	</c:if>
+			                    	<c:if test="${cp != i}">
+				                    	<li><a href="manageProduct?currentPage=${i}">${i}</a></li>
+			                    	</c:if>                    
 		                    	</c:if>
 		                    	<c:if test="${categoryNo != null}">
-			                    	<li><a href="manageProduct?categoryNo=${categoryNo}&currentPage=${i}">${i}</a></li>	                    	                    	
+			                    	<c:if test="${cp == i}">
+			                    		<li><a class="active" href="manageProduct?categoryNo=${categoryNo}&currentPage=${i}">${i}</a></li>	   
+			                    	</c:if>
+			                    	<c:if test="${cp != i}">
+				                    	<li><a href="manageProduct?categoryNo=${categoryNo}&currentPage=${i}">${i}</a></li>	   
+			                    	</c:if>              	                    	
 		                    	</c:if>
 		                    </c:if>
 	                    </c:forEach>
@@ -205,5 +225,17 @@
             </div>
 
         </div>
+        
+        <script>
+        	function deleteCheck() {
+        		if(confirm("상품을 삭제하시겠습니까?")) {
+        			alert("상품이 삭제되었습니다.");
+        			return true;
+        		} else {
+        			return false;
+        		}
+        	}
+        
+        </script>
     </body>
 </html>
