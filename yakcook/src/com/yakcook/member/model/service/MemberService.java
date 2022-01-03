@@ -153,5 +153,34 @@ public class MemberService {
 			           rollback(conn); 
 			       } 
 			       return result;
-			    }    
+			    } 
+			    
+
+public int qnawriter(MemberQnAVo q) {
+	Connection conn = getConnection();
+	int result = 0;
+	try {
+		result = insertQna(conn,q);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+	}catch (SQLException e) {
+        rollback(conn);
+        e.printStackTrace();
+     }finally {
+        close(conn);
+     }
+	return result;
+}
+
+private int insertQna(Connection conn, MemberQnAVo q)  throws SQLException {
+	return new MemberDao().insertQna(conn,q);
+}
+
+public List<MemberQnAVo> qnaDatailAll(String qnano) {
+	int no = Integer.parseInt(qnano);
+	Connection conn = getConnection();
+	return new MemberDao().detailQnaView(conn,no);
+}
 			 }

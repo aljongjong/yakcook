@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.yakcook.common.JDBCTemplate;
+import com.yakcook.member.model.vo.MemberQnAVo;
 import com.yakcook.member.model.vo.MemberVo;
 
 public class MemberDao {
@@ -266,6 +267,65 @@ public class MemberDao {
 		}
 
 		return result;
+	}
+
+	public int insertQna(Connection conn, MemberQnAVo q) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "INSERT INTO QNA (QNA_NO, QNA_TITLE, QNA_CONTENT, QNA_DATE, USER_ID) "
+				+ "VALUES(SEQ_MEMBER.NEXTVAL, ?, ?, SYSDATE, ?)";
+		int result = 0;
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, q.getQna_title());
+				pstmt.setString(2, q.getQna_content());
+				pstmt.setString(3, q.getUser_id());
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+		return result;
+	}
+
+	public List<MemberQnAVo> detailQnaView(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT * FROM QnA WHERE QnA_NO = ?";
+		MemberQnAVo q = null;
+		List QnAListView = new ArrayList<MemberQnAVo>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				int qna_no = rs.getInt("QNA_NO");
+				String qna_title = rs.getString("QNA_TITLE");
+				String qna_content = rs.getString("QNA_CONTENT");
+				Timestamp qna_data = rs.getTimestamp("QNA_DATA");
+				String user_id = rs.getString("USER_ID");
+				
+				q = new MemberQnAVo();
+				q.setQna_no(qna_no);
+				q.setQna_title(qna_title);
+				q.setQna_content(qna_content);
+				q.setQna_date(qna_data);
+				q.setUser_id(user_id);
+				
+				QnAListView.add(q);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(conn);
+			close(pstmt);
+		}
+				
+		return QnAListView;
 	}
 	 
 }
