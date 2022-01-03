@@ -16,14 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.yakcook.payment.service.PaymentService;
 import com.yakcook.payment.vo.PaymentVo;
 
-@WebServlet("/orderinfo")
+@WebServlet("/orderInfo")
 public class paymentController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		
 
 			//입력한 주문정보 가져오기
+			String userId = req.getParameter("userId");
+			System.out.println(userId);
 			String order =	req.getParameter("order");
 
 			String phone1 =	req.getParameter("phone1");
@@ -39,8 +41,6 @@ public class paymentController extends HttpServlet {
 			String memo_option = req.getParameter("memo_option");
 			String input_memo = req.getParameter("input_memo");
 			String methodPay = req.getParameter("method_pay");
-			req.getRequestDispatcher("WEB-INF/views/common/payment/paymentSuccessPage.jsp").forward(req, resp);
-			ScriptEngine javascriptEngine = new ScriptEngineManager().getEngineByName("JavaScript");
 
 			PaymentVo p = new PaymentVo();
 			p.setOrder(order);
@@ -56,6 +56,8 @@ public class paymentController extends HttpServlet {
 			
 			
 			int result = new PaymentService().insertOrder(p);
+			PrintWriter out = resp.getWriter();
+			out.print(result);
 
 		
 		
