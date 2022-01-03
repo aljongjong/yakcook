@@ -1,0 +1,50 @@
+@charset "UTF-8";
+section {
+    width:1200px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+
+table {
+    width: 100%;
+    border-top: 2px solid black;
+    border-bottom:1px solid rgba(201, 199, 199, 0.823);
+    border-collapse: collapse;
+}
+#tableWrap{
+    width: 60%;
+    margin: auto;
+}
+
+tr{
+    border-top: 1px solid rgba(201, 199, 199, 0.823);
+    height: 40px;
+}
+th{
+    font-size: 18px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.content>td{
+    padding: 20px;
+}
+.title{
+    color: rgb(108, 128, 075);
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    margin: 10px;
+    margin-top: 43px;
+    margin-left: 30px;
+}
+
+.t1{
+    width: 80%;
+    text-align: left;
+    padding-left: 30px;
+}
+.t2{
+   	width: 20%;
+}

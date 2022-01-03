@@ -11,6 +11,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/manager/managerHeader.jsp" %>
  	<section>
         <a href="/yakcook/userlist" id="home">유저 목록</a>
         <div id="search_tap">
@@ -29,7 +30,10 @@
                 <th class="t3">이름</th>
                 <th class="t4">이메일</th>
                 <th class="t5">전화번호</th>
-                <th class="t6">강제탈퇴</th>
+                <c:if test="${manager.managerLevel ge 2}">
+					<th class="t6">강제탈퇴</th>
+				</c:if>
+                
             </tr>
             <c:forEach items="${userList}" var="u">
 			<tr>
@@ -38,7 +42,9 @@
 				<td>${u.userName}</td>
 				<td>${u.userEmail}</td>
 				<td>${u.userPhone}</td>
-                <td><input type="button" class="delUser" value="탈퇴"></td>
+				<c:if test="${manager.managerLevel ge 2}">
+					<td><input type="button" class="delUser" value="탈퇴"></td>
+				</c:if> 
 			</tr>
 			</c:forEach>
 
@@ -92,6 +98,14 @@
 	        		}
 	        	});
 	        });  
+			$('.logoutbtn').on('click', function(){
+				window.location = "/yakcook/managerlogout";
+	        });  
+
+			$('.link').on('click', function(){
+				$(this).css('background-color', 'rgb(250, 174, 088)');
+				$(this).css('color', 'white');
+			})
 			
 			
 		}

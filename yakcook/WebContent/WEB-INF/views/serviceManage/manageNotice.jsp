@@ -6,13 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
-<link rel="stylesheet" href="/yakcook/resources/css/customerService/notice.css">
+<link rel="stylesheet" href="/yakcook/resources/css/serviceManage/manageNotice.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/manager/managerHeader.jsp" %>
 	<section>
-	<%@ include file="/WEB-INF/views/customerService/sideMenu.jsp" %>
 	<div id="tableWrap">
             <span class="title">공지사항</span>
             <br>
@@ -47,9 +47,12 @@
     	$('.view').on('click', function(){
     		let td = $(this).children();
 			let number = td.eq(0).text();
-			let url = "noticedetail?noticeNumber=" + number;
+			let url = "managenoticedetail?noticeNumber=" + number;
 			window.location = url;
-    	})
+    	});
+    	$('.logoutbtn').on('click', function(){
+			window.location = "/yakcook/managerlogout";
+        }); 
     }
     </script>
 </body>
