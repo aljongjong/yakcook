@@ -9,7 +9,8 @@
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="/yakcook/resources/css/review/reviewList.css">
-<link href="https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&display=swap"
+<link
+	href="https://fonts.googleapis.com/css2?family=Dokdo&family=East+Sea+Dokdo&display=swap"
 	rel="stylesheet">
 
 </head>
@@ -70,27 +71,20 @@
 
 
 		<footer> </footer>
-
-		<%
-		String loginUserId = null;
-		try {
-			loginUserId = ((MemberVo) session.getAttribute("loginUser")).getUser_id();
-		} catch (Exception e) {
-			loginUserId = null;
-		}
-		%>
-		<script>
+	
+	<%String loginUserId = null;
+	loginUserId = (String)session.getAttribute("userId"); 
+	%>
 		
+		<script>
+	
 	function write_btn() {
-					var x = <%=loginUserId%>;
-					alert(x);
-					 if("<%=loginUserId%>" != null) {
-						location.href = 'reviewWrite';
-				} else {
-					alert("회원만 가능한 기능입니다. \n로그인 하시기 바랍니다.")
-				}
-			}
-		</script>
-</body>
-
+					 if("<%=loginUserId%>" !=null){
+					    location.href='reviewWrite';
+					    
+					 }else{
+					    	alert("회원만 가능한 기능입니다. \n로그인 하시기 바랍니다.")
+					   	 }
+						}
+	</script>
 </html>

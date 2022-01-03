@@ -15,7 +15,7 @@
 <script src="https://js.tosspayments.com/v1"></script>
 <script>
 	function toss_popup() {
-		var tossPayments = TossPayments("test_sk_YoEjb0gm23Pd17W2qek3pGwBJn5e");
+		var tossPayments = TossPayments("test_ck_k6bJXmgo28e9WMkEoLY8LAnGKWx4");
 		var button = document.getElementById("payment-button");
 
 		var orderId = new Date().getTime();
@@ -216,9 +216,14 @@
 						name="AccountNumber" placeholder="계좌번호">
 				</div>
 
-				<button type="button" onclick="form_object_save(this.form);">test
+				<button type="button" onclick="form_object_save(this.form);">
+					test
 
-				
+					<button id="payment-button">결제하기</button>
+					<%
+					String loginUserId = ((MemberVo) session.getAttribute("loginUser")).getUser_id();
+					%>
+					<input type="hidden" name="userId" value="<%=loginUserId%> ">
 			</form>
 		</section>
 		<p>----------------------</p>
@@ -229,20 +234,10 @@
 			<label><input type="radio" name="method" value="가상계좌" />가상계좌</label>
 		</div>
 		<p>----------------------</p>
-		<button id="payment-button">결제하기</button>
-		
-		<%
-		String loginUserId = null;
-		try {
-			String	loginString = ((MemberVo)session.getAttribute("loginUser")).getUser_id();
-		} catch (Exception e) {
-			loginUserId = null;
-		}
-		%>
-		
-		<input type="hidden" name="userId" value="<%=loginUserId%>">
-		
-		
+
+
+
+
 		<footer> </footer>
 	</div>
 
@@ -295,8 +290,7 @@
 							document.getElementById('postcode').value = data.zonecode;
 							document.getElementById("address").value = addr;
 							// 커서를 상세주소 필드로 이동한다.
-							document.getElementById("detailAddress")
-									.focus();
+							document.getElementById("detailAddress").focus();
 						}
 					}).open();
 		}
@@ -322,7 +316,8 @@
 					detailaddress : data.detailaddress.value,
 					extra : data.extra.value,
 					memo_option : data.memo_option.value,
-					input_memo : data.input_memo.value
+					input_memo : data.input_memo.value,
+					userId : data.userId.value
 				},
 				success : function(data) {
 					if (data > 0) {

@@ -47,7 +47,8 @@ public class ReviewListCotroller extends HttpServlet {
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
 		
-		
+	        
+	        //현재 로그인 한 회원의 세션 정보 가져오기
 		// page 갯수 정하는 코드
 		List<ReviewListVo> reviewList = new ReviewService().selectReview(currentPage);
 		// reviewList로 data(reviewList)를 전송해줌.

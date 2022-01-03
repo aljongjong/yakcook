@@ -24,8 +24,7 @@ public class paymentController extends HttpServlet {
 		
 
 			//입력한 주문정보 가져오기
-			String userId = req.getParameter("userId");
-			System.out.println(userId);
+		
 			String order =	req.getParameter("order");
 
 			String phone1 =	req.getParameter("phone1");
@@ -41,8 +40,10 @@ public class paymentController extends HttpServlet {
 			String memo_option = req.getParameter("memo_option");
 			String input_memo = req.getParameter("input_memo");
 			String methodPay = req.getParameter("method_pay");
-
+			String userId = req.getParameter("userId");
+			
 			PaymentVo p = new PaymentVo();
+			p.setUserId(userId);
 			p.setOrder(order);
 			p.setPhone1(phone1);
 			p.setPhone2(phone2);
