@@ -115,6 +115,11 @@ public class ReviewService {
 		Connection conn = getConnection();
 		return new ReviewDao().declarationUp(conn, no);
 	}
+	public int completeDeclaration(String reviewNo, String reviewReason) {
+		int no = Integer.parseInt(reviewNo);
+		Connection conn = getConnection();
+		return new ReviewDao().InsertDeclaration(conn, no, reviewReason);
+	}
 	
 
 }

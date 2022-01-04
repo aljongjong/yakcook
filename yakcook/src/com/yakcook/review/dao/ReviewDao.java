@@ -18,7 +18,7 @@ import com.yakcook.review.vo.ReviewListVo;
 
 public class ReviewDao {
 
-	// 작성한 리뷰의 제목, 내용 , 작성자 ,파일 이미지를 데이터베이스에 넣는메소드
+	// 작성한 리뷰의 제목, 내용 , 작성자 ,등을 데이터베이스에 넣는메소드
 	public int writerReview(Connection conn, ReviewListVo r) {
 		String sql = "INSERT INTO REVIEW (REVIEW_NO , REVIEW_TITLE , REVIEW_CONTENTS , REVIEW_DATE, REVIEW_LIKE ,REVIEW_VIEWS, "
 				+ "REVIEW_DECLARATION,REVIEW_DELETE,USER_ID)"
@@ -404,6 +404,28 @@ public class ReviewDao {
 			close(pstmt);
 		}
 
+		return rs;
+	}
+
+	public int InsertDeclaration(Connection conn, int no, String reviewReason) {
+		PreparedStatement pstmt = null;
+		int rs =0;
+		
+		String sql="INSERT INTO DECLARATION (DECLARATION_NO , REVIEW_NO, DECLATION_REASON) VALUES (SEQ_DECLARATION.NEXTVAL, ? , ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			pstmt.setString(2,reviewReason);
+			rs = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			commit(conn);
+			close(conn);
+			close(pstmt);
+		}
+		
 		return rs;
 	}
 
