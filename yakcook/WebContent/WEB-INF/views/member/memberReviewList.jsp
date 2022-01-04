@@ -13,20 +13,22 @@
 <h1>리뷰 조회 페이지</h1>
 	<table border="1">
 		<tr>
-			<td> 이름 </td>
+			<td> 사진 </td>
 			<td> 제목 </td>
 			<td> 내용 </td>
 			<td> 조회수 </td>
 			<td> 좋아요 </td>
+			<td> 날짜 </td>
 		</tr>
 		
 		<c:forEach items="${data}" var = "b">
 			<tr onclick="location.href='reviewList?reviewNo=${b.reviewNo}'" style = "cursor:pointer;">
-					<td>${b.userId}</td>
+					<td><img src="resources/images/review/${b.reviewImg}" alt=""></td>
 					<td>${b.reviewTitle}</td>
 					<td>${b.reviewContents}</td>
 					<td>${b.reviewViews}</td>
 					<td>${b.reviewLike}</td>
+					<td>${b.reviewDate}</td>
 			</tr>
 		</c:forEach>	
 	</table>

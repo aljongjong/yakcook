@@ -20,6 +20,13 @@
             <div class="review_Wrap">
                 <form action="memberquestionwriter" method="post">
                 <input type = "hidden" name = "id" id = "userid" value = "${id}"><br>
+                		<select name = "qnacategory">
+							<option value="제품" selected>제품</option>
+                            <option value="회원관리">회원관리</option>
+                            <option value="주문/결제">주문/결제</option>
+                            <option value="교환/반품">교환/반품</option>
+                            <option value="기타">기타</option>
+						</select>
                     <table class="review_table">
                         <tr>
                             <th colspan="2">제목</th>

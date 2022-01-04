@@ -32,6 +32,8 @@ public class MemberQuestionWriterController extends HttpServlet{
 		String id = ((MemberVo)session.getAttribute("loginUser")).getUser_id();
 		String title = req.getParameter("question_title");
 		String content = req.getParameter("question_contents");
+		String qnacategory =  req.getParameter("qnacategory");
+		
 		System.out.println("현재 로그인 아이디 리뷰쓰기 : "+ id);
 		
 		// 데이터 값 확인

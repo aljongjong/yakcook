@@ -30,7 +30,7 @@ public class MemberQuestionController extends HttpServlet{
 		//현재 로그인 한 회원의 세션 정보 가져오기
 		String loginUserId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();
 		System.out.println("현재 로그인 아이디 질문! : "+ loginUserId);
-		
+
 		List<MemberQnAVo> qnalist = new MemberService().qnaListAll(loginUserId);
 		
 		req.setAttribute("qnaList", qnalist);
