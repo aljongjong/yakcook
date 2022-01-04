@@ -104,9 +104,19 @@
 	                    <i class="fas fa-truck"></i> 기본 배송비는 2,500원 입니다. 총 상품 금액 10만원 이상 시 <span>무료배송</span>입니다.
 	                </div>
             	</div>
+            	
+<!-- 세션에 로그인 유저 있을 경우 -->	<c:if test="${loginUser != null}"></c:if>
+<!-- 세션에 로그인 유저 없을 경우 -->	<c:if test="${loginUser == null}">
+								<!-- 로그인이 필요합니다. 로그인 창으로 이동하시겠습니까? -->
+								</c:if>
                 <div class="dp_info_forward_pay_gopay_btn">
                     <a href="#">주문 하기</a>
                 </div>
+                
+<!-- 세션에 로그인 유저 있을 경우 -->	<c:if test="${loginUser != null}"></c:if>
+<!-- 세션에 로그인 유저 없을 경우 -->	<c:if test="${loginUser == null}">
+								<!-- 로그인이 필요합니다. 로그인 창으로 이동하시겠습니까? -->
+								</c:if>
                 <div class="dp_info_forward_pay_backshop_btn">
                 <form action="shoppingBasket" method="POST" style="display:inline">
                 	<input type="hidden" name="productNo" value="${detailsProduct.productNo}">

@@ -143,11 +143,11 @@
             <div class="shoppingBasket_forward_pay_all_price">
                 <div>총 결제 금액</div>
                 <c:if test="${totalProductPrice >= 100000}">
-                	<div>${totalProductPrice}<span> 원</span></div>
+                	<div style="color:red;">${totalProductPrice}<span> 원</span></div>
                 </c:if>
                 <c:if test="${totalProductPrice < 100000}">
                 	<c:if test="${totalProductPrice > 0}">
-	                	<div>${totalProductPrice + 2500}<span> 원</span></div>            	
+	                	<div style="color:red;">${totalProductPrice + 2500}<span> 원</span></div>            	
                 	</c:if>
                 </c:if>
                 <c:if test="${totalProductPrice == 0}">

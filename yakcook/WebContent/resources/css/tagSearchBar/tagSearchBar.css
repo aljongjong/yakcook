@@ -12,6 +12,31 @@
     margin: 150px auto;
     z-index: 1000;
 }
+.wrapper .yakcook-logo
+{
+	position:relative;
+	width:450px;
+	height:100px;
+}
+.wrapper .yakcook-logo img
+{
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	width: 200px;
+	height: 70px;
+}
+
+.wrapper .info-searchBar
+{
+	text-align: center;
+}
+.wrapper .info-searchBar p 
+{
+	padding : 10px;
+	font-size : 13px;
+}
 .wrapper .search-input
 {
     position: relative;

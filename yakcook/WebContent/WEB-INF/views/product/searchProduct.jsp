@@ -11,7 +11,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-	<%@ include file="/tagSearchBar/tagSearchBar.jsp"%>
+	<%@ include file="/WEB-INF/views/product/tagSearchBar.jsp"%>
     <div class="wrap">
         <div class="category">
             <div class="category_title">상세 메뉴</div>
@@ -108,19 +108,22 @@
 				                	</form>
 				                </div>
 				                <div class="sp_name_price">
-				                
-				                <form action="detailsProduct" method="POST" style="display:inline-block; float:left">
-				                	<input type="hidden" name="productNo" value="${np.productNo}">
-				                	<input type="hidden" name="price" value="${np.price}">
-				                	<input type="hidden" name="categoryDate" value="${np.categoryDate}">
-				                	<input type="hidden" name="productContents" value="${np.productContents}">
-				                	<input type="hidden" name="productDelete" value="${np.productDelete}">
-				                	<input type="hidden" name="lasteditDate" value="${np.lasteditDate}">
-				                	<input type="hidden" name="inventory" value="${np.inventory}">
-				                	<input type="hidden" name="categoryNo" value="${np.categoryNo}">
-				                    <input type="submit" name="productName" value="${np.productName}" id="searchProductTodetails">
-				                </form>
-				                    <a style="float:right">${np.price}원</a>
+					                <div>
+						                <form action="detailsProduct" method="POST" style="display:inline-block; float:left">
+						                	<input type="hidden" name="productNo" value="${np.productNo}">
+						                	<input type="hidden" name="price" value="${np.price}">
+						                	<input type="hidden" name="categoryDate" value="${np.categoryDate}">
+						                	<input type="hidden" name="productContents" value="${np.productContents}">
+						                	<input type="hidden" name="productDelete" value="${np.productDelete}">
+						                	<input type="hidden" name="lasteditDate" value="${np.lasteditDate}">
+						                	<input type="hidden" name="inventory" value="${np.inventory}">
+						                	<input type="hidden" name="categoryNo" value="${np.categoryNo}">
+						                    <input type="submit" name="productName" value="${np.productName}" id="searchProductTodetails">
+						                </form>
+					                </div>
+				                	<div>
+				                    	<a style="float:right">${np.price}원</a>
+				                    </div>
 				                </div>
 				                <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 				                <c:forEach items="${tagProductList}" var="tp">
@@ -147,6 +150,11 @@
 				                </c:forEach>
 				                </div>
 				                <div class="sb">
+<!-- 세션에 로그인 유저 있을 경우 -->	<c:if test="${loginUser != null}"></c:if>
+<!-- 세션에 로그인 유저 없을 경우 -->	<c:if test="${loginUser == null}">
+								<!-- 로그인이 필요합니다. 로그인 창으로 이동하시겠습니까? -->
+								</c:if>
+				                
 				                    <form action="shoppingBasket" method="POST" style="display:inline;">
 				                		<input type="hidden" name="productNo" value="${np.productNo}">
 					                	<input type="hidden" name="price" value="${np.price}">
@@ -157,18 +165,22 @@
 				                	</form>
 				                </div>
 				                <div class="sp_name_price">
-			                    <form action="detailsProduct" method="POST" style="display:inline-block; float:left">
-				                	<input type="hidden" name="productNo" value="${np.productNo}">
-				                	<input type="hidden" name="price" value="${np.price}">
-				                	<input type="hidden" name="categoryDate" value="${np.categoryDate}">
-				                	<input type="hidden" name="productContents" value="${np.productContents}">
-				                	<input type="hidden" name="productDelete" value="${np.productDelete}">
-				                	<input type="hidden" name="lasteditDate" value="${np.lasteditDate}">
-				                	<input type="hidden" name="inventory" value="${np.inventory}">
-				                	<input type="hidden" name="categoryNo" value="${np.categoryNo}">
-				                    <input type="submit" name="productName" value="${np.productName}" id="searchProductTodetails">
-				                </form>
-				                    <a style="float:right">${np.price}</a>
+				                	<div>
+					                    <form action="detailsProduct" method="POST" style="display:inline-block; float:left">
+						                	<input type="hidden" name="productNo" value="${np.productNo}">
+						                	<input type="hidden" name="price" value="${np.price}">
+						                	<input type="hidden" name="categoryDate" value="${np.categoryDate}">
+						                	<input type="hidden" name="productContents" value="${np.productContents}">
+						                	<input type="hidden" name="productDelete" value="${np.productDelete}">
+						                	<input type="hidden" name="lasteditDate" value="${np.lasteditDate}">
+						                	<input type="hidden" name="inventory" value="${np.inventory}">
+						                	<input type="hidden" name="categoryNo" value="${np.categoryNo}">
+						                    <input type="submit" name="productName" value="${np.productName}" id="searchProductTodetails">
+						                </form>
+					                </div>
+					                <div>
+				                    	<a style="float:right">${np.price}원</a>
+				                    </div>
 				                </div>
 				                <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 				                <c:forEach items="${tagProductList}" var="tp">
@@ -198,6 +210,11 @@
 			                </c:forEach>
 		                </div>
 		                <div class="sb">
+<!-- 세션에 로그인 유저 있을 경우 -->	<c:if test="${loginUser != null}"></c:if>
+<!-- 세션에 로그인 유저 없을 경우 -->	<c:if test="${loginUser == null}">
+								<!-- 로그인이 필요합니다. 로그인 창으로 이동하시겠습니까? -->
+								</c:if>
+								
 		                   <form action="shoppingBasket" method="POST" style="display:inline;">
 		                		<input type="hidden" name="productNo" value="${cp.productNo}">
 			                	<input type="hidden" name="price" value="${cp.price}">
@@ -208,18 +225,22 @@
 		                	</form>
 		                </div>
 		                <div class="sp_name_price">
-	                     <form action="detailsProduct" method="POST" style="display:inline-block; float:left">
-			                	<input type="hidden" name="productNo" value="${cp.productNo}">
-			                	<input type="hidden" name="price" value="${cp.price}">
-			                	<input type="hidden" name="categoryDate" value="${cp.categoryDate}">
-			                	<input type="hidden" name="productContents" value="${cp.productContents}">
-			                	<input type="hidden" name="productDelete" value="${cp.productDelete}">
-			                	<input type="hidden" name="lasteditDate" value="${cp.lasteditDate}">
-			                	<input type="hidden" name="inventory" value="${cp.inventory}">
-			                	<input type="hidden" name="categoryNo" value="${cp.categoryNo}">
-			                    <input type="submit" name="productName" value="${cp.productName}" id="searchProductTodetails">
-		                </form>
-		                    <a style="float:right">${cp.price}</a>
+			                <div>
+			                     <form action="detailsProduct" method="POST" style="display:inline-block; float:left">
+				                	<input type="hidden" name="productNo" value="${cp.productNo}">
+				                	<input type="hidden" name="price" value="${cp.price}">
+				                	<input type="hidden" name="categoryDate" value="${cp.categoryDate}">
+				                	<input type="hidden" name="productContents" value="${cp.productContents}">
+				                	<input type="hidden" name="productDelete" value="${cp.productDelete}">
+				                	<input type="hidden" name="lasteditDate" value="${cp.lasteditDate}">
+				                	<input type="hidden" name="inventory" value="${cp.inventory}">
+				                	<input type="hidden" name="categoryNo" value="${cp.categoryNo}">
+				                    <input type="submit" name="productName" value="${cp.productName}" id="searchProductTodetails">
+				                </form>
+			                </div>
+		                	<div>
+		                    	<a style="float:right">${cp.price}원</a>
+		                    </div>
 		                </div>
 		                <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 		                <c:forEach items="${tagProductList}" var="tp">
@@ -246,6 +267,12 @@
 			                </c:forEach>
 		                </div>
 		                <div class="sb">
+		                
+<!-- 세션에 로그인 유저 있을 경우 -->	<c:if test="${loginUser != null}"></c:if>
+<!-- 세션에 로그인 유저 없을 경우 -->	<c:if test="${loginUser == null}">
+								<!-- 로그인이 필요합니다. 로그인 창으로 이동하시겠습니까? -->
+								</c:if>
+		                
 		                   <form action="shoppingBasket" method="POST" style="display:inline;">
 		                		<input type="hidden" name="productNo" value="${cp.productNo}">
 			                	<input type="hidden" name="price" value="${cp.price}">
@@ -256,18 +283,22 @@
 		                	</form>
 		                </div>
 		                <div class="sp_name_price">
-	                     <form action="detailsProduct" method="POST" style="display:inline-block; float:left">
-			                	<input type="hidden" name="productNo" value="${cp.productNo}">
-			                	<input type="hidden" name="price" value="${cp.price}">
-			                	<input type="hidden" name="categoryDate" value="${cp.categoryDate}">
-			                	<input type="hidden" name="productContents" value="${cp.productContents}">
-			                	<input type="hidden" name="productDelete" value="${cp.productDelete}">
-			                	<input type="hidden" name="lasteditDate" value="${cp.lasteditDate}">
-			                	<input type="hidden" name="inventory" value="${cp.inventory}">
-			                	<input type="hidden" name="categoryNo" value="${cp.categoryNo}">
-			                    <input type="submit" name="productName" value="${cp.productName}" id="searchProductTodetails">
-		                </form>
-		                    <a style="float:right">${cp.price}</a>
+			                <div>
+			                    <form action="detailsProduct" method="POST" style="display:inline-block; float:left">
+				                	<input type="hidden" name="productNo" value="${cp.productNo}">
+				                	<input type="hidden" name="price" value="${cp.price}">
+				                	<input type="hidden" name="categoryDate" value="${cp.categoryDate}">
+				                	<input type="hidden" name="productContents" value="${cp.productContents}">
+				                	<input type="hidden" name="productDelete" value="${cp.productDelete}">
+				                	<input type="hidden" name="lasteditDate" value="${cp.lasteditDate}">
+				                	<input type="hidden" name="inventory" value="${cp.inventory}">
+				                	<input type="hidden" name="categoryNo" value="${cp.categoryNo}">
+				                    <input type="submit" name="productName" value="${cp.productName}" id="searchProductTodetails">
+				                </form>
+			                </div>
+			                <div>
+			                    <a style="float:right">${cp.price}원</a>
+		                    </div>
 		                </div>
 		                <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 		                <c:forEach items="${tagProductList}" var="tp">
