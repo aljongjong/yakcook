@@ -35,6 +35,9 @@
 				</c:forEach>
             </table>
             <br>
+            <div class="btnWrap">
+           		<button class="noticeBtn" id="noticeadd">글쓰기</button>
+            </div>
             <div class="page-area">
 			<c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
 				<c:if test="${i le paging.maxPage}">
@@ -71,6 +74,9 @@
     	$('.logoutbtn').on('click', function(){
 			window.location = "/yakcook/managerlogout";
         }); 
+    	$('#noticeadd').on('click', function(){
+    		window.location = "/yakcook/faqadd";
+    	});
     }
     </script>
 </body>

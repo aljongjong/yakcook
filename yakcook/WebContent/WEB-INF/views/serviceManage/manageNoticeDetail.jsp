@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,17 +22,31 @@
                     <th class="t2">${NV.writeDateString()}</th>
                 </tr>
 				<tr class="content">
-					<td colspan=3>${NV.noticeContent}</td>
+					<td colspan=2>${NV.noticeContent}</td>
 				</tr>
             </table>
             <br>
+            <div class="btnWrap">
+            	<c:if test="${manager.managerLevel ge 2}">
+					<button class="noticeBtn" id="noticemodi">수정</button>
+				</c:if>
+				<c:if test="${manager.managerLevel ge 3}">
+					 <button class="noticeBtn" id="noticedel">삭제</button>
+				</c:if>
+            </div>  
     </div>    
     </section>
-     <script>
+    <script>
     window.onload=()=>{
 		$('.logoutbtn').on('click', function(){
 			window.location = "/yakcook/managerlogout";
         });  	
+		$('#noticemodi').on('click', function(){
+			
+		});
+		$('#noticedel').on('click', function(){
+			
+		});
 	}
     </script>
 </body>
