@@ -39,8 +39,7 @@ public class ReviewDetailController extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 	        
-	    String loginUserId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();
-	    req.setAttribute("loginUserId",loginUserId);
+	    
 		req.getRequestDispatcher("WEB-INF/views/review/detailReview.jsp").forward(req, resp);
 	}
 	

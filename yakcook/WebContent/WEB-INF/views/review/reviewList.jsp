@@ -38,7 +38,7 @@
 						</div>
 
 						<div class="review_img">
-							<img src="/yakcook/upload/" alt="">
+							<img src="resources/images/review/${r.reviewImg}" onclick="location.href='${path}/yakcook/reviewDetail?reviewNo=${r.reviewNo}'">
 						</div>
 
 						<div class="review_contents">
@@ -50,8 +50,8 @@
 						</div>
 
 					</li>
-				</c:forEach>
 
+				</c:forEach>
 			</ul>
 
 			<hr>
@@ -71,15 +71,21 @@
 
 
 		<footer> </footer>
-	
-	<%String loginUserId = null;
-	loginUserId = (String)session.getAttribute("userId"); 
-	%>
+
+		<%String loginUserId = null;
+		try{
+			loginUserId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();	
+		}
+		catch(Exception e){
+			loginUserId = null;
+		}
 		
+	 
+	%>
+
 		<script>
-	
 	function write_btn() {
-					 if("<%=loginUserId%>" !=null){
+					 if("<%=loginUserId%>" !=null && "<%=loginUserId%>" != "null"){
 					    location.href='reviewWrite';
 					    
 					 }else{

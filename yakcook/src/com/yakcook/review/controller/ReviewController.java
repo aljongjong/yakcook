@@ -53,10 +53,10 @@ public class ReviewController extends HttpServlet {
 			InputStream fis = p.getInputStream();
 			if (!originName.equals("")) {
 				// 파일 저장하면서 맨뒤에 ".png"를 추가해줌
-				String serverFile = " " + UUID.randomUUID() + ".jpg";
+				String serverFile = "" + UUID.randomUUID() + ".jpg";
 
 				// 저장할 경로
-				String realPath = req.getServletContext().getRealPath("/reviewImg");
+				String realPath = req.getServletContext().getRealPath("/resources/images/review");
 
 				String filepath = realPath + File.separator + serverFile  ;
 
@@ -97,8 +97,7 @@ public class ReviewController extends HttpServlet {
 		r.setUserId(userId);
 		result = new ReviewService().writerReview(r);
 		imgResult = new ReviewService().imgReview(i);
-
-		if (result > 0) {
+		if (result > 0 && imgResult > 0) {
 			req.setAttribute("msg", "게시물등록에 성공하였습니다");
 			req.getRequestDispatcher("WEB-INF/views/common/Review/ReviewWriterSuccessPage.jsp").forward(req, resp);
 		} else {

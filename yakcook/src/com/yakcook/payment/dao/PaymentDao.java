@@ -24,8 +24,8 @@ public class PaymentDao {
 		int rs = 0 ;
 		try {
 			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setString(1, "wlgus12");
+			System.out.println("zz : " + p.getUserId());//swy
+			pstmt.setString(1, p.getUserId());//swy
 			pstmt.setString(2, p.getOrder());
 			pstmt.setString(3, p.getPhone1()+p.getPhone2()+p.getPhone3());
 			pstmt.setString(4, p.getPostcode());

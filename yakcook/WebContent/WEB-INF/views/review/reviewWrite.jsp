@@ -47,6 +47,7 @@
 								accept=".gif, .jpg, .png"></td>
 						</tr>
 						<input type="hidden" name="userId" value="<%=loginUserId%>">
+						
 					</table>
 					<div class="writer_button">
 						<input type="submit" value="등록"> <input type="button"

@@ -9,7 +9,8 @@
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="/yakcook/resources/css/review/detailReview.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
 
@@ -34,13 +35,13 @@
 
 					<div id="review_img_file">
 						<div id="review_img">
-							<img src="/yakcook/reviewImg/${i.imgServerFile1}" alt="">
+							<img src="resources/images/review/${i.imgServerFile1}" alt="">
 						</div>
 						<div id="review_img">
-							<img src="/yakcook/reviewImg/${i.imgServerFile2}" alt="">
+							<img src="resources/images/review/${i.imgServerFile2}" alt="">
 						</div>
 						<div id="review_img">
-							<img src="/yakcook/reviewImg/${i.imgServerFile3}" alt="">
+							<img src="resources/images/review/${i.imgServerFile3}" alt="">
 						</div>
 
 					</div>
@@ -62,20 +63,87 @@
 
 		<footer></footer>
 	</div>
-	
-			<%String loginUserId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();%>
-	<script>
 
-	function write_btn() {
-					 if("<%=loginUserId%>" !=null){
-					    location.href='reviewWrite';
-					    
-					 }else{
-					    	alert("회원만 가능한 기능입니다. \n로그인 하시기 바랍니다.")
-					   	 }
-						}
-	</script>
+	<%String loginUserId = null;
+		try{
+			loginUserId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();	
+		}
+		catch(Exception e){
+			loginUserId = null;
+		}%>
+
+
+	<script>
+				$(function(){
+					$('#like_btn').on('click',function(){
+						if("<%=loginUserId%>" !=null && "<%=loginUserId%>" != "null"){
+						alert("참여해주셔서 감사합니다.");
+					$.ajax({
+						url:'reviewLike',
+						type:'post',
+						data:{reviewNo : <%=request.getAttribute("reviewNo")%>},
+						success :function(data){
+								$('#like_count').html(data);
+							},
+						error: function(){
+							alert('ERROR');
+							}
+						})
+				}else{
+						alert('회원만 가능한 기능입니다. \로그인 하시기 바랍니다.')
+					}
+				})
+			})
+		
 	
+	
+	$(function(){
+		$('#declaration').on('click',function(){
+			if("<%=loginUserId%>" !=null && "<%=loginUserId%>" != "null"){
+				$.ajax({
+					url:'declaration',
+					type:'post',
+					data:{reviewNo : <%=request.getAttribute("reviewNo")%>},
+					success :function(data){
+						alert('신고가 접수되었습니다.')
+					},
+					error: function(){
+						alert('ERROR');
+					}
+				})
+			}else{
+				alert('회원만 가능한 기능입니다. \로그인 하시기 바랍니다.')
+			}
+		})
+	})
+	
+	
+	$(function(){
+		  $('#delete').on('click',function(){
+		         if(confirm("게시물을 삭제하시겠습니까?")){  
+		    $.ajax({   
+		         url:'reviewDelete',  
+		         type:'post',  
+		         data: {reviewNo:<%=request.getAttribute("reviewNo")%>,userId:"<%=loginUserId%>"},
+		         success : function(data){  
+		                   alert(data);
+		                   location.href='/yakcook/reviewList';
+		           },
+		          error : function(){
+		          alert('게시물 삭제를 실패하였습니다.');
+		          }
+		    });   
+		   }
+		  });
+		  
+		});
+
+
+
+	
+	
+</script>
+
 
 </body>
 </html>

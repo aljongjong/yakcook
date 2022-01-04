@@ -39,17 +39,27 @@ public class ReviewService {
 
 		// p(currentPage)를 int형으로 변환함
 		int p = Integer.parseInt(currentPage);
-		int endNo = p * reviewLimit; // 끝페이지
-		int startNo = endNo - reviewLimit + 1;// 시작페이지
+		System.out.println(p);
+		int startNo = 0;
+		int endNo = p*9;
+		if(p<=1) {
+			startNo = 1;
+		}
+		else if(p>1) {
+			startNo = (p+((p-1)*8));
+		}
+		else {
+			System.out.println("error");
+		}
 		
 		List<ReviewListVo> reviewList = new ReviewDao().getReviewList(conn, startNo, endNo);
 
 		close(conn);
 		return reviewList;
-
-		// 쿼리준비
-
 	}
+	
+
+	
 
 	// 리뷰 개수를 알아보는 메소드 호출
 	public int countReviewAll(Connection conn) {
@@ -105,6 +115,6 @@ public class ReviewService {
 		Connection conn = getConnection();
 		return new ReviewDao().declarationUp(conn, no);
 	}
-
+	
 
 }
