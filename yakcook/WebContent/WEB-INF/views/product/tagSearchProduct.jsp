@@ -24,6 +24,10 @@
                 	</c:if>
                 </c:forEach>
                 </div>
+<!-- 세션에 로그인 유저 있을 경우 -->	<c:if test="${loginUser != null}"></c:if>
+<!-- 세션에 로그인 유저 없을 경우 -->	<c:if test="${loginUser == null}">
+								<!-- 로그인이 필요합니다. 로그인 창으로 이동하시겠습니까? -->
+								</c:if>
                 <div class="sb">
                 	<form action="shoppingBasket" method="POST" style="display:inline;">
                 		<input type="hidden" name="productNo" value="${ts.productNo}">
@@ -35,19 +39,22 @@
                 	</form>
                 </div>
                 <div class="sp_name_price">
-                
-                <form action="detailsProduct" method="POST" style="display:inline-block; float:left">
-                	<input type="hidden" name="productNo" value="${ts.productNo}">
-                	<input type="hidden" name="price" value="${ts.price}">
-                	<input type="hidden" name="categoryDate" value="${ts.categoryDate}">
-                	<input type="hidden" name="productContents" value="${ts.productContents}">
-                	<input type="hidden" name="productDelete" value="${ts.productDelete}">
-                	<input type="hidden" name="lasteditDate" value="${ts.lasteditDate}">
-                	<input type="hidden" name="inventory" value="${ts.inventory}">
-                	<input type="hidden" name="categoryNo" value="${ts.categoryNo}">
-                    <input type="submit" name="productName" value="${ts.productName}" id="searchProductTodetails">
-                </form>
-                    <a style="float:right">${ts.price}원</a>
+	                <div>
+		                <form action="detailsProduct" method="POST" style="display:inline-block; float:left">
+		                	<input type="hidden" name="productNo" value="${ts.productNo}">
+		                	<input type="hidden" name="price" value="${ts.price}">
+		                	<input type="hidden" name="categoryDate" value="${ts.categoryDate}">
+		                	<input type="hidden" name="productContents" value="${ts.productContents}">
+		                	<input type="hidden" name="productDelete" value="${ts.productDelete}">
+		                	<input type="hidden" name="lasteditDate" value="${ts.lasteditDate}">
+		                	<input type="hidden" name="inventory" value="${ts.inventory}">
+		                	<input type="hidden" name="categoryNo" value="${ts.categoryNo}">
+		                    <input type="submit" name="productName" value="${ts.productName}" id="searchProductTodetails">
+		                </form>
+	                </div>
+	                <div>
+	                    <a style="float:right">${ts.price}원</a>
+	                </div>
                 </div>
                 <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
                 <c:forEach items="${tagProductList}" var="tp">

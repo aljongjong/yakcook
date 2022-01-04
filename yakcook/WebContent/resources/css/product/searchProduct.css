@@ -1,4 +1,4 @@
-@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
 /* 프레임 */
 *
 {
@@ -25,7 +25,6 @@
     width: 240px;
     height: 100%;
     float: left;
-    border-right: 1px solid gainsboro;
 }
 .categoryHorizon
 {
@@ -37,9 +36,9 @@
 .products
 {
     width: 958px;
-    height: 100%;
     float: left;
     position: relative;
+    border-left: 1px solid gainsboro;
 }
 /* 카테고리 */
 .category_title
@@ -218,28 +217,28 @@
     text-align: center;
     padding-right: 10px;
 }
+.sp_name_price div:nth-child(1)
+{
+	float: left;
+	width:70%;
+	overflow:hidden;
+}
+.sp_name_price div:nth-child(2)
+{
+	float: left;
+	width:30%
+}
 .sp_name_price a
 {
     color: #262626;
     text-decoration: none;
-    line-height: 1.5;
     font-size: 13px;
     font-weight: 600;
+    line-height: 2.2;
 }
 .sp_name_price a:nth-child(1)
 {
     display: block;
-    width: 70%;
-    float: left;
-}
-.sp_name_price a:nth-child(1):hover
-{
-    text-decoration: underline;
-}
-.sp_name_price a:nth-child(2)
-{
-    width: 30%;
-    line-height: 1.5;
 }
 /* 태그 */
 .sp_tag *
@@ -399,6 +398,7 @@ label
 .manage_product>div
 {
     float: left;
+    overflow:hidden;
 }
 .mp_photo
 {
@@ -646,6 +646,7 @@ td, th
     float: left;
     text-align: center;
     font-size: 14px;
+    overflow:hidden;
 }
 .shoppingBasket_list_each_name>a
 {
@@ -857,10 +858,11 @@ td, th
 .dp_info_name
 {
     height: 50px;
-    font-size: 23px;
+    font-size: 20px;
     font-weight: 700;
     border-bottom: 1px solid gainsboro;
-    line-height: 2;
+    line-height: 3;
+    overflow:hidden;
 }
 .dp_info_stock_review
 {
@@ -1042,6 +1044,7 @@ td, th
     border:none; 
     background: #fff; 
     cursor: pointer;
+    text-align:left;
 }
 #searchProductTodetails:hover
 {

@@ -8,10 +8,20 @@
 <title>태그 검색 창</title>
 <link rel="stylesheet" href="/yakcook/resources/css/tagSearchBar/tagSearchBar.css">
 <script src="https://kit.fontawesome.com/77be500183.js" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 	<body>
         <div class="wrapper">
+        	<div class="yakcook-logo">
+        		<img src="resources/images/product/logoGreen.png">
+        	</div>
+        	<div class="info-searchBar">
+        		<p>
+        			약cook의 태그 검색 기능으로 원하는 상품을 빠르게 검색해보세요!<br>
+        			(브랜드명, 영양제 종류, 섭취 형태 등 다양한 검색 키워드를 제공합니다)
+       			</p>
+        	</div>
             <div class="search-input">
             <form action="tagSearchProduct" method="GET">
                 <input type="text" placeholder="태그 키워드를 검색해보세요!" name="tagName">            

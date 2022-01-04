@@ -21,6 +21,6 @@ public class TagSearchBar extends HttpServlet {
 		List<TagVo> list = new ServiceProduct().registerTagList();
 		
 		req.setAttribute("tagList", list);
-		req.getRequestDispatcher("/tagSearchBar/tagSearchBar.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/views/product/tagSearchBar.jsp").forward(req, resp);
 	}
 }
