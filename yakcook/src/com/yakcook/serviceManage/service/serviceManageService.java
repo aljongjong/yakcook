@@ -75,4 +75,55 @@ public class serviceManageService {
 		return NV;
 	}
 
+	public int addFAQ(FAQVo fv) {
+		Connection conn = getConnection();
+		int categoryNo = new manageServiceDao().getCategoryNumber(conn, fv);
+		int result = new manageServiceDao().addFAQ(conn, fv, categoryNo);
+		close(conn);
+		return result;
+	}
+
+	public int FAQDel(int faqNo) {
+		Connection conn = getConnection();
+		int result = new manageServiceDao().FAQdel(conn, faqNo);
+		close(conn);
+		return result;
+	}
+
+	public FAQVo getFAQ(int fAQNum) {
+		Connection conn = getConnection();
+		FAQVo fv = new manageServiceDao().getFAQSelected(conn, fAQNum);
+		close(conn);
+		return fv;
+	}
+
+	public int modiFAQ(FAQVo fv) {
+		Connection conn = getConnection();
+		int categoryNo = new manageServiceDao().getCategoryNumber(conn, fv);
+		int result = new manageServiceDao().modiFAQ(conn, fv, categoryNo);
+		close(conn);
+		return result;
+	}
+
+	public int addNotice(noticeVo nv) {
+		Connection conn = getConnection();
+		int result = new manageServiceDao().addNotice(conn, nv);
+		close(conn);
+		return result;
+	}
+
+	public int noticeDel(int noticeNo) {
+		Connection conn = getConnection();
+		int result = new manageServiceDao().noticeDel(conn, noticeNo);
+		close(conn);
+		return result;
+	}
+
+	public int modiNotice(noticeVo NV) {
+		Connection conn = getConnection();
+		int result = new manageServiceDao().modiNotice(conn, NV);
+		close(conn);
+		return result;
+	}
+
 }

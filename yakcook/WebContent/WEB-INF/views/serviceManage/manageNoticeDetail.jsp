@@ -40,12 +40,31 @@
     window.onload=()=>{
 		$('.logoutbtn').on('click', function(){
 			window.location = "/yakcook/managerlogout";
-        });  	
+        });
 		$('#noticemodi').on('click', function(){
-			
+			let url = "/yakcook/modinotice?noticeNo=${NV.noticeNo}";
+			window.location = url;
 		});
 		$('#noticedel').on('click', function(){
-			
+        	$.ajax({
+        		url : '/yakcook/delnotice',
+        		method : 'get',
+        		data: {
+        			noticeNo : ${NV.noticeNo}
+        		},
+        		success : function(result){
+       				const data1 = $.trim(result);
+       				if(data1 == "true"){
+       					alert("공지 삭제 완료");
+       					window.location.replace("/yakcook/managenotice");
+        			} else {
+        				alert("공지 삭제 실패")
+        			}	
+        		},
+        		error : function(err){
+        			alert("error");
+        		}
+        	});
 		});
 	}
     </script>

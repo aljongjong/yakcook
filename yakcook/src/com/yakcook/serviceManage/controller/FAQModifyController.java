@@ -11,27 +11,32 @@ import javax.servlet.http.HttpServletResponse;
 import com.yakcook.serviceManage.model.vo.FAQVo;
 import com.yakcook.serviceManage.service.serviceManageService;
 
-
-@WebServlet("/faqadd")
-public class FAQAddController extends HttpServlet {
+@WebServlet("/modiFAQ")
+public class FAQModifyController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/views/serviceManage/addFAQ.jsp").forward(req, resp);
+		int FAQNum = Integer.parseInt(req.getParameter("FAQNum"));
+		FAQVo fv = new serviceManageService().getFAQ(FAQNum);
+		req.setAttribute("fv", fv);
+		req.getRequestDispatcher("/WEB-INF/views/serviceManage/modifyFAQ.jsp").forward(req, resp);
 	}
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int FAQNum = Integer.parseInt(req.getParameter("faqNumber"));
 		String title = req.getParameter("faqTitle");
 		String category = req.getParameter("category");
 		String contents = req.getParameter("faqContents");
 		int managerNo = Integer.parseInt(req.getParameter("manageNo"));
 		
 		FAQVo fv = new FAQVo();
+		fv.setFaqNumber(FAQNum);
 		fv.setCategory(category);
 		fv.setFaqContent(contents);
 		fv.setFaqTitle(title);
 		fv.setManagerNumber(managerNo);
 		
-		int result = new serviceManageService().addFAQ(fv);
+		int result = new serviceManageService().modiFAQ(fv);
 		
 		if(result != 1) {
 			resp.setContentType("text/html; charset=UTF-8");
@@ -40,6 +45,5 @@ public class FAQAddController extends HttpServlet {
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().print(true);
 		}
-		
 	}
 }

@@ -28,7 +28,7 @@
             <ul id="navi">
                 <li><a href="/yakcook/userlist">회원관리</a></li>
                 <li><a href="/yakcook/taglist">태그관리</a></li>
-                <li><a href="#">제품관리</a></li>
+                <li><a href="/yakcook/manageProduct">제품관리</a></li>
                 <li><a href="/yakcook/managenotice">공지사항</a></li>
                 <li><a href="/yakcook/manageFAQ">FAQ</a></li>
                 <li><a href="#">1대1문의</a></li>

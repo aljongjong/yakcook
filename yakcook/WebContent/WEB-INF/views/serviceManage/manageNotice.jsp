@@ -57,6 +57,9 @@
     	$('.logoutbtn').on('click', function(){
 			window.location = "/yakcook/managerlogout";
         }); 
+    	$('#noticeadd').on('click', function(){
+			window.location = "/yakcook/addnotice";
+        }); 
     }
     </script>
 </body>

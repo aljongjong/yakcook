@@ -19,7 +19,7 @@ public class customerServiceDao {
 	public int countFAQAll(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT COUNT(FAQ_NUMBER) FROM FAQ";
+		String sql = "SELECT COUNT(FAQ_NUMBER) FROM FAQ WHERE DELETE_YN='N'";
 		int count = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -41,7 +41,7 @@ public class customerServiceDao {
 		ResultSet rs = null;
 		String sql = "SELECT COUNT(FAQ_NUMBER) FROM FAQ F "
 				+ "JOIN CUSTOMER_CATEGORY C ON (F.CATEGORY_NUMBER = C.CATEGORY_NUMBER) "
-				+ "WHERE C.CATEGORY_NAME = ?";
+				+ "WHERE C.CATEGORY_NAME = ? AND DELETE_YN='N'";
 		int count = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -61,7 +61,8 @@ public class customerServiceDao {
 
 	public ArrayList<FAQVo> getFAQAll(Connection conn, pagingVo pv) {
 		PreparedStatement pstmt = null;
-		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , F.*, C.CATEGORY_NAME FROM FAQ F JOIN CUSTOMER_CATEGORY C ON (F.CATEGORY_NUMBER = C.CATEGORY_NUMBER) )WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM "
+				+ "( SELECT ROWNUM AS RNUM , F.*, C.CATEGORY_NAME FROM FAQ F JOIN CUSTOMER_CATEGORY C ON (F.CATEGORY_NUMBER = C.CATEGORY_NUMBER) WHERE DELETE_YN='N' )WHERE RNUM BETWEEN ? AND ?";
 		ResultSet rs = null;
 		ArrayList<FAQVo> faqList = new ArrayList<FAQVo>();
 		
@@ -86,7 +87,8 @@ public class customerServiceDao {
 
 	public ArrayList<FAQVo> getFAQ(Connection conn, String value, pagingVo pv) {
 		PreparedStatement pstmt = null;
-		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , F.*, C.CATEGORY_NAME FROM FAQ F JOIN CUSTOMER_CATEGORY C ON (F.CATEGORY_NUMBER = C.CATEGORY_NUMBER) WHERE CATEGORY_NAME = ?)WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM "
+				+ "( SELECT ROWNUM AS RNUM , F.*, C.CATEGORY_NAME FROM FAQ F JOIN CUSTOMER_CATEGORY C ON (F.CATEGORY_NUMBER = C.CATEGORY_NUMBER) WHERE CATEGORY_NAME = ? AND DELETE_YN='N')WHERE RNUM BETWEEN ? AND ?";
 		ResultSet rs = null;
 		ArrayList<FAQVo> faqList = new ArrayList<FAQVo>();
 		
@@ -113,7 +115,7 @@ public class customerServiceDao {
 	public int countNotice(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT COUNT(NOTICE_NUMBER) FROM NOTICE";
+		String sql = "SELECT COUNT(NOTICE_NUMBER) FROM NOTICE WHERE DELETE_YN='N'";
 		int count = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -132,7 +134,7 @@ public class customerServiceDao {
 
 	public ArrayList<noticeVo> getNotice(Connection conn, pagingVo pv) {
 		PreparedStatement pstmt = null;
-		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , N.* FROM NOTICE N)WHERE RNUM BETWEEN ? AND ?"
+		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , N.* FROM NOTICE N WHERE DELETE_YN='N')WHERE RNUM BETWEEN ? AND ?"
 				+ "ORDER BY WRITE_DATE DESC";
 		ResultSet rs = null;
 		ArrayList<noticeVo> noticeList = new ArrayList<noticeVo>();
@@ -158,7 +160,7 @@ public class customerServiceDao {
 
 	public noticeVo getNoticeDetail(Connection conn, int noticeNumber) {
 		PreparedStatement pstmt = null;
-		String sql = "SELECT * FROM NOTICE WHERE NOTICE_NUMBER = ?";
+		String sql = "SELECT * FROM NOTICE WHERE NOTICE_NUMBER = ? AND DELETE_YN='N'";
 		ResultSet rs = null;
 		noticeVo NV = null;
 		
