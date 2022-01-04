@@ -38,7 +38,8 @@ public class ReviewListCotroller extends HttpServlet {
 		// 조회해온 리뷰데이터를 ReviewList(리뷰목록에 넘겨줌)
 		int maxPage = 4;
 		req.setAttribute("maxPage", maxPage);
-
+		
+		
 		int startPage = Integer.parseInt(currentPage) - 2;
 
 		if (startPage <= 0)
@@ -46,12 +47,13 @@ public class ReviewListCotroller extends HttpServlet {
 		int endPage = startPage + 5;// pageLimit
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
-		
-	        
 	        //현재 로그인 한 회원의 세션 정보 가져오기
+		
 		// page 갯수 정하는 코드
+		
 		List<ReviewListVo> reviewList = new ReviewService().selectReview(currentPage);
 		// reviewList로 data(reviewList)를 전송해줌.
+		
 		req.setAttribute("data", reviewList);
 		req.getRequestDispatcher("WEB-INF/views/review/reviewList.jsp").forward(req, resp);
 	}
