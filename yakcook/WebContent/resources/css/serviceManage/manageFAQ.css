@@ -61,18 +61,29 @@ th{
     width: 20%;
 }
 .t2{
-    width: 80%;
+    width: 70%;
     text-align: left;
 }
 
-.view>td:first-child{
+.view>td:nth-of-type(2){
     text-align: center;
     color: rgb(250, 174, 088);
     font-weight: bold;
 }
-
 .view:hover{
 	cursor: pointer;
+}
+
+td>input {
+    box-sizing: border-box;
+    background-color: white;
+    width: 100%;
+    height: 30px;
+    border: none;
+}
+td>input:hover{
+    background-color: rgb(250, 174, 088);
+    cursor: pointer;
 }
 
 .btnWrap{
@@ -134,4 +145,7 @@ th{
 }
 .paging:hover{
 	background-color: rgb(250, 174, 088);
+}
+.hidetd{
+	display:none;
 }

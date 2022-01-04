@@ -10,6 +10,10 @@ public class noticeVo {
 	private String noticeContent;
 	private Timestamp writeDate;
 
+	public noticeVo() {
+		
+	}
+	
 	public noticeVo(int noticeNo, int managerNo, String noticeTitle, String noticeContent, Timestamp writeDate) {
 		this.noticeNo = noticeNo;
 		this.managerNo = managerNo;

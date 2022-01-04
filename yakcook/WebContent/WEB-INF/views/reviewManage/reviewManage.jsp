@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<title>FAQ 목록</title>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>리뷰 관리</title>
 <link rel="stylesheet" href="/yakcook/resources/css/serviceManage/manageFAQ.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -11,14 +15,8 @@
 	
 	<section>
 	<div id="tableWrap">
-            <span class="title">자주 찾는 질문 FAQ</span>
+            <span class="title">리뷰 관리</span>
             <br>
-            <a href="manageFAQ" class="category">전체</a>
-            <a href="manageFAQ?category=제품" class="category">제품</a>
-            <a href="manageFAQ?category=회원관리" class="category">회원관리</a>
-            <a href="manageFAQ?category=주문/결제" class="category">주문/결제</a>
-            <a href="manageFAQ?category=교환/반품" class="category">교환/반품</a>
-            <a href="manageFAQ?category=기타" class="category">기타</a>
             <table>
                 <tr>
                     <th class="t1">분류</th>
@@ -125,5 +123,6 @@
         });  
     }
     </script>
+
 </body>
 </html>

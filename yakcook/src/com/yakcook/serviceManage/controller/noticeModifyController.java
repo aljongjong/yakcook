@@ -8,30 +8,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yakcook.serviceManage.model.vo.FAQVo;
+import com.yakcook.serviceManage.model.vo.noticeVo;
 import com.yakcook.serviceManage.service.serviceManageService;
 
-
-@WebServlet("/faqadd")
-public class FAQAddController extends HttpServlet {
+@WebServlet("/modinotice")
+public class noticeModifyController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/views/serviceManage/addFAQ.jsp").forward(req, resp);
+		int noticeNo = Integer.parseInt(req.getParameter("noticeNo"));
+		noticeVo NV = new serviceManageService().getNoticeDetail(noticeNo);
+		req.setAttribute("NV", NV);
+		req.getRequestDispatcher("/WEB-INF/views/serviceManage/modifyNotice.jsp").forward(req, resp);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String title = req.getParameter("faqTitle");
-		String category = req.getParameter("category");
-		String contents = req.getParameter("faqContents");
+		int noticeNumber = Integer.parseInt(req.getParameter("noticeNumber"));
+		String title = req.getParameter("noticeTitle");
+		String contents = req.getParameter("noticeContents");
 		int managerNo = Integer.parseInt(req.getParameter("manageNo"));
 		
-		FAQVo fv = new FAQVo();
-		fv.setCategory(category);
-		fv.setFaqContent(contents);
-		fv.setFaqTitle(title);
-		fv.setManagerNumber(managerNo);
+		noticeVo NV = new noticeVo();
+		NV.setManagerNo(managerNo);
+		NV.setNoticeContent(contents);
+		NV.setNoticeNo(noticeNumber);
+		NV.setNoticeTitle(title);
+
 		
-		int result = new serviceManageService().addFAQ(fv);
+		int result = new serviceManageService().modiNotice(NV);
 		
 		if(result != 1) {
 			resp.setContentType("text/html; charset=UTF-8");
@@ -40,6 +43,5 @@ public class FAQAddController extends HttpServlet {
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().print(true);
 		}
-		
 	}
 }
