@@ -10,7 +10,10 @@
 <link rel="stylesheet"
 	href="/yakcook/resources/css/review/detailReview.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
 
+
+</style>
 
 
 </head>
@@ -18,12 +21,14 @@
 	<div id="wrap">
 
 		<header></header>
-
-		<section>
-			<c:forEach items="${qnaLiat}" var="q">
+			<c:forEach items="${qnaList}" var="q">
+			<form action = "qnadelete" method = "get">
 					<div id="qnd_title">
-						<span>${q.qna_no}</span> <span id>${q.qna_title}</span>
-						<span id="writer">${q.uesr_id}</span> <span id="date">${q.qna_date}</span>
+						
+						문의 번호 : <input type = "text" id = "qnano" name = "qnano" value = "${q.qna_no}" readonly style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"><br>
+						아이디 : <input type = "text" id = "userId" name = "userId" value = "${q.user_id}" readonly style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"><br>
+						제목 : <input type = "text" id = "qnatitle" name = "qnatitle" value = "${q.qna_title}" readonly style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"><br>
+						
 					</div>
 
 					<div id="review_contents">${q.qna_content}</div>
@@ -32,10 +37,10 @@
 
 					<div id="review_button">
 						<button type="button" onclick="location.href='memberQuestion'">목록으로</button>
-						<button type="button" id="delete">삭제하기</button>
+						<input type="submit" value = "삭제">
 					</div>
+					</form>
 			</c:forEach>
-		</section>
 
 
 

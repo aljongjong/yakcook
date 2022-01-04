@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.yakcook.common.JDBCTemplate;
+import com.yakcook.member.model.service.MemberService;
 import com.yakcook.member.model.vo.MemberVo;
 import com.yakcook.review.vo.ReviewListVo;
 import com.yakcook.review.vo.ReviewListVo;
@@ -32,46 +33,8 @@ public class memberReviewListController extends HttpServlet {
 		String loginUserId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();
 		System.out.println("현재 로그인 아이디!!!!!!!! : "+ loginUserId);
 		
-		/*
-		 * req.getRequestDispatcher("WEB-INF/views/member/memberReviewList.jsp").forward
-		 * (req, resp);
-		 */
+		List<ReviewListVo> reviewList = new MemberService().reviewListAll(loginUserId);
 		
-		Connection conn = JDBCTemplate.getConnection();
-		
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "SELECT * FROM REVIEW WHERE USER_ID = ?";
-		List<ReviewListVo> reviewList = new ArrayList<ReviewListVo>();
-		
-		// 쿼리 날리기
-		try{
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,loginUserId);
-			rs = pstmt.executeQuery();
-			// 데이터 꺼내오기
-			while(rs.next()) {
-				int reviewNo = rs.getInt("REVIEW_NO");
-				String userId = rs.getString("USER_ID"); 
-				String reviewTitle = rs.getString("REVIEW_TITLE");
-				String reviewContents = rs.getString("REVIEW_CONTENTS");
-				int reviewLike = rs.getInt("REVIEW_LIKE");
-				int reviewViews = rs.getInt("REVIEW_VIEWS");
-				
-				ReviewListVo r = new ReviewListVo();
-				r.setReviewNo(reviewNo);
-				r.setUserId(userId); 
-				r.setReviewTitle(reviewTitle);
-				r.setReviewContents(reviewContents);
-				r.setReviewLike(reviewLike);
-				r.setReviewViews(reviewViews);
-				
-				reviewList.add(r);
-			}
-
-		}catch (SQLException e) {
-			e.printStackTrace();
-		}
 		req.setAttribute("data", reviewList);
 		req.getRequestDispatcher("/WEB-INF/views/member/memberReviewList.jsp").forward(req, resp);
 	}

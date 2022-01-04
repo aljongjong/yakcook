@@ -13,6 +13,7 @@ import java.util.List;
 import com.yakcook.common.JDBCTemplate;
 import com.yakcook.member.model.vo.MemberQnAVo;
 import com.yakcook.member.model.vo.MemberVo;
+import com.yakcook.review.vo.ReviewListVo;
 
 public class MemberDao {
 	public int insertMember(Connection conn, MemberVo m) throws SQLException {
@@ -292,30 +293,24 @@ public class MemberDao {
 	public List<MemberQnAVo> detailQnaView(Connection conn, int no) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		String sql = "SELECT * FROM QnA WHERE QnA_NO = ?";
 		MemberQnAVo q = null;
-		List QnAListView = new ArrayList<MemberQnAVo>();
-		
+		String sql = "SELECT * FROM QnA WHERE QNA_NO = ?";
+		List<MemberQnAVo> QnAListView = new ArrayList<MemberQnAVo>();
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+			while(rs.next()) {
 				int qna_no = rs.getInt("QNA_NO");
 				String qna_title = rs.getString("QNA_TITLE");
 				String qna_content = rs.getString("QNA_CONTENT");
-				Timestamp qna_data = rs.getTimestamp("QNA_DATA");
 				String user_id = rs.getString("USER_ID");
 				
 				q = new MemberQnAVo();
 				q.setQna_no(qna_no);
 				q.setQna_title(qna_title);
 				q.setQna_content(qna_content);
-				q.setQna_date(qna_data);
-				q.setUser_id(user_id);
-				
+				q.setUser_id(user_id);				
 				QnAListView.add(q);
 			}
 		} catch (SQLException e) {
@@ -323,9 +318,101 @@ public class MemberDao {
 		}finally {
 			close(conn);
 			close(pstmt);
+			close(rs);
 		}
-				
 		return QnAListView;
+	}
+
+	public int deleteQnA(Connection conn, int no, String id) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "UPDATE QnA SET QUIT_YN = 'Y' WHERE QNA_NO = ? AND USER_ID = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			pstmt.setString(2, id);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public static List<MemberQnAVo> qnaListAll(Connection conn, String loginUserId) {
+		PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String sql = "SELECT * FROM QnA WHERE USER_ID = ? AND QUIT_YN = 'N'";
+	      List<MemberQnAVo> qnaList = new ArrayList<MemberQnAVo>();
+	      
+	      // 쿼리 날리기
+	      try{
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setString(1,loginUserId);
+	         rs = pstmt.executeQuery();
+	         // 데이터 꺼내오기
+	         while(rs.next()) {
+	            int qna_no = rs.getInt("QNA_NO");
+	            String user_id = rs.getString("USER_ID");
+	            String qna_title = rs.getString("QNA_TITLE"); 
+	            String qna_content = rs.getString("QNA_CONTENT");
+	            
+	            MemberQnAVo q = new MemberQnAVo();
+	            q.setQna_no(qna_no);
+	            q.setUser_id(user_id);
+	            q.setQna_title(qna_title);
+	            q.setQna_content(qna_content);
+
+	            qnaList.add(q);
+	         }
+
+	      }catch (SQLException e) {
+	         e.printStackTrace();
+	      }
+
+		return qnaList;
+	}
+
+	public static List<ReviewListVo> reviewListAll(Connection conn, String loginUserId) {
+		 PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String sql = "SELECT * FROM REVIEW WHERE USER_ID = ? AND REVIEW_DELETE = 'N'";
+	      List<ReviewListVo> reviewList = new ArrayList<ReviewListVo>();
+	      
+	      // 쿼리 날리기
+	      try{
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setString(1,loginUserId);
+	         rs = pstmt.executeQuery();
+	         // 데이터 꺼내오기
+	         while(rs.next()) {
+	            int reviewNo = rs.getInt("REVIEW_NO");
+	            String userId = rs.getString("USER_ID"); 
+	            String reviewTitle = rs.getString("REVIEW_TITLE");
+	            String reviewContents = rs.getString("REVIEW_CONTENTS");
+	            int reviewLike = rs.getInt("REVIEW_LIKE");
+	            int reviewViews = rs.getInt("REVIEW_VIEWS");
+	            
+	            ReviewListVo r = new ReviewListVo();
+	            r.setReviewNo(reviewNo);
+	            r.setUserId(userId); 
+	            r.setReviewTitle(reviewTitle);
+	            r.setReviewContents(reviewContents);
+	            r.setReviewLike(reviewLike);
+	            r.setReviewViews(reviewViews);
+	            
+	            reviewList.add(r);
+	         }
+
+	      }catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return reviewList;
 	}
 	 
 }

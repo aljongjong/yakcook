@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.yakcook.common.JDBCTemplate;
+import com.yakcook.member.model.service.MemberService;
 import com.yakcook.member.model.vo.MemberQnAVo;
 import com.yakcook.member.model.vo.MemberVo;
 
@@ -30,39 +31,9 @@ public class MemberQuestionController extends HttpServlet{
 		String loginUserId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();
 		System.out.println("현재 로그인 아이디 질문! : "+ loginUserId);
 		
+		List<MemberQnAVo> qnalist = new MemberService().qnaListAll(loginUserId);
 		
-		Connection conn = JDBCTemplate.getConnection();
-		
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "SELECT * FROM QnA WHERE USER_ID = ?";
-		List<MemberQnAVo> qnaList = new ArrayList<MemberQnAVo>();
-		
-		// 쿼리 날리기
-		try{
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,loginUserId);
-			rs = pstmt.executeQuery();
-			// 데이터 꺼내오기
-			while(rs.next()) {
-				int qna_no = rs.getInt("QNA_NO");
-				String user_id = rs.getString("USER_ID");
-				String qna_title = rs.getString("QNA_TITLE"); 
-				String qna_content = rs.getString("QNA_CONTENT");
-				
-				MemberQnAVo q = new MemberQnAVo();
-				q.setQna_no(qna_no);
-				q.setUser_id(user_id);
-				q.setQna_title(qna_title);
-				q.setQna_content(qna_content);
-
-				qnaList.add(q);
-			}
-
-		}catch (SQLException e) {
-			e.printStackTrace();
-		}
-		req.setAttribute("data", qnaList);
+		req.setAttribute("qnaList", qnalist);
 		req.getRequestDispatcher("/WEB-INF/views/member/memberQuestion.jsp").forward(req, resp);
 	}
 }
