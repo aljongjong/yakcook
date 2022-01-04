@@ -13,6 +13,7 @@ public class ReviewListVo {
 	private int reviewViews;
 	private String reviewDelete;
 	private String reviewImg;
+	private String reason ;
 	
 	
 	
@@ -27,6 +28,7 @@ public class ReviewListVo {
 		this.reviewViews = reviewViews;
 		this.reviewDelete = reviewDelete;
 		this.reviewImg = reviewImg;
+		this.reason = reason;
 	}
 	public int getReviewNo() {
 		return reviewNo;
@@ -88,6 +90,13 @@ public class ReviewListVo {
 	public void setReviewImg(String reviewImg) {
 		this.reviewImg = reviewImg;
 	}
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
 	
 	
 }

@@ -48,9 +48,12 @@
 
 					<div id="review_button">
 						<button type="button" onclick="location.href='reviewList'">목록으로</button>
-						<button type="button" id="declaration">신고하기</button>
+						<form>
+						<button type="button" id="declaration_btn"  >신고하기</button>
+						
 						<button type="button" id="delete">삭제하기</button>
 					</div>
+					
 					<h3 id="like_count">${d.reviewLike}</h3>
 					<button type="button" id="like_btn">좋아요</button>
 					<h3>조회수 :${d.reviewViews}</h3>
@@ -74,6 +77,9 @@
 
 
 	<script>
+	
+	
+	//게시물좋아요
 				$(function(){
 					$('#like_btn').on('click',function(){
 						if("<%=loginUserId%>" !=null && "<%=loginUserId%>" != "null"){
@@ -97,26 +103,7 @@
 		
 	
 	
-	$(function(){
-		$('#declaration').on('click',function(){
-			if("<%=loginUserId%>" !=null && "<%=loginUserId%>" != "null"){
-				$.ajax({
-					url:'declaration',
-					type:'post',
-					data:{reviewNo : <%=request.getAttribute("reviewNo")%>},
-					success :function(data){
-						alert('신고가 접수되었습니다.')
-					},
-					error: function(){
-						alert('ERROR');
-					}
-				})
-			}else{
-				alert('회원만 가능한 기능입니다. \로그인 하시기 바랍니다.')
-			}
-		})
-	})
-	
+	//게시물삭제
 	
 	$(function(){
 		  $('#delete').on('click',function(){
@@ -139,7 +126,21 @@
 		});
 
 
-
+	
+	//게시물신고
+	$(function(){
+		
+		$('#declaration_btn').on('click',function(){
+			if("<%=loginUserId%>" !=null && "<%=loginUserId%>" !="null"){
+				
+				window.open("declarationPopup?reviewNo=<%=request.getAttribute("reviewNo")%>","declaration","width=400,height=300,left=100,top=50")
+				
+			}else{
+				alert('회원만 가능한 기능입니다. \n 로그인 하시길 바랍니다.')
+			}
+		})
+	})
+	
 	
 	
 </script>

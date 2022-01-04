@@ -15,7 +15,7 @@
 <script src="https://js.tosspayments.com/v1"></script>
 <script>
 	function toss_popup() {
-		var tossPayments = TossPayments("test_ck_k6bJXmgo28e9WMkEoLY8LAnGKWx4");
+		var tossPayments = TossPayments("test_ck_dP9BRQmyarYyoMg1pNarJ07KzLNk");
 		var button = document.getElementById("payment-button");
 
 		var orderId = new Date().getTime();
@@ -223,7 +223,7 @@
 					<%
 					String loginUserId = ((MemberVo) session.getAttribute("loginUser")).getUser_id();
 					%>
-					<input type="hidden" name="userId" value="<%=loginUserId%> ">
+					<input type="hidden" name="userId" value="<%=loginUserId%>">
 			</form>
 		</section>
 		<p>----------------------</p>

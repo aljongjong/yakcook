@@ -20,17 +20,15 @@ public class paymentSuccessController extends HttpServlet {
 		// amout값과 총상품가격(DB에저장된) 이 같은지 비교를 한다.
 		
 		
-		String paymentKey = req.getParameter("paymentKey");
 		String orderId = req.getParameter("orderId");
 
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create(
-						"https://api.tosspayments.com/v1/payments/"+paymentKey))
+						"https://api.tosspayments.com/v1/payments/test_sk_YoEjb0gm23Pd17W2qek3pGwBJn5e"))
 				.header("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==")
 				.header("Content-Type", "application/json")
-				.method("POST",
-						HttpRequest.BodyPublishers.ofString("{\"amount\":15000,\"orderId\":\""+orderId+"\"}"))
-				.build();
+				.method("POST", HttpRequest.BodyPublishers.ofString("{\"amount\":15000,\"orderId\":\"K2eeCEJEuzKbfV1MEoO4N\"}"))
+			    .build();
 		HttpResponse<String> response;
 		try {
 			response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
@@ -42,4 +40,3 @@ public class paymentSuccessController extends HttpServlet {
 		
 		
 	}
-}
