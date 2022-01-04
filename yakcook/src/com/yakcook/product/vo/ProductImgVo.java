@@ -24,6 +24,4 @@ public class ProductImgVo {
 	public void setProductImgName(String productImgName) {
 		this.productImgName = productImgName;
 	}
-	
-	
 }

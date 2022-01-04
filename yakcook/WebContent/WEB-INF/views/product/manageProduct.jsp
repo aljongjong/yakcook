@@ -11,6 +11,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </head>
     <body>
+    	<%@ include file="/WEB-INF/views/manager/managerHeader.jsp" %>
+
         <div class="wrap">
             <div class="category">
             <div class="category_title">상세 메뉴</div>
@@ -235,6 +237,11 @@
         			return false;
         		}
         	}
+        	
+        	
+        	$('.logoutbtn').on('click', function(){
+                window.location = "/yakcook/managerlogout";
+            });
         
         </script>
     </body>

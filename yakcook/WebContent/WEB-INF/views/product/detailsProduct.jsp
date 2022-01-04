@@ -93,9 +93,11 @@
 					<div>총 상품 가격 : </div>
 					<c:if test="${detailsProduct.price < 100000}">
 						<div id="dpTotal">${detailsProduct.price + 2500}</div><span style="font-size:14px"> 원</span>
+						<input type="hidden" value="" id="toPtotalPrice">
 					</c:if>
 					<c:if test="${detailsProduct.price >= 100000}">
 						<div id="dpTotal">${detailsProduct.price}</div><span style="font-size:14px"> 원</span>
+						<input type="hidden" value="" id="toPtotalPrice">
 					</c:if>
                 </div>
 
@@ -105,28 +107,47 @@
 	                </div>
             	</div>
             	
-<!-- 세션에 로그인 유저 있을 경우 -->	<c:if test="${loginUser != null}"></c:if>
-<!-- 세션에 로그인 유저 없을 경우 -->	<c:if test="${loginUser == null}">
-								<!-- 로그인이 필요합니다. 로그인 창으로 이동하시겠습니까? -->
+<!-- 세션에 로그인 유저 있을 경우 -->	<c:if test="${sessionScope.loginUser != null}">
+									<div class="dp_info_forward_pay_gopay_btn">
+						           		<form action="payment" method="GET">
+						           			<input type="hidden" name="productNo" value="${detailsProduct.productNo}">
+						           			<input type="hidden" name="amount" value="" id="toPamount">
+						           			<input type="hidden" name="totalPrice" value="" id="toPprice">
+						           			<input onclick="toPaymentPage()" type="submit" value="주문 하기" id="detailsProductToPayment">
+						           		</form>
+						            </div>
 								</c:if>
-                <div class="dp_info_forward_pay_gopay_btn">
-                    <a href="#">주문 하기</a>
-                </div>
+<!-- 세션에 로그인 유저 없을 경우 -->  <c:if test="${sessionScope.loginUser == null}">
+									<div onclick="loginAlarm();" class="dp_info_forward_pay_gopay_btn">
+						           		<a href="#">주문 하기</a>
+						            </div>
+								</c:if>
                 
-<!-- 세션에 로그인 유저 있을 경우 -->	<c:if test="${loginUser != null}"></c:if>
-<!-- 세션에 로그인 유저 없을 경우 -->	<c:if test="${loginUser == null}">
-								<!-- 로그인이 필요합니다. 로그인 창으로 이동하시겠습니까? -->
+<!-- 세션에 로그인 유저 있을 경우 -->	<c:if test="${sessionScope.loginUser != null}">
+									<div class="dp_info_forward_pay_backshop_btn">
+						                <form action="shoppingBasket" method="POST" style="display:inline">
+						                	<input type="hidden" name="productNo" value="${detailsProduct.productNo}">
+						                	<input type="hidden" name="price" value="${detailsProduct.price}">
+						                	<input type="hidden" name="amount" value="" id="toSBamount">
+						                	<input type="hidden" name="categoryNo" value="${detailsProduct.categoryNo}">
+						                	<input type="hidden" name="productName" value="${detailsProduct.productName}">
+						                    <input onclick="toShoppingBasket()" type="submit" value="장바구니에 담기" id="detailsProductToShoppingBasket">
+						                </form>
+						            </div>
 								</c:if>
-                <div class="dp_info_forward_pay_backshop_btn">
-                <form action="shoppingBasket" method="POST" style="display:inline">
-                	<input type="hidden" name="productNo" value="${detailsProduct.productNo}">
-                	<input type="hidden" name="price" value="${detailsProduct.price}">
-                	<input type="hidden" name="amount" value="" id="toSBamount">
-                	<input type="hidden" name="categoryNo" value="${detailsProduct.categoryNo}">
-                	<input type="hidden" name="productName" value="${detailsProduct.productName}">
-                    <input onclick="toShoppingBasket()" type="submit" value="장바구니에 담기" id="detailsProductToShoppingBasket">
-                </form>
-            </div>
+<!-- 세션에 로그인 유저 없을 경우 -->	<c:if test="${sessionScope.loginUser == null}">
+									<div class="dp_info_forward_pay_backshop_btn">
+						                <form action="shoppingBasket" method="POST" onsubmit="return loginAlarm();" style="display:inline">
+						                	<input type="hidden" name="productNo" value="${detailsProduct.productNo}">
+						                	<input type="hidden" name="price" value="${detailsProduct.price}">
+						                	<input type="hidden" name="amount" value="" id="toSBamount">
+						                	<input type="hidden" name="categoryNo" value="${detailsProduct.categoryNo}">
+						                	<input type="hidden" name="productName" value="${detailsProduct.productName}">
+						                    <input onclick="toShoppingBasket()" type="submit" value="장바구니에 담기" id="detailsProductToShoppingBasket">
+						                </form>
+						            </div>
+								</c:if>
+                
         </div>
         
 
@@ -201,23 +222,40 @@
     				amount : $("#dpAmount").val()
     			},
     			success : function(result) {
-    				$("#dpTotal").text(result);
+    				$("#dpTotal").text(result),
+    				$("#toPprice").val(result);
     			}
     		});
     	}
+        // 장바구니로 입력한 수량 보낼때
     	function toShoppingBasket() {
     		let amount = document.getElementById("dpAmount");
             let tosbamount = document.getElementById("toSBamount");
             tosbamount.value = amount.value;
             console.log(tosbamount.value);
     	}
-    	
+    	// 주문페이지로 입력한 수량 보낼때, 총 가격 보낼때
+    	function toPaymentPage() {
+    		let amount = document.getElementById("dpAmount");
+    		let topamount = document.getElementById("toPamount");
+    		topamount.value = amount.value;
+    		console.log(topamount.value);
+    		
+    		let toPtotalPrice = document.getElementById("toPtotalPrice");
+    		console.log(toPprice.value);
+    	}
         function maxLengthCheck(object) {
    	    if (object.value.length > object.maxLength) {
    	        object.value = object.value.slice(0, object.maxLength);
    	    }
    	    
-   	}
+   		}
+        
+        // 로그인 알람
+    	function loginAlarm() {
+    		alert("로그인이 필요합니다.");
+    		return false;
+    	}
 
 
     </script>

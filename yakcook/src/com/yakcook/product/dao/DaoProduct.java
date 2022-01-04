@@ -1010,7 +1010,7 @@ public class DaoProduct {
 //	public int registerProduct(Connection conn, ProductVo pv) {
 //		
 //		PreparedStatement pstmt = null;
-//		String sql = "INSERT INTO PRODUCT VALUES (SEQ_PRODUCTNO.NEXTVAL, ?, ?, DEFAULT, ?, DEFAULT, DEFAULT, ?, ?)";
+//		String sql = "INSERT INTO PRODUCT VALUES (SEQ_PRODUCT_NO.NEXTVAL, ?, ?, DEFAULT, ?, DEFAULT, DEFAULT, ?, ?)";
 //		int result = 0;
 //		
 //		try {
@@ -1036,7 +1036,7 @@ public class DaoProduct {
 	public int registerProductTag1(Connection conn, ProductVo pv, int tagNo1, int tagNo2, int tagNo3) {
 		
 		PreparedStatement pstmt = null;
-		String sql1 = "INSERT INTO PRODUCT VALUES (SEQ_PRODUCTNO.NEXTVAL, ?, ?, DEFAULT, ?, DEFAULT, DEFAULT, ?, ?)";
+		String sql1 = "INSERT INTO PRODUCT VALUES (SEQ_PRODUCT_NO.NEXTVAL, ?, ?, DEFAULT, ?, DEFAULT, DEFAULT, ?, ?)";
 		int result1 = 0;
 		
 		try {
@@ -1481,7 +1481,7 @@ public class DaoProduct {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ShoppingBasketVo sv = null;
-		String sql = "SELECT * FROM SHOPPINGBAG WHERE MEMBER_NO = ?";
+		String sql = "SELECT * FROM SHOPPINGBAG WHERE USER_NO = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -1490,7 +1490,7 @@ public class DaoProduct {
 			
 			if(rs.next()) {
 				int shoppingBasketNo = rs.getInt("SHOPPINGBAG_NO");
-				int memberNo = rs.getInt("MEMBER_NO");
+				int memberNo = rs.getInt("USER_NO");
 				
 				sv = new ShoppingBasketVo();
 				
@@ -1518,7 +1518,7 @@ public class DaoProduct {
 		int result = 0;
 		ShoppingBasketVo sv = null;
 		String sql = "INSERT INTO SHOPPINGBAG VALUES(SEQ_SHOPPINGBAG_NO.NEXTVAL, ?)";
-		String sql1 = "SELECT * FROM SHOPPINGBAG WHERE MEMBER_NO = ?";
+		String sql1 = "SELECT * FROM SHOPPINGBAG WHERE USER_NO = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -1541,7 +1541,7 @@ public class DaoProduct {
 				rs.next();
 				
 				int shoppingBasketNo = rs.getInt("SHOPPINGBAG_NO");
-				int memberNo = rs.getInt("MEMBER_NO");
+				int memberNo = rs.getInt("USER_NO");
 				
 				sv = new ShoppingBasketVo();
 				
