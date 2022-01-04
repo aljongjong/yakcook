@@ -75,6 +75,23 @@ th{
 	cursor: pointer;
 }
 
+.btnWrap{
+	text-align: right;
+}
+
+.noticeBtn{
+    background-color: rgb(171, 184, 104);
+    padding: 5px 10px;
+    font-size: 15px;
+    color: white;
+    border: none;
+    
+}
+.noticeBtn:hover{
+    background-color: rgb(250, 174, 088);
+    cursor: pointer;
+}
+
 .category{
     font-weight: bold;
     font-size: 18px;

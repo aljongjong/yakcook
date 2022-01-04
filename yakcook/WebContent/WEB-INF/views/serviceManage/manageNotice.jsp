@@ -26,11 +26,15 @@
 				<tr class="view">
 					<td>${n.noticeNo}</td>
 					<td>${n.noticeTitle}</td>
-					<td>${n.writeDateString()}
+					<td>${n.writeDateString()}</td>
 				</tr>
 				</c:forEach>
             </table>
             <br>
+            <div class="btnWrap">
+           		<button class="noticeBtn" id="noticeadd">글쓰기</button>
+            </div>
+            
             <div class="page-area">
 			<c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
 				<c:if test="${i le paging.maxPage}">
