@@ -56,13 +56,13 @@ public class ShoppingBasket extends HttpServlet {
 		pv.setInventory(Integer.parseInt(amount));
 		
 		int memberNo = 1;
-		String name = "YC";
+		String id = "YC";
 //		회원정보 받아왔다고 생각하고
 //		int memberNo = Integer.parseInt(req.getParameter("id"));
 //		String name = req.getParameter("name");
 		MemberVo mv = new MemberVo();
 		mv.setMemberNo(memberNo);
-		mv.setName(name);
+		mv.setId(id);
 		
 //		나중에 합칠때 미리님 서블릿으로 이용 회원 확인 회원 정보가져와서 그 회원에 대한 장바구니 생성
 		ShoppingBasketVo sv = new ServiceProduct().shoppingBasket(mv);

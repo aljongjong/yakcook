@@ -154,9 +154,12 @@
 	                <div>0<span> 원</span></div>            	
                 </c:if>
             </div>
-            <c:if test="${totalProductPrice > 0}">
+            <c:if test="${totalProductPrice > 0}"> <!--  -->
 	            <div class="shoppingBasket_forward_pay_gopay_btn">
-	                <a href="#">주문 하기</a>
+	            	<form action="payment" method="POST">
+	            		<input type="hidden" name="shoppingBagNo" value="${sv.shoppingBasketNo}">
+	                	<input type="submit" value="주문 하기" id="detailsProductToPayment">
+	            	</form>
 	            </div>
             </c:if>
             <div class="shoppingBasket_forward_pay_backshop_btn">

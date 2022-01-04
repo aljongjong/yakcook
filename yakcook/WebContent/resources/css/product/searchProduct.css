@@ -1060,3 +1060,11 @@ td, th
     width: 280px;
     transform: translateY(-5px);
 }
+#detailsProductToPayment {
+    border: none;
+    background: rgb(250, 174, 88);
+    cursor: pointer;
+    color: #fff;
+    width: 280px;
+    transform: translateY(-5px);
+}
