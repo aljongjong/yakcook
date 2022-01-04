@@ -11,6 +11,7 @@ import static com.yakcook.common.JDBCTemplate.*;
 import com.yakcook.member.model.dao.MemberDao;
 import com.yakcook.member.model.vo.MemberQnAVo;
 import com.yakcook.member.model.vo.MemberVo;
+import com.yakcook.review.vo.ReviewListVo;
 
 public class MemberService {
 	   private String encrypt(String pwd) {
@@ -182,5 +183,29 @@ public List<MemberQnAVo> qnaDatailAll(String qnano) {
 	int no = Integer.parseInt(qnano);
 	Connection conn = getConnection();
 	return new MemberDao().detailQnaView(conn,no);
+}
+
+public int deleteQnA(String qnano, String id) {
+	int no = Integer.parseInt(qnano); 
+	Connection conn = getConnection();
+	MemberDao mDao = new MemberDao();
+	int result = mDao.deleteQnA(conn, no, id);
+	
+	if(result > 0) {
+		commit(conn);
+	}else {
+		rollback(conn);
+	}
+	return result;
+}
+
+public List<MemberQnAVo> qnaListAll(String loginUserId) {
+	Connection conn = getConnection();
+	return MemberDao.qnaListAll(conn, loginUserId);
+}
+
+public List<ReviewListVo> reviewListAll(String loginUserId) {
+	Connection conn = getConnection();
+	return MemberDao.reviewListAll(conn, loginUserId);
 }
 			 }

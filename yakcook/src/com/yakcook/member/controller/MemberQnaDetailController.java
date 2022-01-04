@@ -12,15 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.yakcook.member.model.service.MemberService;
 import com.yakcook.member.model.vo.MemberQnAVo;
 
-@WebServlet("/qnaDetail")
+@WebServlet("/QnADetail")
 public class MemberQnaDetailController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String qnano = req.getParameter("qna_no");
+		System.out.println(qnano);
 		
-		List<MemberQnAVo> qnaLiat = new MemberService().qnaDatailAll(qnano);
+		List<MemberQnAVo> qnaList = new MemberService().qnaDatailAll(qnano);
 		
-		req.setAttribute("qnaLiat", qnaLiat);
-		req.getRequestDispatcher("WEB-INF/views/review/detailReview.jsp").forward(req, resp);
+		req.setAttribute("qnaList", qnaList);
+		req.getRequestDispatcher("WEB-INF/views/member/MemberQnADetail.jsp").forward(req, resp);
 	}
 }
