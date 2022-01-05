@@ -226,4 +226,22 @@ public int myqnaUpdate(String userId, String qnatitle, String qnacontent, int in
 	}
 	return result;
 }
+
+public MemberVo myinfoList(String id) {
+	Connection conn = getConnection();
+	return new MemberDao().myinfoList(conn, id);
+}
+
+public int myinfoUpdate(String id, String email, String phone) {
+	Connection conn = getConnection();
+	
+	int result = new MemberDao().myinfoUpdate(conn, id, email, phone);
+	close(conn);
+	if(result > 0) {
+		commit(conn);
+	}else {
+		rollback(conn);
+	}
+	return result;
+}
 			 }
