@@ -9,9 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.yakcook.member.model.vo.MemberVo;
 import com.yakcook.product.service.ServiceProduct;
-import com.yakcook.product.vo.MemberVo;
+import com.yakcook.product.vo.MemberCheckVo;
 import com.yakcook.product.vo.ProductImgVo;
 import com.yakcook.product.vo.ProductVo;
 import com.yakcook.product.vo.ShoppingBasketProVo;
@@ -39,14 +41,15 @@ public class UpdateShoppingBasket extends HttpServlet {
 		List<ShoppingBasketProVo> list = new ArrayList<>();
 		list = new ServiceProduct().updateShoppingBasket(sbp);
 		
-		int memberNo = 1;
-		String name = "YC";
 //		회원정보 받아왔다고 생각하고
 //		int memberNo = Integer.parseInt(req.getParameter("id"));
 //		String name = req.getParameter("name");
-		MemberVo mv = new MemberVo();
-		mv.setMemberNo(memberNo);
-		mv.setName(name);
+		HttpSession session = req.getSession(); 
+		String loginUserId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();
+		int loginUserNo = new ServiceProduct().getMemberNoForShoppingBasket(loginUserId);
+		MemberCheckVo mv = new MemberCheckVo();
+		mv.setMemberNo(loginUserNo);
+		mv.setId(loginUserId);
 		
 //		나중에 합칠때 미리님 서블릿으로 이용 회원 확인 회원 정보가져와서 그 회원에 대한 장바구니 생성
 		ShoppingBasketVo sv = new ServiceProduct().shoppingBasket(mv);

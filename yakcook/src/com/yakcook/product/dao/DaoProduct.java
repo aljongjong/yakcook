@@ -10,7 +10,7 @@ import java.util.List;
 
 import static com.yakcook.common.JDBCTemplate.*;
 import com.yakcook.product.vo.CategoryVo;
-import com.yakcook.product.vo.MemberVo;
+import com.yakcook.product.vo.MemberCheckVo;
 import com.yakcook.product.vo.ProductImgVo;
 import com.yakcook.product.vo.ProductVo;
 import com.yakcook.product.vo.ShoppingBasketProVo;
@@ -1476,7 +1476,7 @@ public class DaoProduct {
 /*-------------------------------------장바구니----------------------------------------*/
 
 //	장바구니를 먼저 조회하는 쿼리 실행 후 있는 장바구니면 그대로 그 장바구니 반환하고 없으면 만든다음에 반환
-	public ShoppingBasketVo shoppingBasket(Connection conn, MemberVo mv) {
+	public ShoppingBasketVo shoppingBasket(Connection conn, MemberCheckVo mv) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -1511,7 +1511,7 @@ public class DaoProduct {
 		return sv;
 	}
 	// 기존 장바구니가 없으면 장바구니 만들고 셀렉트해서 장바구니 반환
-	private ShoppingBasketVo shoppingBasketInsert(Connection conn, MemberVo mv) {
+	private ShoppingBasketVo shoppingBasketInsert(Connection conn, MemberCheckVo mv) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -1832,6 +1832,33 @@ public class DaoProduct {
 		
 		return list;
 	}
+	// 세션 로그인 아이디로 로그인한 회원 번호 알아오기
+	public int getMemberNoForShoppingBasket(Connection conn, String loginUserId) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT USER_NO FROM MEMBER WHERE USER_ID = ?";
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, loginUserId);
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			result = rs.getInt("USER_NO");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		System.out.println("세션에 로그인한 유저 넘버 :" + result);
+		
+		return result;
+	}
 	
 /*-------------------------------------태그 검색 결과----------------------------------------*/
 	public List<ProductVo> tagSearchProduct(Connection conn, String tagName) {
@@ -1881,6 +1908,8 @@ public class DaoProduct {
 		
 		return list;
 	}
+
+	
 
 	
 

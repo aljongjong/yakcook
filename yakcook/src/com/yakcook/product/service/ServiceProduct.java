@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.yakcook.product.dao.DaoProduct;
 import com.yakcook.product.vo.CategoryVo;
-import com.yakcook.product.vo.MemberVo;
+import com.yakcook.product.vo.MemberCheckVo;
 import com.yakcook.product.vo.ProductImgVo;
 import com.yakcook.product.vo.ProductVo;
 import com.yakcook.product.vo.ShoppingBasketProVo;
@@ -513,7 +513,7 @@ public class ServiceProduct {
 /*-------------------------------------장바구니----------------------------------------*/
 	
 	// 기존 회원 장바구니가 있으면 기존거 반환, 없으면 생성하고 반환 하기
-	public ShoppingBasketVo shoppingBasket(MemberVo mv) {
+	public ShoppingBasketVo shoppingBasket(MemberCheckVo mv) {
 		
 		Connection conn = getConnection();
 		
@@ -633,6 +633,24 @@ public class ServiceProduct {
 		
 		return list;
 	}
+	// 세션 로그인 아이디로 로그인 회원 번호 알아오기
+	public int getMemberNoForShoppingBasket(String loginUserId) {
+		
+		Connection conn = getConnection();
+		
+		int result = new DaoProduct().getMemberNoForShoppingBasket(conn, loginUserId);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return result;
+	}
+
 /*-------------------------------------태그 검색 결과----------------------------------------*/
 	public List<ProductVo> tagSearchProduct(String tagName) {
 		

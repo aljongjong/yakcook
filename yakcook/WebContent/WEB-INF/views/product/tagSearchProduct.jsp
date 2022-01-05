@@ -58,7 +58,7 @@
                 </div>
                 <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
                 <c:forEach items="${tagProductList}" var="tp">
-                	<c:if test="${ts.productName eq tp.productName}">
+                	<c:if test="${ts.productNo eq tp.productNo}">
 		                <div class="sp_tag">
 		                	<form action="tagSearchProduct" method="GET" style="display:inline-block; float:left">
 		                		<c:if test="${tp.tagName eq tagName}">

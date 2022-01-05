@@ -1,6 +1,6 @@
 package com.yakcook.product.vo;
 
-public class MemberVo {
+public class MemberCheckVo {
 
 	private int memberNo;
 	private String id;

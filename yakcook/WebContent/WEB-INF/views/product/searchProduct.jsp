@@ -11,6 +11,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <div class="wrap">
         <div class="category">
             <div class="category_title">상세 메뉴</div>
@@ -139,7 +140,7 @@
 				                </div>
 				                <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 				                <c:forEach items="${tagProductList}" var="tp">
-				                	<c:if test="${np.productName eq tp.productName}">
+				                	<c:if test="${np.productNo eq tp.productNo}">
 						                <div class="sp_tag">
 						                	<form action="tagSearchProduct" method="GET" style="display:inline-block; float:left">
 						                		<input type="hidden" name="tagName" value="${tp.tagName}">
@@ -204,7 +205,7 @@
 				                </div>
 				                <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 				                <c:forEach items="${tagProductList}" var="tp">
-				                	<c:if test="${np.productName eq tp.productName}">
+				                	<c:if test="${np.productNo eq tp.productNo}">
 						                <div class="sp_tag">
 						                	<form action="tagSearchProduct" method="GET" style="display:inline-block; float:left">
 						                		<input type="hidden" name="tagName" value="${tp.tagName}">
@@ -272,7 +273,7 @@
 		                </div>
 		                <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 		                <c:forEach items="${tagProductList}" var="tp">
-		                	<c:if test="${np.productName eq tp.productName}">
+		                	<c:if test="${cp.productNo eq tp.productNo}">
 				                <div class="sp_tag">
 				                	<form action="tagSearchProduct" method="GET" style="display:inline-block; float:left">
 				                		<input type="hidden" name="tagName" value="${tp.tagName}">
@@ -338,7 +339,7 @@
 		                </div>
 		                <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 		                <c:forEach items="${tagProductList}" var="tp">
-		                	<c:if test="${np.productName eq tp.productName}">
+		                	<c:if test="${cp.productNo eq tp.productNo}">
 				                <div class="sp_tag">
 				                	<form action="tagSearchProduct" method="GET" style="display:inline-block; float:left">
 				                		<input type="hidden" name="tagName" value="${tp.tagName}">
