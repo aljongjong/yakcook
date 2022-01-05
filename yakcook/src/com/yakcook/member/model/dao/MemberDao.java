@@ -472,5 +472,55 @@ public int myqnaUpdate(Connection conn, String userId, String qnatitle, String q
 	
 	return result;
 }
+
+public MemberVo myinfoList(Connection conn, String id) {
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	String query = "SELECT * FROM MEMBER WHERE USER_ID = ?";
+	MemberVo m = null;
+	
+	try {
+		pstmt = conn.prepareStatement(query);
+		pstmt.setString(1, id);
+		rs = pstmt.executeQuery();
+		if(rs.next()) {
+			m = new MemberVo();
+			m.setUser_id(rs.getString("USER_ID"));
+			m.setUser_name(rs.getString("USER_NAME"));
+			m.setUser_email(rs.getString("USER_EMAIL"));
+			m.setUser_phone(rs.getString("USER_PHONE"));
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+		close(rs);
+	}
+	
+	return m;
+}
+
+public int myinfoUpdate(Connection conn, String id, String email, String phone) {
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	int result = 0;
+	
+	String query = "UPDATE MEMBER SET USER_EMAIL = ?, USER_PHONE = ? WHERE USER_ID = ? ";
+	
+	try {
+		pstmt = conn.prepareStatement(query);
+		pstmt.setString(1, email);
+		pstmt.setString(2, phone);
+		pstmt.setString(3, id);
+		result = pstmt.executeUpdate();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+		close(rs);
+	}
+	
+	return result;
+}
     
 }

@@ -41,5 +41,6 @@
 	<a href = "pwdUpdateForm">비밀번호변경</a>
 	<a href = "memberReview">내 리뷰</a>
 	<a href = "memberquestion">내 문의</a>
+	<a onclick="location.href='memberinfoupdate?user_id=${m.user_id}'">회원정보변경</a>
 </body>
 </html>
