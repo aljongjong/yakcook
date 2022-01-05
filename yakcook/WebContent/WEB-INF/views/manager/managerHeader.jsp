@@ -33,7 +33,7 @@
                 <li><a href="/yakcook/manageFAQ">FAQ</a></li>
                 <li><a href="#">1대1문의</a></li>
                 <li><a href="#">리뷰관리</a></li>
-                <li><a href="#">결제관리</a></li>
+                <li><a href="/yakcook/paymentdetail">결제관리</a></li>
         </ul>
         </div>
     </nav>

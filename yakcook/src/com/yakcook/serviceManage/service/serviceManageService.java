@@ -6,6 +6,7 @@ import static com.yakcook.common.JDBCTemplate.getConnection;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.yakcook.paymentDetail.model.vo.paymentVo;
 import com.yakcook.serviceManage.dao.manageServiceDao;
 import com.yakcook.serviceManage.model.vo.FAQVo;
 import com.yakcook.serviceManage.model.vo.noticeVo;
@@ -125,5 +126,7 @@ public class serviceManageService {
 		close(conn);
 		return result;
 	}
+
+	
 
 }

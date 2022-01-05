@@ -352,4 +352,6 @@ public class manageServiceDao {
 		return result;
 	}
 
+	
+
 }
