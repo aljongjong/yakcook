@@ -10,6 +10,7 @@
 <script src="https://kit.fontawesome.com/77be500183.js" crossorigin="anonymous"></script>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/common/headerFinal.jsp" %>
 	<div class="wrapTagSearch">
         <div class="categoryHorizon">
             <div class="categoryHorizon_title" style="display:inline">#태그 검색 결과 : <span> ${tagName}</span></div>
@@ -76,5 +77,6 @@
            	</div>
       	</c:forEach>
 	</div>
+	 <%@ include file="/WEB-INF/views/common/footerFinal.jsp" %>
 </body>
 </html>

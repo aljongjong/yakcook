@@ -77,6 +77,12 @@
     font-size: 13px;
     color: rgb(171, 184, 107);
 }
+.userInterface>ul>li>span
+{
+    color: rgb(108, 128, 75);
+    font-size: 13px;
+    font-weight: 600;
+}
 .userInterface>ul>li>a:hover
 {
     color: rgb(108, 128, 75);

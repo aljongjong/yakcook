@@ -432,6 +432,8 @@
 
     </div>
     
+    <%@ include file="/WEB-INF/views/common/footerFinal.jsp" %>
+    
     <script>
     	function loginAlarm() {
     		alert("장바구니 이용은 로그인이 필요합니다.");
