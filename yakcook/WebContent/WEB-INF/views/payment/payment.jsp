@@ -15,19 +15,34 @@
 <script src="https://js.tosspayments.com/v1"></script>
 <script>
 	function toss_popup() {
-		var tossPayments = TossPayments("test_ck_dP9BRQmyarYyoMg1pNarJ07KzLNk");
+		var tossPayments = TossPayments("test_ck_k6bJXmgo28e9WMkEoLY8LAnGKWx4");
 		var button = document.getElementById("payment-button");
 
 		var orderId = new Date().getTime();
 
 		var method = document.querySelector('input[name=method]:checked').value; // "카드" 혹은 "가상계좌"
-
+		/*	
+		if(method=="카드"){
+			tossPayments.requestPayment('카드', {
+				  amount: 1,
+				  orderId: 'VN2-tONRrEGc_KkHnmE',
+				  orderName: '토스 티셔츠 외 2건',
+				  customerName: '박토스',
+				  successUrl: window.location.origin + "/yakcook/paymentSuccess?method="+method,
+				  failUrl: window.location.origin + "/yakcook/paymentFail",
+				})
+		}
+		*/
+		var min = Math.ceil(0);
+	  	var max = Math.floor(999999999999);
+ 	 	var orderIdRandom = Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+		
 		var paymentData = {
-			amount : 19000,
-			orderId : "asdfhi123saq23498asdaf",
+			amount : 100,
+			orderId : orderIdRandom.toString(10),
 			orderName : "토스 티셔츠",
 			customerName : "이토페",
-			successUrl : window.location.origin + "/yakcook/paymentSuccess",
+			successUrl : window.location.origin + "/yakcook/paymentSuccess?method="+method,
 			failUrl : window.location.origin + "/yakcook/paymentFail",
 		};
 
@@ -221,7 +236,8 @@
 
 					<button id="payment-button">결제하기</button>
 					<%
-					String loginUserId = ((MemberVo) session.getAttribute("loginUser")).getUser_id();
+					String loginUserId = "wlgus00";
+					//String loginUserId = ((MemberVo) session.getAttribute("loginUser")).getUser_id();
 					%>
 					<input type="hidden" name="userId" value="<%=loginUserId%>">
 			</form>
@@ -298,8 +314,9 @@
 
 	<script
 		src="${pageContext.request.contextPath}/resources/js/payment/payment.js"></script>
-
+		
 	<script>
+
 		var data = null;
 		function form_object_save(form_object_save) {
 			data = form_object_save;
