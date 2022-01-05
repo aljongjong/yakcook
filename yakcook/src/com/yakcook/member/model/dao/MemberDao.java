@@ -184,6 +184,7 @@ public class MemberDao {
       }
       return id;
    }
+   
    public int findPwd(Connection conn, String name, String id, String email) {
       PreparedStatement pstmt = null;
       ResultSet rs = null;
@@ -273,14 +274,15 @@ public class MemberDao {
    public int insertQna(Connection conn, MemberQnAVo q) {
       PreparedStatement pstmt = null;
       ResultSet rs = null;
-      String sql = "INSERT INTO QNA (QNA_NO, QNA_TITLE, QNA_CONTENT, QNA_DATE, USER_ID) "
-            + "VALUES(SEQ_MEMBER.NEXTVAL, ?, ?, SYSDATE, ?)";
+      String sql = "INSERT INTO QNA (QNA_NO, QNA_TITLE, QNA_CONTENT, QNA_DATE, USER_ID, QNA_CATEGORY) "
+            + "VALUES(SEQ_MEMBER.NEXTVAL, ?, ?, SYSDATE, ?,?)";
       int result = 0;
          try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, q.getQna_title());
             pstmt.setString(2, q.getQna_content());
             pstmt.setString(3, q.getUser_id());
+            pstmt.setString(4, q.getQna_category());
             result = pstmt.executeUpdate();
          } catch (SQLException e) {
             e.printStackTrace();
@@ -357,12 +359,14 @@ public class MemberDao {
                String user_id = rs.getString("USER_ID");
                String qna_title = rs.getString("QNA_TITLE"); 
                String qna_content = rs.getString("QNA_CONTENT");
+               String qna_category = rs.getString("QNA_CATEGORY");
                
                MemberQnAVo q = new MemberQnAVo();
                q.setQna_no(qna_no);
                q.setUser_id(user_id);
                q.setQna_title(qna_title);
                q.setQna_content(qna_content);
+               q.setQna_category(qna_category);
 
                qnaList.add(q);
             }
@@ -418,5 +422,55 @@ public class MemberDao {
 
       return reviewList;
    }
+
+public MemberQnAVo myqnaList(Connection conn, String qna_no) {
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	String query = "SELECT * FROM QnA WHERE QNA_NO = ? AND MANAGER_ANSWER = 'N'";
+	MemberQnAVo q = null;
+	
+	try {
+		pstmt = conn.prepareStatement(query);
+		pstmt.setString(1, qna_no);
+		rs= pstmt.executeQuery();
+		if(rs.next()) {
+			q = new MemberQnAVo();
+			q.setQna_no(rs.getInt("QNA_NO"));
+			q.setQna_title(rs.getString("QNA_TITLE"));
+			q.setQna_content(rs.getString("QNA_CONTENT"));
+			q.setUser_id(rs.getString("USER_ID"));
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+	       close(pstmt);
+	       close(rs);
+	    }
+	
+	return q;
+}
+
+public int myqnaUpdate(Connection conn, String userId, String qnatitle, String qnacontent, int intqnano) {
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	int result = 0;
+	String query = "UPDATE QnA SET USER_ID = ?, QNA_TITLE = ?, QNA_CONTENT = ? WHERE QNA_NO = ?";
+	
+	try {
+		pstmt = conn.prepareStatement(query);
+		pstmt.setString(1, userId);
+		pstmt.setString(2, qnatitle);
+		pstmt.setString(3, qnacontent);
+		pstmt.setInt(4, intqnano);
+		result = pstmt.executeUpdate();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+		close(rs);
+	}
+	
+	return result;
+}
     
 }

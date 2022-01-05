@@ -35,7 +35,7 @@ public class MemberQuestionWriterController extends HttpServlet{
 		String qnacategory =  req.getParameter("qnacategory");
 		
 		System.out.println("현재 로그인 아이디 리뷰쓰기 : "+ id);
-		
+		System.out.println(qnacategory);
 		// 데이터 값 확인
 		//System.out.println(title + content + id);
 		
@@ -44,6 +44,7 @@ public class MemberQuestionWriterController extends HttpServlet{
 		q.setUser_id(id);
 		q.setQna_title(title);
 		q.setQna_content(content);
+		q.setQna_category(qnacategory);
 		
 		// 객체 들고 서비스로 고고
 		int result = new MemberService().qnawriter(q);

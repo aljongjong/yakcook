@@ -96,8 +96,8 @@ public class MemberService {
 			   
 			    public int deleteMember(String userPwd, String userId) {
 			       Connection conn = getConnection();
-			       MemberDao mDao = new MemberDao();
-			       int result = mDao.deleteMember(conn, encrypt(userPwd), userId);
+			       //MemberDao mDao = new MemberDao();
+			       int result = new MemberDao().deleteMember(conn, encrypt(userPwd), userId);
 			    
 			       if(result > 0) {
 			          commit(conn); 
@@ -109,32 +109,32 @@ public class MemberService {
 
 			    public String findId(String name, String email) {
 			        Connection conn = getConnection();
-			        MemberDao mDao = new MemberDao();
-			        String id = mDao.findId(conn,name, email);
+			        //MemberDao mDao = new MemberDao();
+			        String id = new MemberDao().findId(conn,name, email);
 			        close(conn);
 			        return id;
 			    }
 			    
 			    public int findPwd(String name, String id, String email) {
 			       Connection conn = getConnection();
-			       MemberDao mDao = new MemberDao();
-			       int result = mDao.findPwd(conn, name, id, email);
+			       //MemberDao mDao = new MemberDao();
+			       int result = new MemberDao().findPwd(conn, name, id, email);
 			       close(conn);
 			       return result;
 			    }
 
 			    public int myPwdCheck(String userId, String oldPwd) {
 			        Connection conn = getConnection();
-			        MemberDao mDao = new MemberDao();
-			        int result = mDao.myPwdCheck(conn, userId, encrypt(oldPwd));
+			        //MemberDao mDao = new MemberDao();
+			        int result = new MemberDao().myPwdCheck(conn, userId, encrypt(oldPwd));
 			        close(conn);
 			        return result;
 			     }
 
 			    public int myPwdUpdate(String userId, String newPwd) {
 			        Connection conn = getConnection();
-			        MemberDao mDao = new MemberDao();
-			        int result = mDao.myPwdUpdate(conn, userId, encrypt(newPwd));
+			        //MemberDao mDao = new MemberDao();
+			        int result = new MemberDao().myPwdUpdate(conn, userId, encrypt(newPwd));
 			        close(conn);
 			        if(result > 0) {
 			            commit(conn); 
@@ -145,8 +145,8 @@ public class MemberService {
 			    }
 			    public int myfindPwdUpdate(String id, String pwd) {
 			       Connection conn = getConnection();
-			       MemberDao mDao = new MemberDao();
-			       int result = mDao.myfindPwdUpdate(conn, id, encrypt(pwd));
+			       //MemberDao mDao = new MemberDao();
+			       int result = new MemberDao().myfindPwdUpdate(conn, id, encrypt(pwd));
 			       close(conn);
 			       if(result > 0) {
 			           commit(conn); 
@@ -188,8 +188,8 @@ public List<MemberQnAVo> qnaDatailAll(String qnano) {
 public int deleteQnA(String qnano, String id) {
 	int no = Integer.parseInt(qnano); 
 	Connection conn = getConnection();
-	MemberDao mDao = new MemberDao();
-	int result = mDao.deleteQnA(conn, no, id);
+	//MemberDao mDao = new MemberDao();
+	int result = new MemberDao().deleteQnA(conn, no, id);
 	
 	if(result > 0) {
 		commit(conn);
@@ -207,5 +207,23 @@ public List<MemberQnAVo> qnaListAll(String loginUserId) {
 public List<ReviewListVo> reviewListAll(String loginUserId) {
 	Connection conn = getConnection();
 	return MemberDao.reviewListAll(conn, loginUserId);
+}
+
+public MemberQnAVo myqnaList(String qna_no) {
+    Connection conn = getConnection();
+    return new MemberDao().myqnaList(conn,qna_no);
+}
+
+public int myqnaUpdate(String userId, String qnatitle, String qnacontent, int intqnano) {
+	Connection conn =  getConnection();
+	//MemberDao mDao = new MemberDao();
+	int result = new MemberDao().myqnaUpdate(conn, userId, qnatitle, qnacontent, intqnano);
+	close(conn);
+	if(result > 0) {
+		commit(conn);
+	}else {
+		rollback(conn);
+	}
+	return result;
 }
 			 }
