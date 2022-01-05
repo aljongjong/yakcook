@@ -1,0 +1,139 @@
+
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+.headerWrap *
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+/* 프레임 */
+.headerWrap
+{
+    width: 100%;
+    height: 70px;
+    border-bottom: 2px solid rgb(108, 128, 75);
+    position: fixed;
+    transition: 0.5s;
+    z-index:50;
+    background: #fff;
+    top:0;
+}
+.headerlogo
+{
+    width: 200px;
+    height: 100%;
+    position: relative;
+    left: 8%;
+    float: left;
+}
+.headerCategory
+{
+    width: 600px;
+    height: 100%;
+    position: relative;
+    right: 8%;
+    float: right;
+}
+/* etc */
+.headerlogo>a>img
+{
+    width: 65%;
+    height: 65%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.userInterface
+{
+    width: 100%;
+    height: 30%;
+}
+.hompageInterface
+{
+    width: 100%;
+    height: 70%;
+}
+.headerCategory
+{
+    padding: 5px;
+}
+/* 유저 인터페이스 */
+.userInterface>ul
+{
+    float: right;
+    padding-right: 6%;
+}
+.userInterface>ul>li
+{
+    float: left;
+    padding-right: 10px;
+}
+.userInterface>ul>li>a
+{
+    text-decoration: none;
+    font-size: 13px;
+    color: rgb(171, 184, 107);
+}
+.userInterface>ul>li>a:hover
+{
+    color: rgb(108, 128, 75);
+    font-weight: 700;
+}
+
+/* 홈페이지 인터페이스 */
+.hompageInterface>ul>li
+{
+    float: left;
+    line-height: 2;
+    width: 25%;
+}
+.hompageInterface>ul>li>a
+{
+    text-decoration: none;
+    color: rgb(171, 184, 107);
+}
+.hompageInterface>ul>li::before
+{
+    width: 10px;
+    height: 1px;
+    color: rgb(171, 184, 107);
+
+}
+.hompageInterface>ul>li>a:hover
+{
+    color: rgb(108, 128, 75);
+    font-weight: 700;
+}
+.default
+{
+    z-index: 1000;
+}
+/* sticky */
+.sticky
+{
+    background: rgb(108, 128, 75);
+    box-shadow: 1px 6px 20px gray;
+}
+.sticky>.headerCategory>.userInterface>ul>li>a
+{
+    color: #fff;
+}
+.sticky>.headerCategory>.hompageInterface>ul>li>a
+{
+    color: #fff;
+}
+.sticky>.headerCategory>.userInterface>ul>li>a:hover
+{
+    color: rgb(171, 184, 107);
+}
+.sticky>.headerCategory>.hompageInterface>ul>li>a:hover
+{
+    color: rgb(171, 184, 107);
+}
+.img
+{
+    z-index: 0;
+}
