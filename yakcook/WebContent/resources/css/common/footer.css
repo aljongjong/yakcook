@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
-*
+.footerWrap *
 {
     box-sizing: border-box;
     color: #fff;
@@ -21,51 +21,54 @@
     width: 1000px;
     margin: auto;
 }
-.content1
+.footerContents>.content1
 {
     width: 50%;
     float: left;
 }
-.content2
+.footerContents>.content2
 {
     width: 50%;
     float: left;
 }
 /* content1 */
-.content1>ul
+.footerContents>.content1>ul
 {
     padding: 0;
 }
-.content1>ul>:nth-child(1)
+.footerContents>.content1>ul>:nth-child(1)
 {
     font-size: 15px;
     font-weight: 700;
 }
 /* content2 */
-.content2>.help>ul
+.footerContents>.content2>.help>ul
 {
     padding-left: 100px;
 }
-.content2>div>ul>:nth-child(1)
+.footerContents>.content2>div>ul>:nth-child(1)
 {
     font-size: 15px;
     font-weight: 700;
 }
-.help>ul>li:nth-child(6),
-.help>ul>li:nth-child(7),
-.help>ul>li:nth-child(8)
+.footerContents>.content2 li:nth-child(6),
+.footerContents>.content2>.help>ul>li:nth-child(7),
+.footerContents>.content2>.help>ul>li:nth-child(8)
 {
     float: left;
     letter-spacing: 10px;
     padding-top: 5px;
     padding-left: 10px;
 }
-i
+.fa-instagram,
+.fa-facebook-square,
+.fa-youtube
 {
     font-size: 30px;
 }
-i:hover
+.fa-instagram:hover,
+.fa-facebook-square:hover,
+.fa-youtube:hover
 {
-    color: rgb(250, 174, 88);
+    color: rgb(171, 184, 104);
 }
-

@@ -1884,15 +1884,16 @@ public class DaoProduct {
 				int productNo = rs.getInt("PRODUCT_NO");
 				String productName = rs.getString("PRODUCT_NAME");
 				int price = rs.getInt("PRICE");
+				String productCotents = rs.getString("PRODUCT_CONTENTS");
 				int inventory = rs.getInt("INVENTORY");
 				int categoryNo = rs.getInt("CATEGORY_NO");
 				String tag = rs.getString("TAG_NAME");
-				
 				pv = new ProductVo();
 				
 				pv.setProductNo(productNo);
 				pv.setProductName(productName);
 				pv.setPrice(price);
+				pv.setProductContents(productCotents);
 				pv.setInventory(inventory);
 				pv.setCategoryNo(categoryNo);
 				pv.setTagName(tag);

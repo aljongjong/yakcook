@@ -18,6 +18,7 @@
 </style>
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/common/headerFinal.jsp" %>
     <div class="wrap">
         <div class="categoryHorizon">
             <div class="categoryHorizon_title">제품 상세 정보</div>
@@ -176,6 +177,7 @@
         </div>
     </div>
 </div>
+<%@ include file="/WEB-INF/views/common/footerFinal.jsp" %>
     <script>
         // 탭 메뉴
         var tabBtn = $(".detailsProduct_notice_tab_btn > ul > li");

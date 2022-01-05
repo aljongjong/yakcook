@@ -12,6 +12,7 @@
 </head>
 <body>
 	<body>
+	<%@ include file="/WEB-INF/views/common/headerFinal.jsp" %>
         <div class="wrapper">
         	<div class="yakcook-logo">
         		<img src="resources/images/product/logoGreen.png">
@@ -34,7 +35,7 @@
         
         
         <div id="layer_bg"></div>
-        
+         <%@ include file="/WEB-INF/views/common/footerFinal.jsp" %>
         <% int i = 0; %>
         <c:forEach items="${tagList}" var="tl">
         	<input type="hidden" id="tN<%=i%>" value="${tl.tagName}">
@@ -49,7 +50,7 @@
 			}
         </script>
         <script src="/yakcook/resources/js/tagSearchBar/script.js"></script>
-
+	
     </body>
 </body>
 </html>

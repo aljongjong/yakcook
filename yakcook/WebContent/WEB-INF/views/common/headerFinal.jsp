@@ -1,3 +1,4 @@
+<%@page import="com.yakcook.member.model.vo.MemberVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,6 +10,7 @@
 <link rel="stylesheet" href="resources/css/common/header.css">
 </head>
 <body>
+<%MemberVo vo = (MemberVo)session.getAttribute("vo"); %>
         <div class="headerWrap" id="header">
             <div class="headerlogo">
                 <a href="#"><img src="resources/images/common/logoGreen.png" alt="로고" class="default" id="img"></a>
@@ -18,9 +20,15 @@
             <div class="headerCategory">
                 <div class="userInterface">
                     <ul>
-                        <li><a href="loginForm">로그인</a></li>
-                        <li><a href="profileForm">마이페이지</a></li>
-                        <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                    	<% if(request.getSession().getAttribute("loginUser") == null){ %>
+                        <li><a href="login">로그인</a></li>
+                        <%} else{%>
+                        <li><span>${loginUser.user_name}님 환영합니다! </span><a href="logout">로그아웃</a></li>
+                        <%} %>
+                        <li><span style="color:gainsboro"> | </span></li>
+                        <li><a href="profile">마이페이지</a></li>
+                        <li><span style="color:gainsboro"> | </span></li>
+                        <li><a href="shoppingBasket"><i class="fas fa-shopping-cart"></i></a></li>
                     </ul>
                 </div>
                 <div class="hompageInterface">
