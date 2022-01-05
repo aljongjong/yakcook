@@ -21,7 +21,6 @@ public class paymentDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String category = req.getParameter("category");
 		String search = req.getParameter("pay_search");
-		String status = req.getParameter("status");
 		String currentPage = req.getParameter("currentPage");
 		pagingVo pv = new pagingVo();
 		if(currentPage == null) {
@@ -38,14 +37,10 @@ public class paymentDetailController extends HttpServlet {
 		int endPage = startPage + pv.getPageLimit();
 		pv.setEndPage(endPage);
 		
-		ArrayList<paymentVo> paymentVo = new paymentDetailService().getPayList(category,search, status, pv);
+		ArrayList<paymentVo> paymentVo = new paymentDetailService().getPayList(category,search, pv);
 		
-		if(category!=null) {
-			req.setAttribute("category", category);
-			req.setAttribute("search", null);
-		}
 		if(search!=null) {
-			req.setAttribute("category", null);
+			req.setAttribute("category", category);
 			req.setAttribute("search", search);
 		}
 		req.setAttribute("paging", pv);

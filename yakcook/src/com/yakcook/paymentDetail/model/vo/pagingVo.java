@@ -3,7 +3,7 @@ package com.yakcook.paymentDetail.model.vo;
 public class pagingVo {
 	private int currentPage = 1;
 	private int pageLimit = 10;
-	private int boardLimit = 10;
+	private int boardLimit = 5;
 	private int maxPage;
 	private int startNo;
 	private int endNo;

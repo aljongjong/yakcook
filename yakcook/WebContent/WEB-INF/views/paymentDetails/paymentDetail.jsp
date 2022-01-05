@@ -15,23 +15,23 @@
             <br>
             
             <a href="paymentdetail" class="category">전체</a>
-            <a href="paymentdetail?category=결제중" class="category">결제완료</a>
-            <a href="paymentdetail?category=결제완료" class="category">결제완료</a>
-            <a href="paymentdetail?category=배송준비" class="category">배송준비</a>
-            <a href="paymentdetail?category=배송중" class="category">배송중</a>
-            <a href="paymentdetail?category=배송완료" class="category">배송완료</a>
-            <a href="paymentdetail?category=환불" class="category">환불</a>
+            <a href="paymentdetail?pay_search=결제중&category=status" class="category">결제중</a>
+            <a href="paymentdetail?pay_search=결제완료&category=status" class="category">결제완료</a>
+            <a href="paymentdetail?pay_search=배송준비&category=status" class="category">배송준비</a>
+            <a href="paymentdetail?pay_search=배송중&category=status" class="category">배송중</a>
+            <a href="paymentdetail?pay_search=배송완료&category=status" class="category">배송완료</a>
+            <a href="paymentdetail?pay_search=환불&category=status" class="category">환불</a>
             <br>
             <div id="search_tap">
         	<form action="paymentdetail" method="get">
         		<span><label for="pay_search">주문 기록 검색</label>&nbsp;&nbsp;
-        			<select name="status">
+        			<select name="category">
         				<option value="USER_ID" selected>아이디</option>
         				<option value="ORDER_NAME">이름</option>
         				<option value="ORDER_NO">주문번호</option>
         				<option value="ORDER_PHONE">전화번호</option>
         			</select>
-                    <input type="text" name="pay_search" id="pay_search">
+                    <input type="text" name="pay_search" id="pay_search" required>
                     <input class="btn1" type="submit" value="검색">
                 </span>   
         	</form>     
@@ -46,31 +46,35 @@
                     <th class="t6">주문상태</th>
 
                 </tr>
+                <c:forEach items="${payList}" var="p">
 				<tr class="view">
-					<td class="center">1</td>
+					<td class="center">${p.orderNo}</td>
 					<td class="center">
-					wersfv<br>
-					박재한<br>
-					01046669408
+					${p.userId}<br>
+					${p.userName}<br>
+					${p.userPhone}
 					</td>
 					<td class="small">
-					경기도 안성시 남파로 130 쌍용아파트 <br>
-					101동 605호 <br>
-					안성시, 쌍용아파트 <br>
-					부재시 문 앞에 놔주세요 <br>
-					문 앞에 놔주세요
+					우편번호 ${p.postNo} <br>
+					${p.address} <br>
+					${p.detailAddress} <br>
+					${p.extraAddress}  <br>
+					메모 <br>
+					${p.memo} / ${p.memoInput} 
 					</td>
 					<td class="small">
-					California Gold Nutrition, 프로바이오틱스/4개 <br>
-					California Gold Nutrition, 비타민B 복합체 구미젤리/12개 <br>
-					총 금액 : 150000
+					결제 방식 : ${p.payMethod} <br>
+					<c:forEach items="${p.payProduct}" var="t">
+					${t.productName} / ${t.quantity}개<br>
+					</c:forEach>
+					총 금액 : ${p.getTotalAll()}
 					</td>
 					<td class="center">
-					2022-01-05
+					${p.writeDateString()}
 					</td>
 					<td class="center">
-						결제중
-						<select name="status">
+						${p.status}
+						<select id="status" name="status">
 							<option value="결제완료">결제완료</option>
 							<option value="배송준비">배송준비</option>
 							<option value="배송중">배송중</option>
@@ -81,20 +85,17 @@
 						<button class="statusBtn">상태 변경</button>
 					</td>
 				</tr>
+				</c:forEach>
+				
             </table>
             <br>
            <div class="page-area">
 			<c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
 				<c:if test="${i le paging.maxPage}">
-					<%
-					if(request.getAttribute("category") != null) {%>
-						<div class="paging">
-							<a class='page' href="?category=${category}&currentPage=${i}">${i}</a>
-						</div>	
 						
-					<%}else if(request.getAttribute("search") != null){ %>
+					<%if(request.getAttribute("search") != null){ %>
 						<div class="paging">
-							<a class='page' href="?pay_search=${search}&currentPage=${i}">${i}</a>
+							<a class='page' href="?pay_search=${search}&category=${category}&currentPage=${i}">${i}</a>
 						</div>	
 					<%}else { %>
 						<div class="paging">
@@ -114,24 +115,25 @@
     	$('.logoutbtn').on('click', function(){
 			window.location = "/yakcook/managerlogout";
         }); 
-		$(document).on('click','.delFAQ', function(){
+		$(document).on('click','.statusBtn', function(){
 			let btn = $(this);
 			let tr = btn.parent().parent();
 			let td = tr.children();
         	$.ajax({
-        		url : '/yakcook/delFAQ',
+        		url : '/yakcook/statusupdate',
         		method : 'get',
         		data: {
-        			FAQDel : td.eq(0).text()
+        			orderNo : td.eq(0).text(),
+        			status : $(this).siblings('#status').val()
         		},
         		
         		success : function(result){
        				const data1 = $.trim(result);
        				if(data1 == "true"){
-       					alert("FAQ 삭제 완료");
+       					alert("상태 수정 완료");
        					location.reload();
         			} else {
-        				alert("FAQ 삭제 실패")
+        				alert("상태 수정 실패")
         			}	
         		},
         		error : function(err){
