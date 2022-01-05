@@ -22,6 +22,8 @@ public class paymentSuccessController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		
 		String amount = req.getParameter("amount");
 		// amout값과 총상품가격(DB에저장된) 이 같은지 비교를 한다.
 		String paymentKey = req.getParameter("paymentKey");
@@ -44,6 +46,10 @@ public class paymentSuccessController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		
+		
+		int result = new PaymentService().paymentComplate();
+		int paymethod = new PaymentService().paymentCard();
 		}
 		else if(method.equals("카드")) {
 			HttpRequest request = HttpRequest.newBuilder()

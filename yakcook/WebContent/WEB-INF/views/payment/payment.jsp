@@ -1,6 +1,7 @@
 <%@page import="com.yakcook.member.model.vo.MemberVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,12 +34,13 @@
 				})
 		}
 		*/
+		
 		var min = Math.ceil(0);
 	  	var max = Math.floor(999999999999);
  	 	var orderIdRandom = Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
 		
 		var paymentData = {
-			amount : 100,
+			amount : ${totalPrice},
 			orderId : orderIdRandom.toString(10),
 			orderName : "토스 티셔츠",
 			customerName : "이토페",
@@ -114,43 +116,80 @@
 
 
 				</div>
+				<c:if test="${empty shoppingList}">
+					<c:forEach items="${productList}" var="p">
+						<div id="info-list">
+							<!--결제정보-->
+							<div id="info-prod">
+								<li>제품</li>
+								<li>가격</li>
+								<li>수량</li>
+							</div>
 
-				<div id="info-list">
-					<!--결제정보-->
-					<div id="info-prod">
-						<li>제품</li>
-						<li>가격</li>
-						<li>수량</li>
-					</div>
+							<div id="product_img">
+								<span><img src="/./fff69c60c13cbd0e03cf0c430e49a78b.jpg"
+									alt=""></span>
+							</div>
+							<div id="product_name">
+								<span></span>
+							</div>
 
-					<div id="product_img">
-						<span><img src="/./fff69c60c13cbd0e03cf0c430e49a78b.jpg"
-							alt=""></span>
-					</div>
-					<div id="product_name">
-						<span>정관장 홍삼</span>
-					</div>
+							<div id="product_count">
+								<span></span>
+							</div>
+						</div>
 
-					<div id="product_count">
-						<span>1개</span>
-					</div>
-				</div>
+						<div id="prod-li">
+							<li>${p.productName}
+							<li>${p.price}원</li>
+							<li>배송비</li>
+							<li>${amount}개</li>
+							<li>결제금액</li>
+							<li>${totalPrice}원</li>
+						</div>
+					</c:forEach>
 
-				<div id="prod-li">
-					<li>총 상품 금액</li>
-					<li>200000원</li>
-					<li>배송비</li>
-					<li>3000원</li>
-					<li>결제금액</li>
-					<li>230000원</li>
-				</div>
+				</c:if>
 
+				<c:if test="${empty productList}">
+					<c:forEach items="${shoppingList}" var="s">
+						<div id="info-list">
+							<!--결제정보-->
+							<div id="info-prod">
+								<li>제품</li>
+								<li>가격</li>
+								<li>수량</li>
+							</div>
 
+							<div id="product_img">
+								<span><img src="/./fff69c60c13cbd0e03cf0c430e49a78b.jpg"
+									alt=""></span>
+							</div>
+							<div id="product_name">
+								<span></span>
+							</div>
+
+							<div id="product_count">
+								<span></span>
+							</div>
+						</div>
+
+						<div id="prod-li">
+							<li>${s.productName}
+							<li>${s.price}원</li>
+							<li>배송비</li>
+							<li>${amount}개</li>
+							<li>결제금액</li>
+							<li>${totalPrice}원</li>
+						</div>
+					</c:forEach>
+
+				</c:if>
 
 
 				<div id="Payment_Method"></div>
 
-				<div id="agreement">
+								<div id="agreement">
 					<input type="checkbox" id="agreement_check">개인정보 제공 동의
 					<div id="mebmerTerms">
 
@@ -179,16 +218,16 @@
 					<div id="methods-container">
 
 						<label class="method_item"> <input type="radio"
-							name="method_pay" class="method_pay" value="카드"> <span>신용
+											name="method_pay" class="method_pay" value="카드"> <span>신용
 								/ 체크카드</span>
 						</label> </label> <label class="method_item"> <input type="radio"
-							name="method_pay" class="method_pay" value="계좌이체"> <span>계좌
+											name="method_pay" class="method_pay" value="계좌이체"> <span>계좌
 								이체</span>
 						</label> <label class="method_item"> <input type="radio"
-							name="method_pay" class="method_pay" value="가상계좌"> <span>가상
+											name="method_pay" class="method_pay" value="가상계좌"> <span>가상
 								계좌</span>
 						</label> <label class="method_item"> <input type="radio"
-							name="method_pay" class="method_pay" value="무통장"> <span>무통장
+											name="method_pay" class="method_pay" value="무통장"> <span>무통장
 								입금</span>
 						</label>
 					</div>
@@ -227,8 +266,8 @@
 						<option value="케이뱅크">케이뱅크</option>
 						<option value="카카오뱅크">카카오뱅크</option>
 					</select> <br> <input type="text" name="AccountHolder"
-						placeholder="예금주"> <br> <input type="text"
-						name="AccountNumber" placeholder="계좌번호">
+										placeholder="예금주"> <br> <input type="text"
+										name="AccountNumber" placeholder="계좌번호">
 				</div>
 
 				<button type="button" onclick="form_object_save(this.form);">
@@ -314,7 +353,7 @@
 
 	<script
 		src="${pageContext.request.contextPath}/resources/js/payment/payment.js"></script>
-		
+
 	<script>
 
 		var data = null;
