@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -31,34 +32,14 @@ public class joinController extends HttpServlet{
 	//회원가입 진행
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		
 		String id = req.getParameter("id");
 		String pwd = req.getParameter("pwd");
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
 		String phone = req.getParameter("phone");
-		
-		//파일 읽을 준비
-//		Part part = req.getPart("profile");
-//		if(part != null) {
-//			String originName = part.getSubmittedFileName();
-//			InputStream fis = part.getInputStream();
-//			
-//			//파일 저장 준비
-//			String changeName = ""+ UUID.randomUUID();
-//			String ext = originName.substring(originName.lastIndexOf("."),originName.length());
-//			String realPath = req.getServletContext().getRealPath("/upload");
-//			String filePath = realPath + File.separator + changeName +ext;
-//			FileOutputStream fos = new FileOutputStream(filePath);
-//			
-//			byte[] buf = new byte[1024];
-//			int size = 0;
-//			while(fis.read(buf) != -1) {
-//				fos.write(buf, 0, size);
-//			}
-//			fis.close();
-//			fos.close();
-//		}
-		
 		
 		MemberVo m = new MemberVo();
 		m.setUser_id(id);
@@ -71,12 +52,17 @@ public class joinController extends HttpServlet{
 		
 		if(result>0) {
 			// 성공
-			req.setAttribute("msg", "회원가입 성공");
-			req.getRequestDispatcher("WEB-INF/views/common/successPage.jsp").forward(req, resp);
+			/*
+			 * req.setAttribute("msg", "회원가입 성공");
+			 * req.getRequestDispatcher("WEB-INF/views/common/successPage.jsp").forward(req,
+			 * resp);
+			 */
+			out.println("<script>alert('회원가입이 완료 되었습니다.'); location.href='home.jsp';</script>");				 
+			out.flush();
 		}else {
 			// 실패
-			req.setAttribute("msg", "회원가입 실패");
-			req.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(req, resp);
+			out.println("<script>alert('회원 가입 실패.'); location.href='home.jsp';</script>");				 
+			out.flush();
 		}
 	}
 }

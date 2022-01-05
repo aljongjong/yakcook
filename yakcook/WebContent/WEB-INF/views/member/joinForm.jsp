@@ -129,7 +129,7 @@
 						Email
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Email is required">
-						<input class="input100"  type="email" name="email" id="email" class = "none">
+						<input class="input100"  type="email" name="email" id = "email" class = "none">
 						<span class="focus-input100"></span>
 					</div>
 						<br>
@@ -141,7 +141,7 @@
 						Phone
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Phone is required">
-						<input class="input100" type="text" name="phone" class = "none">
+						<input class="input100" type="text" name="phone" class = "none" maxlength="13" id = "phoneNumber">
 						<span class="focus-input100"></span>
 					</div>
 					
