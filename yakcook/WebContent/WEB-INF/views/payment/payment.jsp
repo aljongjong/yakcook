@@ -15,6 +15,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://js.tosspayments.com/v1"></script>
 <script>
+
 	function toss_popup() {
 		var tossPayments = TossPayments("test_ck_k6bJXmgo28e9WMkEoLY8LAnGKWx4");
 		var button = document.getElementById("payment-button");
@@ -22,18 +23,7 @@
 		var orderId = new Date().getTime();
 
 		var method = document.querySelector('input[name=method]:checked').value; // "카드" 혹은 "가상계좌"
-		/*	
-		if(method=="카드"){
-			tossPayments.requestPayment('카드', {
-				  amount: 1,
-				  orderId: 'VN2-tONRrEGc_KkHnmE',
-				  orderName: '토스 티셔츠 외 2건',
-				  customerName: '박토스',
-				  successUrl: window.location.origin + "/yakcook/paymentSuccess?method="+method,
-				  failUrl: window.location.origin + "/yakcook/paymentFail",
-				})
-		}
-		*/
+		
 		
 		var min = Math.ceil(0);
 	  	var max = Math.floor(999999999999);
@@ -42,8 +32,8 @@
 		var paymentData = {
 			amount : ${totalPrice},
 			orderId : orderIdRandom.toString(10),
-			orderName : "토스 티셔츠",
-			customerName : "이토페",
+			orderName : "${productName}",
+			customerName : "order",
 			successUrl : window.location.origin + "/yakcook/paymentSuccess?method="+method,
 			failUrl : window.location.origin + "/yakcook/paymentFail",
 		};
@@ -61,7 +51,9 @@
 </head>
 
 <body>
-
+<%!int order_count = 0;
+	int total_price = 0;
+%>
 	<div id="wrap">
 		<header> </header>
 
@@ -116,6 +108,8 @@
 
 
 				</div>
+
+
 				<c:if test="${empty shoppingList}">
 					<c:forEach items="${productList}" var="p">
 						<div id="info-list">
@@ -143,9 +137,14 @@
 							<li>${p.productName}
 							<li>${p.price}원</li>
 							<li>배송비</li>
-							<li>${amount}개</li>
+
 							<li>결제금액</li>
-							<li>${totalPrice}원</li>
+							<c:if test="${amount==1}">
+								<li>${defaultPrice}원</li>
+							</c:if>
+							<c:if test="${amount>1}">
+								<li>${totalPrice}원</li>
+							</c:if>
 						</div>
 					</c:forEach>
 
@@ -153,6 +152,8 @@
 
 				<c:if test="${empty productList}">
 					<c:forEach items="${shoppingList}" var="s">
+
+
 						<div id="info-list">
 							<!--결제정보-->
 							<div id="info-prod">
@@ -177,19 +178,20 @@
 						<div id="prod-li">
 							<li>${s.productName}
 							<li>${s.price}원</li>
+							<li>${s.inventory}개</li>
 							<li>배송비</li>
-							<li>${amount}개</li>
 							<li>결제금액</li>
-							<li>${totalPrice}원</li>
+							<li id = "price<%=request.getAttribute("productSum"); %>">${s.productSum}원</li>								
+							<%order_count = order_count+1;%>
 						</div>
 					</c:forEach>
-
+						
 				</c:if>
 
 
 				<div id="Payment_Method"></div>
 
-								<div id="agreement">
+				<div id="agreement">
 					<input type="checkbox" id="agreement_check">개인정보 제공 동의
 					<div id="mebmerTerms">
 
@@ -218,16 +220,16 @@
 					<div id="methods-container">
 
 						<label class="method_item"> <input type="radio"
-											name="method_pay" class="method_pay" value="카드"> <span>신용
+							name="method_pay" class="method_pay" value="카드"> <span>신용
 								/ 체크카드</span>
 						</label> </label> <label class="method_item"> <input type="radio"
-											name="method_pay" class="method_pay" value="계좌이체"> <span>계좌
+							name="method_pay" class="method_pay" value="계좌이체"> <span>계좌
 								이체</span>
 						</label> <label class="method_item"> <input type="radio"
-											name="method_pay" class="method_pay" value="가상계좌"> <span>가상
+							name="method_pay" class="method_pay" value="가상계좌"> <span>가상
 								계좌</span>
 						</label> <label class="method_item"> <input type="radio"
-											name="method_pay" class="method_pay" value="무통장"> <span>무통장
+							name="method_pay" class="method_pay" value="무통장"> <span>무통장
 								입금</span>
 						</label>
 					</div>
@@ -266,8 +268,8 @@
 						<option value="케이뱅크">케이뱅크</option>
 						<option value="카카오뱅크">카카오뱅크</option>
 					</select> <br> <input type="text" name="AccountHolder"
-										placeholder="예금주"> <br> <input type="text"
-										name="AccountNumber" placeholder="계좌번호">
+						placeholder="예금주"> <br> <input type="text"
+						name="AccountNumber" placeholder="계좌번호">
 				</div>
 
 				<button type="button" onclick="form_object_save(this.form);">

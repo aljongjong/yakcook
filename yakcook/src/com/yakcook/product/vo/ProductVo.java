@@ -16,12 +16,24 @@ public class ProductVo {
 	private int categoryNo;
 	private String tagName;
 	private String categoryName;
+	private int productSum;
 	
-	public String getCategoryName() {
-		return categoryName;
-	}
-	public void setCategoryName(String categoryName) {
+	
+	
+	
+	public ProductVo() {
+		this.productNo = productNo;
+		this.productName = productName;
+		this.price = price;
+		this.categoryDate = categoryDate;
+		this.productContents = productContents;
+		this.productDelete = productDelete;
+		this.lasteditDate = lasteditDate;
+		this.inventory = inventory;
+		this.categoryNo = categoryNo;
+		this.tagName = tagName;
 		this.categoryName = categoryName;
+		this.productSum = productSum;
 	}
 	public int getProductNo() {
 		return productNo;
@@ -83,6 +95,17 @@ public class ProductVo {
 	public void setTagName(String tagName) {
 		this.tagName = tagName;
 	}
-	
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public int getProductSum() {
+		return productSum;
+	}
+	public void setProductSum(int productSum) {
+		this.productSum = productSum;
+	}
 	
 }
