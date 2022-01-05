@@ -31,8 +31,7 @@
                 <li><a href="/yakcook/manageProduct">제품관리</a></li>
                 <li><a href="/yakcook/managenotice">공지사항</a></li>
                 <li><a href="/yakcook/manageFAQ">FAQ</a></li>
-                <li><a href="#">1대1문의</a></li>
-                <li><a href="#">리뷰관리</a></li>
+                <li><a href="/yakcook/manageQNA">1대1문의</a></li>
                 <li><a href="/yakcook/paymentdetail">결제관리</a></li>
         </ul>
         </div>

@@ -7,19 +7,19 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.yakcook.paymentDetail.dao.paymentDetailDao;
+import com.yakcook.paymentDetail.model.vo.pagingVo;
+import com.yakcook.paymentDetail.model.vo.payProductVo;
 import com.yakcook.paymentDetail.model.vo.paymentVo;
 
 public class paymentDetailService {
 
 	public ArrayList<paymentVo> getPayList(String category, String search,
-			String status, com.yakcook.paymentDetail.model.vo.pagingVo pv) {
+			pagingVo pv) {
 		Connection conn = getConnection();
 		ArrayList<paymentVo> paymentVo = null;
 		int totalBoardCount=0;
-		if(category != null) {
-			totalBoardCount = new paymentDetailDao().countCategoryPay(conn ,category);
-		}else if((search != null)){
-			totalBoardCount = new paymentDetailDao().countSearchPay(conn ,search, status);
+		if((search != null)){
+			totalBoardCount = new paymentDetailDao().countSearchPay(conn ,search, category);
 		}else {
 			totalBoardCount = new paymentDetailDao().countPayAll(conn);
 		}
@@ -35,15 +35,24 @@ public class paymentDetailService {
 		pv.setStartNo(startNo);
 		pv.setEndNo(endNo);
 		
-		if(category != null) {
-			paymentVo = new paymentDetailDao().getCategoryPay(conn, category, pv);
-		}else if((search != null)){
-			paymentVo = new paymentDetailDao().getSearchPay(conn, search, status, pv);
+		if((search != null)){
+			paymentVo = new paymentDetailDao().getSearchPay(conn, search, category, pv);
 		}else {
 			paymentVo = new paymentDetailDao().getPayAll(conn, pv);
 		}
 		
+		for(paymentVo payVo : paymentVo) {
+			ArrayList<payProductVo> ppv = new paymentDetailDao().getPayProduct(conn, payVo.getOrderNo());
+			payVo.setPayProduct(ppv);
+		}
 		close(conn);
 		return paymentVo;
+	}
+
+	public int statusUpdate(int orderNo, String status) {
+		Connection conn = getConnection();
+		int result = new paymentDetailDao().statusUpdate(conn, orderNo, status);
+		close(conn);
+		return result;
 	}
 }

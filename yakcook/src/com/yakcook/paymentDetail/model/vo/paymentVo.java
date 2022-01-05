@@ -1,6 +1,7 @@
 package com.yakcook.paymentDetail.model.vo;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class paymentVo {
@@ -10,12 +11,12 @@ public class paymentVo {
 	private String userPhone;
 	private String postNo;
 	private String address;
-	private String DetailAddress;
-	private String ExtraAddress;
-	private String Memo;
-	private String MemoInput;
+	private String detailAddress;
+	private String extraAddress;
+	private String memo;
+	private String memoInput;
 	private Date orderDate;
-	private String Status;
+	private String status;
 	private String payMethod;
 	private ArrayList<payProductVo> payProduct = new ArrayList<payProductVo>();
 	private int totalAll;
@@ -63,28 +64,28 @@ public class paymentVo {
 		this.address = address;
 	}
 	public String getDetailAddress() {
-		return DetailAddress;
+		return detailAddress;
 	}
 	public void setDetailAddress(String detailAddress) {
-		DetailAddress = detailAddress;
+		this.detailAddress = detailAddress;
 	}
 	public String getExtraAddress() {
-		return ExtraAddress;
+		return extraAddress;
 	}
 	public void setExtraAddress(String extraAddress) {
-		ExtraAddress = extraAddress;
+		this.extraAddress = extraAddress;
 	}
 	public String getMemo() {
-		return Memo;
+		return memo;
 	}
 	public void setMemo(String memo) {
-		Memo = memo;
+		this.memo = memo;
 	}
 	public String getMemoInput() {
-		return MemoInput;
+		return memoInput;
 	}
 	public void setMemoInput(String memoInput) {
-		MemoInput = memoInput;
+		this.memoInput = memoInput;
 	}
 	public Date getOrderDate() {
 		return orderDate;
@@ -93,10 +94,10 @@ public class paymentVo {
 		this.orderDate = orderDate;
 	}
 	public String getStatus() {
-		return Status;
+		return status;
 	}
 	public void setStatus(String status) {
-		Status = status;
+		this.status = status;
 	}
 
 	public ArrayList<payProductVo> getPayProduct() {
@@ -110,6 +111,11 @@ public class paymentVo {
 			this.totalAll += pv.getTotal();
 		}
 		return totalAll;
+	}
+	public String writeDateString() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String writeDay = formatter.format(orderDate);
+		return writeDay;
 	}
 	
 	
