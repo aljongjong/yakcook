@@ -13,31 +13,28 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.yakcook.payment.service.PaymentService;
 
-
-
-
-
 @WebServlet("/paymentSuccess")
 public class paymentSuccessController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
+
 		String amount = req.getParameter("amount");
 		// amout값과 총상품가격(DB에저장된) 이 같은지 비교를 한다.
 		String paymentKey = req.getParameter("paymentKey");
-		
+
 		String orderId = req.getParameter("orderId");
 		String method = req.getParameter("method");
 
-		if(method.equals("가상계좌")) {
+		if (method.equals("가상계좌")) {
 			HttpRequest request = HttpRequest.newBuilder()
 					.uri(URI.create("https://api.tosspayments.com/v1/virtual-accounts"))
 					.header("Authorization", "Basic dGVzdF9za19Zb0VqYjBnbTIzUGQxN1cycWVrM3BHd0JKbjVlOg==")
 					.header("Content-Type", "application/json")
-					.method("POST", HttpRequest.BodyPublishers.ofString("{\"amount\":"+amount+",\"orderId\":\""+orderId+"\",\"orderName\":\"토스 티셔츠 외 2건\",\"customerName\":\"박토스\",\"bank\":\"우리\"}"))
-				    .build();
+					.method("POST",
+							HttpRequest.BodyPublishers.ofString("{\"amount\":" + amount + ",\"orderId\":\"" + orderId
+									+ "\",\"orderName\":\"토스 티셔츠 외 2건\",\"customerName\":\"박토스\",\"bank\":\"우리\"}"))
+					.build();
 			HttpResponse<String> response;
 			try {
 				response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
@@ -46,18 +43,19 @@ public class paymentSuccessController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
-		
-		int result = new PaymentService().paymentComplate();
-		int paymethod = new PaymentService().paymentCard();
-		}
-		else if(method.equals("카드")) {
+
+			int result = new PaymentService().paymentComplate();
+			int paymethod = new PaymentService().VirtualAccount();
+
+			req.getRequestDispatcher("WEB-INF/views/payment/paymentSuccess.jsp").forward(req, resp);
+
+		} else if (method.equals("카드")) {
 			HttpRequest request = HttpRequest.newBuilder()
-				    .uri(URI.create("https://api.tosspayments.com/v1/payments/"+paymentKey))
-				    .header("Authorization", "Basic dGVzdF9za19Zb0VqYjBnbTIzUGQxN1cycWVrM3BHd0JKbjVlOg==")
-				    .header("Content-Type", "application/json")
-				    .method("POST", HttpRequest.BodyPublishers.ofString("{\"amount\":"+amount+",\"orderId\":\""+orderId+"\"}"))
-				    .build();
+					.uri(URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey))
+					.header("Authorization", "Basic dGVzdF9za19Zb0VqYjBnbTIzUGQxN1cycWVrM3BHd0JKbjVlOg==")
+					.header("Content-Type", "application/json").method("POST", HttpRequest.BodyPublishers
+							.ofString("{\"amount\":" + amount + ",\"orderId\":\"" + orderId + "\"}"))
+					.build();
 			HttpResponse<String> response;
 			try {
 				response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
@@ -66,9 +64,11 @@ public class paymentSuccessController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
+			int result = new PaymentService().paymentComplate();
+			int paymethod = new PaymentService().paymentCard();
+
+			req.getRequestDispatcher("WEB-INF/views/payment/paymentSuccess.jsp").forward(req, resp);
 		}
-		
-		int result = new PaymentService().paymentComplate();
-		req.getRequestDispatcher("WEB-INF/views/payment/paymentSuccess.jsp").forward(req, resp);
 	}
 }

@@ -46,6 +46,13 @@ public class PaymentService {
 		Connection conn = getConnection();
 		return new PaymentDao().updateMethodCard(conn);
 	}
+
+
+
+	public int VirtualAccount() {
+		Connection conn = getConnection();
+		return new PaymentDao().updateMethodAccount(conn);
+	}
 	
 	
 	

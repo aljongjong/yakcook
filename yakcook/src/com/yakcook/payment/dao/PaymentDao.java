@@ -53,7 +53,7 @@ public class PaymentDao {
 		PreparedStatement pstmt = null;
 		int rs = 0;
 
-		String sql = "UPDATE  ORDER_INFO SET COMPLEATE =  'Y' WHERE ORDER_NO = (SELECT ORDER_NO FROM (SELECT * FROM ORDER_INFO ORDER BY ORDER_NO DESC) WHERE ROWNUM =1)";
+		String sql = "UPDATE  ORDER_INFO SET COMPLEATE =  'Y', STATUS ='결제완료' WHERE ORDER_NO = (SELECT ORDER_NO FROM (SELECT * FROM ORDER_INFO ORDER BY ORDER_NO DESC) WHERE ROWNUM =1)";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -74,7 +74,7 @@ public class PaymentDao {
 		ResultSet rs = null;
 		List productList = new ArrayList<ProductVo>();
 		ProductVo p = null;
-		String sql = "SELECT PRODUCT_NAME ,PRICE FROM PRODUCT WHERE PRODUCT_NO =?";
+		String sql = "SELECT PRODUCT_NAME , PRICE FROM PRODUCT WHERE PRODUCT_NO =?";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -83,18 +83,18 @@ public class PaymentDao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-			String productName = rs.getString("PRODUCT_NAME");
-			int price = rs.getInt("PRICE");
+				String productName = rs.getString("PRODUCT_NAME");
+				int price = rs.getInt("PRICE");
+				p = new ProductVo();
+				
+				
+				p.setProductName(productName);
+				p.setPrice(price);
 			
-			p = new ProductVo();
-			
-			p.setProductName(productName);
-			p.setPrice(price);
-			
-			productList.add(p);
+
+				productList.add(p);
 			}
-			
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -107,45 +107,68 @@ public class PaymentDao {
 	public List<ShoppingBasketProVo> getShoppingBagList(Connection conn, int no) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-	
+
 		List shoppingBagList = new ArrayList<ShoppingBasketProVo>();
-		ProductVo s =null;
-	
-		String sql ="SELECT P.PRODUCT_NAME, P.PRICE , S.INVENTORY FROM PRODUCT P, "
-				+ "SHOPPINGBAG_PRO S WHERE P.PRODUCT_NO = S.PRODUCT_NO AND SHOPPINGBAG_NO =?";
-		
+		ProductVo s = null;
+
+		String sql = "SELECT P.PRODUCT_NAME, P.PRICE , S.INVENTORY ,P.PRICE*S.INVENTORY FROM PRODUCT P, SHOPPINGBAG_PRO S "
+				+ "WHERE P.PRODUCT_NO = S.PRODUCT_NO AND SHOPPINGBAG_NO =?";
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
-			rs =pstmt.executeQuery();
-			
-			while(rs.next()) {
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
 				String productName = rs.getString("PRODUCT_NAME");
 				int price = rs.getInt("PRICE");
-				int inventory = rs.getInt("INVENTORY"); 
-				
+				int inventory = rs.getInt("INVENTORY");
+				int productSum = rs.getInt("P.PRICE*S.INVENTORY");
+
 				s = new ProductVo();
-				
+
 				s.setProductName(productName);
 				s.setPrice(price);
+				s.setInventory(inventory);
+				s.setProductSum(productSum);
 				shoppingBagList.add(s);
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(conn);
 			close(pstmt);
 		}
-		
+
 		return shoppingBagList;
 	}
 
 	public int updateMethodCard(Connection conn) {
 		PreparedStatement pstmt = null;
 		int rs = 0;
-		
+
 		String sql = "UPDATE ORDER_INFO SET PAYMETHOD = '카드' WHERE ORDER_NO = (SELECT ORDER_NO FROM (SELECT * FROM ORDER_INFO ORDER BY ORDER_NO DESC) WHERE ROWNUM =1)";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			commit(conn);
+			close(conn);
+			close(pstmt);
+		}
+
+		return rs;
+	}
+
+	public int updateMethodAccount(Connection conn) {
+		PreparedStatement pstmt = null;
+		int rs = 0;
+		
+		String sql = "UPDATE ORDER_INFO SET PAYMETHOD = '계좌이체' WHERE ORDER_NO = (SELECT ORDER_NO FROM (SELECT * FROM ORDER_INFO ORDER BY ORDER_NO DESC) WHERE ROWNUM =1)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -160,5 +183,4 @@ public class PaymentDao {
 		
 		return rs;
 	}
-
 }

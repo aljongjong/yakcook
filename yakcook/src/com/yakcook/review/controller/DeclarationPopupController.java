@@ -16,7 +16,6 @@ public class DeclarationPopupController extends HttpServlet{
 		
 		String reviewNo = req.getParameter("reviewNo");
 		
-		System.out.println("팝업으로 받아오는곳 :: "+reviewNo);
 		
 		req.setAttribute("reviewNo",reviewNo);
 		req.getRequestDispatcher("WEB-INF/views/review/declaration.jsp").forward(req, resp);

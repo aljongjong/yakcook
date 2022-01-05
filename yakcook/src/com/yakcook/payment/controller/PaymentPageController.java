@@ -29,13 +29,15 @@ public class PaymentPageController extends HttpServlet {
 		String productNo = req.getParameter("productNo");
 		String amount = req.getParameter("amount");
 		String totalPrice = req.getParameter("totalPrice");
-
+		String defaultPrice = req.getParameter("defaultPrice");
 		req.setAttribute("productNo", productNo);
+		
 		req.setAttribute("amount", amount);
 		req.setAttribute("totalPrice", totalPrice);
-
+		req.setAttribute("defaultPrice", defaultPrice);
 		List<ProductVo> productList = new PaymentService().selectList(productNo);
 		req.setAttribute("productList", productList);
+		req.setAttribute("productName",(productList.get(0).getProductName()));
 		req.getRequestDispatcher("WEB-INF/views/payment/payment.jsp").forward(req, resp);
 	}
 
@@ -43,9 +45,12 @@ public class PaymentPageController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String shoppingBagNo = req.getParameter("shoppingBagNo");
-
+		String defaultPrice = req.getParameter("defaultPrice");
+		
 		List<ShoppingBasketProVo> shoppingList = new PaymentService().selectShoppingBag(shoppingBagNo);
 		req.setAttribute("shoppingList", shoppingList);
+		req.setAttribute("productSum", shoppingList);
+		req.setAttribute("defaultPrice", defaultPrice);
 		req.getRequestDispatcher("WEB-INF/views/payment/payment.jsp").forward(req, resp);
 	}
 

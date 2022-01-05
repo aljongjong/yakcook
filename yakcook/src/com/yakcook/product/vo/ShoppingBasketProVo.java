@@ -5,7 +5,15 @@ public class ShoppingBasketProVo {
 	private int shoppingBasketNo;
 	private int productNo;
 	private int inventory;
+
 	
+	
+	public ShoppingBasketProVo() {
+		this.shoppingBasketNo = shoppingBasketNo;
+		this.productNo = productNo;
+		this.inventory = inventory;
+		
+	}
 	public int getShoppingBasketNo() {
 		return shoppingBasketNo;
 	}
@@ -24,6 +32,8 @@ public class ShoppingBasketProVo {
 	public void setInventory(int inventory) {
 		this.inventory = inventory;
 	}
+
+
 	
 	
 }
