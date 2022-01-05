@@ -60,12 +60,6 @@ public class paymentController extends HttpServlet {
 			PrintWriter out = resp.getWriter();
 			out.print(result);
 
-			
-//			int intOrderNo = new PaymentService().selectOrder();
-//			String orderNo = Integer.toString(intOrderNo);
-//			req.setAttribute("orderNo", orderNo);
-//			req.getRequestDispatcher("WEB-INF/views/payment/payment.jsp").forward(req, resp);
-		
 	}
 	
 }

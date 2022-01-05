@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yakcook.payment.service.PaymentService;
+
 
 
 
@@ -60,5 +62,7 @@ public class paymentSuccessController extends HttpServlet {
 			}
 		}
 		
+		int result = new PaymentService().paymentComplate();
+		req.getRequestDispatcher("WEB-INF/views/payment/paymentSuccess.jsp").forward(req, resp);
 	}
 }

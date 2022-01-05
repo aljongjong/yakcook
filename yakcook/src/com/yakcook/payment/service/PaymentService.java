@@ -13,10 +13,11 @@ public class PaymentService {
 		return new PaymentDao().insertOrder(conn,p);
 	}
 
-	public int selectOrder() {
+
+
+	public int paymentComplate() {
 		Connection conn = getConnection();
-		return new PaymentDao().selectedOrder(conn);
-		
+		return new PaymentDao().updateComplate(conn);
 	}
 	
 	

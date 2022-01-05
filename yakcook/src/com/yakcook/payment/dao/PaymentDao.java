@@ -48,26 +48,27 @@ public class PaymentDao {
 		return rs;
 	}
 
-	public int selectedOrder(Connection conn) {
+
+
+	public int updateComplate(Connection conn) {
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		int result = 0;
+		int rs = 0 ;
+	
 		
-		String sql ="(SELECT ORDER_NO FROM(SELECT * FROM ORDER_INFO ORDER BY ORDER_NO DESC)WHERE ROWNUM =1)";
+		String sql = "UPDATE  ORDER_INFO SET COMPLEATE =  'Y' WHERE ORDER_NO = (SELECT ORDER_NO FROM (SELECT * FROM ORDER_INFO ORDER BY ORDER_NO DESC) WHERE ROWNUM =1)";
+		
 		try {
-			pstmt =	conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				result = rs.getInt("ORDER_NO");
-			}
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
+			commit(conn);
 			close(conn);
 			close(pstmt);
 		}
 		
-		return result;
+		return rs;
 	}
 	
 	

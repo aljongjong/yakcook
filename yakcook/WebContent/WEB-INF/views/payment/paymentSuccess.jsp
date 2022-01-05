@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-curl --request POST \
-  --url https://api.tosspayments.com/v1/payments/{paymentKey} \
-  --header 'Authorization: Basic dGVzdF9za19Zb0VqYjBnbTIzUGQxN1cycWVrM3BHd0JKbjVlOg=='
+<h1>결제완료</h1>
 </body>
 </html>
