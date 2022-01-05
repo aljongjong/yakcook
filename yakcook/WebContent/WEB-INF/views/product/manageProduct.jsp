@@ -107,7 +107,7 @@
 		                    <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 							<div class="mp_tag">
 			                <c:forEach items="${tagProductList}" var="tp">
-								<c:if test="${np.productName eq tp.productName}">
+								<c:if test="${np.productNo eq tp.productNo}">
 									<a>#${tp.tagName}</a>
 								</c:if>		                
 			                </c:forEach>
@@ -153,7 +153,7 @@
 			                <!-- 각 제품에 부여된 태그 조인해서 가져오기 -->
 							<div class="mp_tag">
 			                <c:forEach items="${tagProductList}" var="tp">
-			                	<c:if test="${cp.productName eq tp.productName}">
+			                	<c:if test="${cp.productNo eq tp.productNo}">
 					                    <a>#${tp.tagName}</a>
 									</c:if>		                
 								</c:forEach>

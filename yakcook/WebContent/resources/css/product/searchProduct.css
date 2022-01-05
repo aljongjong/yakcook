@@ -253,8 +253,9 @@
     margin-left: 0;
     border: none;
     color: #fff;
-    line-height: 2;
+    line-height: 1;
     cursor: pointer;
+    font-size: 12px;
 }
 .sp_tag:hover *
 {
@@ -1045,6 +1046,7 @@ td, th
     background: #fff; 
     cursor: pointer;
     text-align:left;
+    line-height:2;
 }
 #searchProductTodetails:hover
 {
