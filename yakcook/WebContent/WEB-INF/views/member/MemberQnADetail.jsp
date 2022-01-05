@@ -36,7 +36,8 @@
 					</div>
 
 					<div id="review_button">
-						<button type="button" onclick="location.href='memberQuestion'">목록으로</button>
+						<button type="button" onclick="location.href='memberQuestion'">목록으로</button>						
+						<button type="button" onclick="location.href='qnaupdate?qna_no=${q.qna_no}'">수정하기</button>
 						<input type="submit" value = "삭제">
 					</div>
 					</form>

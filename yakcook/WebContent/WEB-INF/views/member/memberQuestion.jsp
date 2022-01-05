@@ -14,6 +14,7 @@
 		<tr>
 			<td> 문의 번호 </td>
 			<td> 아이디 </td>
+			<td> 카테고리 </td>
 			<td> 제목 </td>
 			<td> 내용 </td>
 		</tr>
@@ -22,6 +23,7 @@
 			<tr onclick="location.href='QnADetail?qna_no=${q.qna_no}'" style = "cursor:pointer;">
 					<td>${q.qna_no}</td>
 					<td>${q.user_id}</td>
+					<td>${q.qna_category}</td>
 					<td>${q.qna_title}</td>
 					<td>${q.qna_content}</td>
 			</tr>
