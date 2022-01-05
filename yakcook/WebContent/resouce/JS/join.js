@@ -8,13 +8,15 @@ let pwdMsg = document.getElementById('pwdMsg');				//확인 메세지
 let pwdspan = document.getElementById('pwdspan');
 let userName = document.getElementById('userName'); //이름 값
 let nameMsg = document.getElementById('nameMsg');
-let email = document.getElementById('email') // 이메일
+let email = document.getElementById('email'); // 이메일
+let phone = document.getElementById('userphone');
 let passwordCheckNum = 0; // 비밀번호 일치할 때 넘어가도록 관리하는 변수
 let emailCheckNum = 0; // 이메일 인증 성공시 넘어가도록 관리하는 변수
 let nameCheckNum = 0; // 이름 정규식 만족하면 넘어가도록 관리하는 변수
 let correctColor = "#00ff00";	//맞았을 때 출력되는 색깔.
 let wrongColor ="#ff0000";	//틀렸을 때 출력되는 색깔
 let userIdCheck = true;
+let phoneChNum = 0;
 
 //아이디 중복 체크 + 정규식 처리 동시에!
 $('#idBox').keyup(function(){
@@ -28,7 +30,7 @@ $('#idBox').keyup(function(){
 				id : $('#idBox').val()
 			},
 			success : function(data){
-				if(data =="true"){
+				if(data == "true"){
 					$("#idspan").text("사용 가능한 아이디 입니다.");
 					$('input').attr('readonly', false);
 					$("#idBox").focus();
@@ -79,14 +81,14 @@ let replaceName = /^[가-힣a-zA-Z\s]+$/;
 $('#userName').on('keyup', function(){
 	let x = $(this).val();
 	if(x.length>1){
-		nameMsg.innerHTML ="글자수가 안 모자람";
+		nameMsg.innerHTML ="";
 		nameCheckNum = 1;
 		if(!x.match(replaceName)){
 			nameMsg.innerHTML = "이름은 한글, 영문만 입력 가능합니다.";
 			nameCheckNum = 0;
 		}
 	}else{
-		nameMsg.innerHTML ="글자수가 모자람";
+		nameMsg.innerHTML ="이름을 다시 입력해주세여.";
 		nameCheckNum = 0;
 	}
 });
@@ -126,47 +128,10 @@ function confirmemail(emailconfirm_value, authNum){
 	}
 }
 
-console.log(userIdCheck);
-//sumbit버튼 눌렀을 때 일어나는 함수
-function Check(){
-	// 중복된 아이디면 넘어가지 않도록 
-	if(userIdCheck == false){
-	  alert("중복된 아이디 입니다.");
-	  document.getElementById('idBox').focus();
-	  return false;
-	}
-	
-	
-	// 비밀번호 정규식 만족하지 않았을 경우 넘어가지 않도록
-	if(passwordCheckNum === 0){
-		console.log(passwordCheckNum)
-		alert("비밀번호 정규식을 만족하지 않습니다.");
-	  	document.getElementById('password').focus();
-		return false;
-	}
-	
-	// 비밀번호가 동일하지 않을 경우 넘어가지 않도록
-	if(password.value !== passwordConfirm.value) {
-		   alert("동일한 비밀번호 값을 입력하세요.")
-		   document.getElementById('passwordConfirm').value = '';
-		   document.getElementById('passwordConfirm').focus();
-		   return false;
-		}
-		
-	// 이름 정규식 만족하지 않았을 경우 넘어가지 않게
-	if(nameCheckNum === 0){
-		alert("이름이 맞지 않습니다.");
-	  	document.getElementById('userName').focus();
-	 	return false;
-	}
-	
-	//이메일 인증성공하지 못하면 넘어가지 않도록
-/* 	if(emailCheckNum === 0){
-		alert("이메일 인증을 다시 진행해주세요");
-	  	document.getElementById('userName').focus();
-	 	return false;
-	} */
-}
+$(document).on("keyup", "#phoneNumber", function() {
+	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+});
+
 
 //필수입력항목 체크!
 password.addEventListener('click', () => {
@@ -210,3 +175,36 @@ $(".checkbox_group .normal").each(function(){
 
 $("#check_all").prop("checked", is_checked);
 });
+
+//sumbit버튼 눌렀을 때 일어나는 함수
+function Check(){
+	// 중복된 아이디면 넘어가지 않도록 
+	if(userIdCheck == false){
+	  alert("중복된 아이디 입니다.");
+	  document.getElementById('idBox').focus();
+	  return false;
+	}
+	
+	// 비밀번호 정규식 만족하지 않았을 경우 넘어가지 않도록
+	if(passwordCheckNum === 0){
+		console.log(passwordCheckNum)
+		alert("비밀번호 정규식을 만족하지 않습니다.");
+	  	document.getElementById('password').focus();
+		return false;
+	}
+	
+	// 비밀번호가 동일하지 않을 경우 넘어가지 않도록
+	if(password.value !== passwordConfirm.value) {
+		   alert("동일한 비밀번호 값을 입력하세요.")
+		   document.getElementById('passwordConfirm').value = '';
+		   document.getElementById('passwordConfirm').focus();
+		   return false;
+		}
+		
+	// 이름 정규식 만족하지 않았을 경우 넘어가지 않게
+	if(nameCheckNum === 0){
+		alert("이름이 맞지 않습니다.");
+	  	document.getElementById('userName').focus();
+	 	return false;
+	}
+}
