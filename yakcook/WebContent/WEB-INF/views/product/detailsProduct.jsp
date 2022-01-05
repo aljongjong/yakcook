@@ -113,6 +113,7 @@
 						           			<input type="hidden" name="productNo" value="${detailsProduct.productNo}">
 						           			<input type="hidden" name="amount" value="" id="toPamount">
 						           			<input type="hidden" name="totalPrice" value="" id="toPprice">
+						           			<input type="hidden" name="defaultPrice" value="${detailsProduct.price + 2500}" id="defaultP">
 						           			<input onclick="toPaymentPage()" type="submit" value="주문 하기" id="detailsProductToPayment">
 						           		</form>
 						            </div>
@@ -256,7 +257,7 @@
     		alert("로그인이 필요합니다.");
     		return false;
     	}
-
+        
 
     </script>
 </body>

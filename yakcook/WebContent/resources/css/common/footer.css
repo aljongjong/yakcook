@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+*
+{
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 13px;
+    line-height: 2;
+    list-style: none;
+}
+/* 전체 프레임 */
+.footerWrap
+{
+    width: 100%;
+    background: rgb(108, 128, 75);
+    float: left;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.footerContents
+{
+    width: 1000px;
+    margin: auto;
+}
+.content1
+{
+    width: 50%;
+    float: left;
+}
+.content2
+{
+    width: 50%;
+    float: left;
+}
+/* content1 */
+.content1>ul
+{
+    padding: 0;
+}
+.content1>ul>:nth-child(1)
+{
+    font-size: 15px;
+    font-weight: 700;
+}
+/* content2 */
+.content2>.help>ul
+{
+    padding-left: 100px;
+}
+.content2>div>ul>:nth-child(1)
+{
+    font-size: 15px;
+    font-weight: 700;
+}
+.help>ul>li:nth-child(6),
+.help>ul>li:nth-child(7),
+.help>ul>li:nth-child(8)
+{
+    float: left;
+    letter-spacing: 10px;
+    padding-top: 5px;
+    padding-left: 10px;
+}
+i
+{
+    font-size: 30px;
+}
+i:hover
+{
+    color: rgb(250, 174, 88);
+}
+
