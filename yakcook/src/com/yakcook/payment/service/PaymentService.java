@@ -12,6 +12,12 @@ public class PaymentService {
 		Connection conn = getConnection();
 		return new PaymentDao().insertOrder(conn,p);
 	}
+
+	public int selectOrder() {
+		Connection conn = getConnection();
+		return new PaymentDao().selectedOrder(conn);
+		
+	}
 	
 	
 	

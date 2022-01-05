@@ -42,10 +42,34 @@ public class PaymentDao {
 		}finally{
 			close(pstmt);
 			commit(conn);
+			close(conn);
 			
 		}
 		return rs;
 	}
+
+	public int selectedOrder(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		
+		String sql ="(SELECT ORDER_NO FROM(SELECT * FROM ORDER_INFO ORDER BY ORDER_NO DESC)WHERE ROWNUM =1)";
+		try {
+			pstmt =	conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("ORDER_NO");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(conn);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 	
 		
 }

@@ -24,7 +24,7 @@ public class paymentController extends HttpServlet {
 		
 
 			//입력한 주문정보 가져오기
-		
+			
 			String order =	req.getParameter("order");
 
 			String phone1 =	req.getParameter("phone1");
@@ -60,8 +60,11 @@ public class paymentController extends HttpServlet {
 			PrintWriter out = resp.getWriter();
 			out.print(result);
 
-		
-		
+			
+//			int intOrderNo = new PaymentService().selectOrder();
+//			String orderNo = Integer.toString(intOrderNo);
+//			req.setAttribute("orderNo", orderNo);
+//			req.getRequestDispatcher("WEB-INF/views/payment/payment.jsp").forward(req, resp);
 		
 	}
 	
