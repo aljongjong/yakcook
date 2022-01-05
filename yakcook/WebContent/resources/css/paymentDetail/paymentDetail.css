@@ -17,7 +17,7 @@ table {
     border-collapse: collapse;
 }
 #tableWrap{
-    width: 80%;
+    width: 100%;
     margin: auto;
 }
 
@@ -47,60 +47,71 @@ th{
     margin-left: 30px;
 }
 #search_tap{
-    width: 60%;
+    width: 100%;
     margin: 0 auto;
     text-align: right;
     padding-bottom: 10px;
 }
-#search_tap>span {
+#search_tap>form>span {
     display: block;
     margin-right: 10px;
 }
 
 .t1{
-    width: 20%;
+    width: 5%;
 }
 .t2{
-    width: 70%;
-    text-align: left;
+    width: 15%;
+}
+.t3{
+	width: 30%;
+	text-align: left;
+}
+.t4{
+	width: 35%;
+	text-align: left;
+}
+.t5{
+	width: 10%;
+}
+.t6{
+	width: 10%;
 }
 
-.view>td:nth-of-type(2){
-    text-align: center;
-    color: rgb(250, 174, 088);
-    font-weight: bold;
-}
-.view:hover{
-	cursor: pointer;
+.center{
+	text-align:center;
 }
 
-td>input {
+td>button {
     box-sizing: border-box;
     background-color: white;
     width: 100%;
-    height: 30px;
+    height: 25px;
     border: none;
 }
-td>input:hover{
+td>button:hover{
     background-color: rgb(250, 174, 088);
     cursor: pointer;
 }
-
-.btnWrap{
-	text-align: right;
+.category{
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    color: rgb(250, 174, 088);
+    text-decoration:none;
+    display: inline-block;
 }
-
-.noticeBtn{
-    background-color: rgb(171, 184, 104);
-    padding: 5px 10px;
-    font-size: 15px;
+.category:link{
+    font-weight: bold;
+    font-size: 18px;
+    color: rgb(250, 174, 088);
+    text-decoration:none;
+}
+.category:hover{
     color: white;
-    border: none;
-    
-}
-.noticeBtn:hover{
     background-color: rgb(250, 174, 088);
-    cursor: pointer;
+    text-decoration:none;
 }
 
 .page-area{
@@ -125,6 +136,20 @@ td>input:hover{
 .paging:hover{
 	background-color: rgb(250, 174, 088);
 }
-.hidetd{
-	display:none;
+
+.small{
+	font-size:15px;
+}
+
+.btn1{
+    background-color: rgb(171, 184, 104);
+    padding: 5px 10px;
+    font-size: 15px;
+    color: white;
+    border: none;
+    
+}
+.btn1:hover{
+    background-color: rgb(250, 174, 088);
+    cursor: pointer;
 }
