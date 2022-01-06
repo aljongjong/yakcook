@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.UUID;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +28,9 @@ public class ReviewController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html; charset=UTF-8");
 		
 		String title = req.getParameter("review_title"); //리뷰제목 받아오기
 		String contents = req.getParameter("review_contents");//리뷰내용 받아오기
@@ -97,12 +101,13 @@ public class ReviewController extends HttpServlet {
 		r.setUserId(userId);
 		result = new ReviewService().writerReview(r);
 		imgResult = new ReviewService().imgReview(i);
+		PrintWriter out = resp.getWriter();
+		
+		
 		if (result > 0 && imgResult > 0) {
-			req.setAttribute("msg", "게시물등록에 성공하였습니다");
-			req.getRequestDispatcher("WEB-INF/views/common/Review/ReviewWriterSuccessPage.jsp").forward(req, resp);
+			out.println("<script>alert('게시물이 등록되었습니다.')</script>");
 		} else {
-			req.setAttribute("msg", "게시물등록이 실패되었습니다.");
-			req.getRequestDispatcher("WEB-INF/views/common/Review/ReviewWriterErrorPage.jsp").forward(req, resp);
+			out.println("<script>alert('게시물이 등록이 실패되었습니다.')</script>");
 		}
 
 	}

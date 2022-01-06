@@ -104,11 +104,11 @@ public class PaymentDao {
 		return productList;
 	}
 
-	public List<ShoppingBasketProVo> getShoppingBagList(Connection conn, int no) {
+	public List<ProductVo> getShoppingBagList(Connection conn, int no) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		List shoppingBagList = new ArrayList<ShoppingBasketProVo>();
+		List shoppingBagList = new ArrayList<ProductVo>();
 		ProductVo s = null;
 
 		String sql = "SELECT P.PRODUCT_NAME, P.PRICE , S.INVENTORY ,P.PRICE*S.INVENTORY FROM PRODUCT P, SHOPPINGBAG_PRO S "

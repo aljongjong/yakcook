@@ -24,6 +24,8 @@ public class ReivewDeclarationController extends HttpServlet{
 			int declaration = new ReviewService().upDeclaration(reviewNo);
 			int declarationTable = new ReviewService().completeDeclaration(reviewNo , reviewReason);
 			
+			req.setCharacterEncoding("UTF-8");
+			resp.setContentType("text/html; charset=UTF-8");
 			
 			PrintWriter out = resp.getWriter();
 			

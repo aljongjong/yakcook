@@ -23,6 +23,7 @@ footer{
 .review_Wrap{
     height: 100%;
     width: 100%;
+  
 }
 
 .review_table{
@@ -31,6 +32,7 @@ footer{
     border-spacing: 10px;
     border:2px solid rgb(214, 211, 211);
     border-radius: 6px;
+    margin-bottom: 50px;
 }
 .review_table tr{
     font-size: 20px;
@@ -47,14 +49,14 @@ footer{
     margin-left: 60px;
 }
 .review_table input[type=text]{
-    border:1px solid #05956c;
+    border:1px solid #abb868;
 }
 .review_table textarea{
     margin-left: 60px;
-    border:1px solid #05956c;
+    border:1px solid #abb868;
 }
 .review_table input[type=file]{
-    color: #05956c;
+    color: #abb868;
 }
 .review_contents{
     width: 85%;
@@ -63,16 +65,18 @@ footer{
 .writer_button{
    text-align: center;
    height:40px;
+  
 }
 .writer_button input{
     width: 130px;
     height: 35px;
     margin-left: 30px;  
-    background-color: #0CD49C;
+    background-color: #feae4f;
     color: whitesmoke;
     font-size: 1.0em;
     border-radius: 6px;
     border: white;
+     cursor: pointer;
 }
 hr{
     margin-top: 30px;

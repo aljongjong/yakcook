@@ -68,7 +68,7 @@ public class paymentSuccessController extends HttpServlet {
 			int result = new PaymentService().paymentComplate();
 			int paymethod = new PaymentService().paymentCard();
 
-			req.getRequestDispatcher("WEB-INF/views/payment/paymentSuccess.jsp").forward(req, resp);
+			req.getRequestDispatcher("WEB-INF/views/payment/paymentSuccessPage.jsp").forward(req, resp);
 		}
 	}
 }
