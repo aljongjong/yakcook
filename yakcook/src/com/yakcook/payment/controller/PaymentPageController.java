@@ -37,7 +37,10 @@ public class PaymentPageController extends HttpServlet {
 		req.setAttribute("defaultPrice", defaultPrice);
 		List<ProductVo> productList = new PaymentService().selectList(productNo);
 		req.setAttribute("productList", productList);
-		req.setAttribute("productName",(productList.get(0).getProductName()));
+		req.setAttribute("itemList", productList.get(0).getProductName());
+		
+		
+		
 		req.getRequestDispatcher("WEB-INF/views/payment/payment.jsp").forward(req, resp);
 	}
 
@@ -47,10 +50,24 @@ public class PaymentPageController extends HttpServlet {
 		String shoppingBagNo = req.getParameter("shoppingBagNo");
 		String defaultPrice = req.getParameter("defaultPrice");
 		
-		List<ShoppingBasketProVo> shoppingList = new PaymentService().selectShoppingBag(shoppingBagNo);
+		List<ProductVo> shoppingList = new PaymentService().selectShoppingBag(shoppingBagNo);
+		int totalPrice = 0;
+		int productCount = shoppingList.size();
+		String itemList = "";
+		for(int i=0;i < productCount ;i++) {
+			totalPrice += shoppingList.get(i).getProductSum();
+			if(i==productCount-1) {
+				itemList += shoppingList.get(i).getProductName();
+				break;
+			}
+			itemList += shoppingList.get(i).getProductName()+", ";
+//			totalPrice = totalPrice + ;
+		}
+		System.out.println(itemList);
 		req.setAttribute("shoppingList", shoppingList);
-		req.setAttribute("productSum", shoppingList);
+		req.setAttribute("totalPrice", totalPrice);
 		req.setAttribute("defaultPrice", defaultPrice);
+		req.setAttribute("itemList",itemList);
 		req.getRequestDispatcher("WEB-INF/views/payment/payment.jsp").forward(req, resp);
 	}
 

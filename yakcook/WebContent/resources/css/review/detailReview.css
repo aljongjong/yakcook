@@ -1,70 +1,245 @@
-body *{
-    
+body * {
+   /* border: 1px solid black;/ */
 }
 
 #wrap{
-    width: 1200px;
-    height: 2000px;
-    margin: auto;
-    padding: auto;
+   width: 1200px;
+   height: 1000px;
+   margin: auto;
+   padding: auto;
 }
 
-header{
-    height: 10%;
+#header{
+   height: 20%;
 }
 
 section{
-    height: 80%;
+   height: 70%;
+}
+#footer{
+   height: 10%;
 }
 
-footer{
-    height: 10%;
+#button_menu button{
+width: 100px;
+height: 30px;
+margin-left: 10px;
+background-color: rgb(255, 255, 255);
+border: 4px solid #feae4f;;
+font-size: 15px;
+border-radius: 7px;
+cursor: pointer;
+}
+#reivew_head{
+   height: 50px;
+   line-height: 50px;
+   text-align: center;
+   background-color: #e5f7d1;
+}
+#board{
+   margin-top: 20px;
+   border: 2px solid #e8e0a1;
+}
+hr{
+  background-color:  #feae4f;
+  height: 3px;
+  border: none;
 }
 
-#reivew_title{
-    width: 80%;
-    height: 80px;
-    margin-left: 10%;
-    text-align: center;
-
+#views{
+   height: 100%;
+   width: 80px;
+   float: left;
+   font-size: 13px;
 }
-
-#product_name{
-    font-size: 24px;
-    font-weight: 800;
-    line-height: 80px;
+#title{
+   height: 100%;
+   width: 950px;
+   float: left;
+   font-size: 20px;
+   font-weight: 600;
+   
 }
-
 #writer{
-    font-size :20px
+   width: 150px;
+   float: left;
 }
 #date{
-    float: right;
-    line-height: 35px;
+   width: 100px;
+   float: left;
+}
+#contents{
+   width: 100%;
+   height: 450px;
 }
 #review_contents{
-    width: 80%;
-    height: 300px;
-    margin-left: 10%;
-    text-align: center;
+   width:48%;
+   height: 100%;
+   margin: 10px;
+   height: 400px;
+   float: left;
 }
-#review_img_file{
-    width: 80%;
-    height: 300px;
-    margin-left: 10%;
+
+#like{
+   margin-top: 40px;
+   width: 1200px;
 }
+#like_img{
+   float: right;
+   width: 30px;
+   height: 30px;
+}
+#like_count{
+   height: 53px;
+   line-height: 70px;
+   font-size: 16px;
+   margin-left: 15px;
+   float:left;
+}
+
+#like_btn{
+   margin-top: 5px;
+   margin-right: 10px;
+   width: 50%;
+   float: right;
+   height: 45px;
+   background-color: #abb868;
+   cursor: pointer;
+   border: 1px solid white;
+   font-size: 20px;
+   border-radius: 7px;
+   color: whitesmoke;
+   font-weight: 600;
+}
+
+
 #review_img{
-    margin-left: 50px;
-    width: 250px;
-    height: 250px;
-    float: left;
+   margin: 10px;
+   width: 48%;
+   float: left;
+   height: 90%;
+   text-align: center;
 }
-#review_img img{
-    width: 100%;
-    height: 100%;
+
+#review_img div{
+   width: 100%;
+   height: 94%;
 }
-#review_button{
-    width: 80%;
-    margin-left: 10%;
-    text-align: center;
+#review_img button{
+width: 50px;
+height: 5px;
+}
+div>img{
+   height: 100%;
+   width: 100%;
+}
+#like_img{
+width: 55px;
+height: 55px;
+float: left;
+margin-left: 15px;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  vertical-align: top;
+  border: none;
+}
+
+.slide {
+  position: relative;
+  height: 90%;
+  width: 95;
+  overflow: hidden;
+}
+
+.panel {
+  width: 400%
+}
+
+.panel:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.panel>li {
+  width: 25%;
+  height: 200px;
+  float: left;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+}
+
+.panel>li:nth-of-type(1) {
+ 
+}
+
+.panel>li:nth-of-type(2) {
+ 
+}
+
+.panel>li:nth-of-type(3) {
+ 
+}
+
+.dot:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.dot {
+  position: absolute;
+  left: 45%;
+  top :90%;
+  transform: translateX(-50%);
+}
+
+.dot>li {
+  float: left;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: rgb(216, 216, 216);
+  margin-left: 10px;
+  margin-right: 10px;
+  text-indent: -9999px;
+  cursor: pointer;
+}
+
+.dot>li.on {
+  background-color: #feae4f;
+}
+
+.prev {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10%;
+  cursor: pointer;
+}
+
+.next {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10%;
+  cursor: pointer;
 }

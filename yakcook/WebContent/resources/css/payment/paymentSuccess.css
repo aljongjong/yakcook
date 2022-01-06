@@ -1,0 +1,34 @@
+body * {
+    /* border: 1px solid black; */
+ }
+#wrap{
+    width: 1200px;
+    height: 500px;
+    margin: auto;
+    padding: auto;
+}
+
+#response{
+    text-align: center;
+    height: 400px;
+    font-size: 40px;
+    color: grey;
+}
+#response div{
+    position: absolute;
+    top: 10%;
+    left: 35%;
+}
+
+#home_btn{
+    margin-top: 50px;
+    width: 300px;
+    height: 40px;
+    background-color: #feae4f;
+    font-size: 20px;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+}

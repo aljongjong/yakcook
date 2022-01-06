@@ -34,7 +34,7 @@ public class PaymentService {
 
 
 
-	public List<ShoppingBasketProVo> selectShoppingBag(String shoppingBagNo) {
+	public List<ProductVo> selectShoppingBag(String shoppingBagNo) {
 		Connection conn = getConnection();
 		int no = Integer.parseInt(shoppingBagNo);
 		return new PaymentDao().getShoppingBagList(conn, no);

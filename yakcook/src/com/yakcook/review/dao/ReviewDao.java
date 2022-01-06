@@ -255,7 +255,12 @@ public class ReviewDao {
 				String serverFile3 = rs.getString("REVIEW_IMG_SERVERFILE3");
 
 				i = new ReviewImgVo();
-				i.setImgServerFile1(serverFile1);
+				if(serverFile1 != null) {
+					i.setImgServerFile1(serverFile1);
+				}
+				else {
+					i.setImgServerFile1("no_img.jpg");
+				}
 				i.setImgServerFile2(serverFile2);
 				i.setImgServerFile3(serverFile3);
 				ReviewImgList.add(i);

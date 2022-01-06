@@ -9,11 +9,14 @@
 </head>
 
 <link rel="stylesheet"
-	href="/yakcook/resources/css/review/writerReview.css">
+	href="/yakcook/resources/css/review/reviewWriter.css">
 <body>
 
-	<div id="wrap">
-		<header> </header>
+	
+		<header>
+		<%@ include file="/WEB-INF/views/common/headerFinal.jsp"%>
+		 </header>
+		 <div id="wrap">
 		<%
 	String loginUserId = ((MemberVo)session.getAttribute("loginUser")).getUser_id();%>
 		<section>
@@ -49,9 +52,10 @@
 						<input type="hidden" name="userId" value="<%=loginUserId%>">
 						
 					</table>
+					
 					<div class="writer_button">
-						<input type="submit" value="등록"> <input type="button"
-							value="취소" onclick="location.href='reviewList'">
+						<input type="submit" value="등록"> 
+						<input type="button" value="취소" onclick="location.href='reviewList'">
 
 					</div>
 				</form>

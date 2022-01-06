@@ -12,28 +12,25 @@ $(function() {
 	})
 });
 
-//체크박스 유무에 따라 메모 보여주기
-
-$('input[type=radio][name=method_pay]').on('click', function() {
-	var chkValue = $('input[type=radio][name=method_pay]:checked').val();
-
-	if (chkValue == '무통장') {
-		$('#no_bankbook').css('display', 'block');
-		$('#Refuncd_Acc').css('display', 'none');
-	} else if (chkValue == '카드') {
-		$('#no_bankbook').css('display', 'none');
-		$('#Refuncd_Acc').css('display', 'none');
-	} else if (chkValue == '가상계좌') {
-		$('#no_bankbook').css('display', 'none');
-		$('#Refuncd_Acc').css('display', 'block');
-	} else if (chkValue == '계좌이체') {
-		$('#no_bankbook').css('display', 'none');
-		$('#Refuncd_Acc').css('display', 'none');
-	}
-});
+ $(function(){
+            $('#agreement_show').click(function(){
+                if($('#agreement_contents').css("display")=="none"){
+                    $('#agreement_contents').show();
+                }
+            });
+        });
+        
+        $("#payment_btn").click(function(){
+            
+            // 첫번째 체크박스가 체크되어 있는경우
+            if($("#checkbox").is(":checked")){
+                
+            } else { // 첫번째 체크박스가 체크 되어있지 않은 있는경우
+                alert("개인 정보 제공에 동의하여 주세요.")
+                return false;
+            }
 
 
-
-
+        });
 
 

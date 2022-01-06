@@ -40,9 +40,10 @@ public class paymentController extends HttpServlet {
 			String memo_option = req.getParameter("memo_option");
 			String input_memo = req.getParameter("input_memo");
 			String methodPay = req.getParameter("method_pay");
-			String userId = req.getParameter("userId");
+			String userId = req.getParameter("userId");	
 			
 			PaymentVo p = new PaymentVo();
+			
 			p.setUserId(userId);
 			p.setOrder(order);
 			p.setPhone1(phone1);
@@ -54,6 +55,7 @@ public class paymentController extends HttpServlet {
 			p.setExtra(extra);
 			p.setMemo_option(memo_option);
 			p.setInput_memo(input_memo);
+			
 			
 			
 			int result = new PaymentService().insertOrder(p);

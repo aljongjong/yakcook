@@ -1,0 +1,205 @@
+body * {
+    /* border: 1px solid black; */
+    box-sizing: border;
+}
+
+
+
+#wrap{
+    width: 1200px;
+    height: 1700px;
+    margin: auto;
+    padding: auto;
+}
+
+#order_form{
+    border: 1px #abb868;
+    
+}
+#order_item{
+    margin-top: 10px;
+    margin-left: 10%;
+    width: 80%;
+    height: 8%;
+    border: 1px solid #abb868;
+    background-color: rgba(255, 255, 255, 0.315);
+   
+}
+.line{
+    margin-top: 3px;
+    margin-left: 5px;
+    width: 0.1px;
+    height: 110px;
+    float: left;
+    border: 1px solid #abb868;
+}
+
+#item_name{
+    width: 400px;
+}
+.itme_text{
+    float: left;
+    font-size: 15px;
+    font-weight: 800;
+    margin-top: 40px;
+    text-align: center;
+}
+#item_price{
+    width: 350px;
+}
+#item_amount{
+    width: 180px;
+}
+#total_price{
+    margin-top: 10px;
+    width: 80%;
+    margin-left: 10%;
+    height: 60px;
+    font-size: 30px;
+    font-weight: 600;
+    text-align: right;
+}
+#total{
+    font-size: 30;
+    font-weight: 600;
+    color: #feae4f;
+}
+#order_form {
+    margin-top: 100px;
+    width: 70%;
+    padding: 5%;
+    margin-left: 10%;
+    border: 1px solid #e8e0a1;
+}
+
+#notice{
+    width: 100%;
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#order-info input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 200px;
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid gray;
+}
+#order-info{
+    font-size: 18px;
+    font-weight: 500;
+}
+.address{
+    margin-top: 10px;
+    width: 650px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid gray;
+}
+#postcode{
+    width: 200px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid gray
+}
+#postcodeBtn{
+    margin-top: 10px;
+    width: 150px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid gray;
+    background-color: #abb868;
+    font-size: 16px;
+    cursor: pointer;
+}
+#delivery_memo{
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 700;
+}
+#memo_option{
+    width: 500px;
+    height: 30px;
+    font-size: 16px;
+}
+#additional{
+    color: #6c804b;
+}
+#agreement_check{
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 700;
+}
+#agreement_check input[type=checkbox]{
+    height: 15px;
+    width: 15px;
+}
+#agreement_show{
+    cursor: pointer;
+    color: #6c804b;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 40px;
+
+}
+#agreement_contents{
+    display: none;
+}
+#paymethod_text{
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 700;
+}
+#pay_method{
+    margin-top: 10px;
+    width: 100%;
+    height: 30%;
+    font-size: 20px;
+}
+#pay_method div{
+    width: 15%;
+    margin-top: 15px;
+    margin-left: 10px;
+    float: left;
+    background-color: #abb868;
+    color: white;
+    border-radius: 7px;
+}
+#pay_method input[type=radio]{
+    width: 15px;
+    height: 15px;
+}
+#pay_method div label{
+    margin-left: 20px;
+}
+
+#payment_btn{
+    width: 400px;
+    height: 50px;
+    background-color: black;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+#paymentBtn_form{
+    margin-top: 100px;
+    width: 100%;
+    height: 30%;
+    text-align: center;
+}
+
+#last_hr{
+    margin-top: 45px;
+}
+header{
+    height: 10%;
+}
+section{
+    height: 80%;
+}
+footer{
+    height: 10%;
+}

@@ -16,25 +16,23 @@
 </head>
 <body>
 
-	<div id="wrap">
-		<header>
-			<div id="title_img"></div>
+	
+		<header id="header">
+			<%@ include file="/WEB-INF/views/common/headerFinal.jsp"%>
 			<div id="title">PRODUCT REVIEW</div>
-
-
-			<hr>
 			<h3>Yakcook 상품에 대해 가득한 이야기들을 확인해보세요!</h3>
 		</header>
-
+				
 
 		<section>
-
+		<div id="wrap">
+			
 			<ul id="review_ul">
 				<c:forEach items="${data}" var="r">
 
 					<li class="review_li">
 						<div class="review_pro">
-							<a href="${path}/yakcook/reviewDetail?reviewNo=${r.reviewNo}">${r.reviewTitle}</a>
+							<a href="${path}/yakcook/reviewDetail?reviewNo=${r.reviewNo}" class+>${r.reviewTitle}</a>
 						</div>
 
 						<div class="review_img">
@@ -58,7 +56,7 @@
 			<div class="page_area">
 				<c:forEach var="i" begin="1" end="5">
 					<c:if test="${i le maxPage}">
-						<a href="reviewList?currentPage=${i}">${i}</a>
+						<a href="reviewList?currentPage=${i}" class="a">${i}</a>
 					</c:if>
 				</c:forEach>
 				<button onclick="write_btn();" id="writer">글쓰기</button>
@@ -70,7 +68,7 @@
 		</section>
 
 
-		<footer> </footer>
+		<footer  id="footer"> </footer>
 
 		<%String loginUserId = null;
 		try{
