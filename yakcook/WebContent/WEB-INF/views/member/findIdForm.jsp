@@ -38,10 +38,10 @@
 					</span>
 	
 					<span class="txt1 p-b-11">
-						<h3>아이디</h3>
+						<h3>이름</h3>
 					</span>
 					<div class="wrap-input100 validate-input m-b-36" data-validate="UserName is required">
-						<input class="input100" type="text" name = "Name" id = "userName" placeholder = "아이디를 입력해주세요" required>
+						<input class="input100" type="text" name = "Name" id = "userName" placeholder = "이름 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 	

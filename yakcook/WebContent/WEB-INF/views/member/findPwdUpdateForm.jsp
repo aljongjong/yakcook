@@ -29,7 +29,6 @@
 	<link rel="stylesheet" type="text/css" href="resouce/CSS/main.css">
 <!--===============================================================================================-->
 <body>
-<h2>비밀번호 변경</h2>
 <!-- <form action = "findPwdUpdate" method = "post"> -->
 <%-- 	<input type = "hidden" name = "id" id = "userid" value = "${id}"><br>
 	비밀번호 : <input type = "text" name = "password" id = "password" onkeyup="passConfirm()" onpaste="return false;" oncopy="return false;"><br>

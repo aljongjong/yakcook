@@ -36,7 +36,7 @@ public class MemderFindIdController extends HttpServlet {
 		
 		if(id != null) {
 			req.setAttribute("id", id);
-			req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
+			req.getRequestDispatcher("/index.jsp").forward(req, resp);
 		}else {
 			out.println("<script>alert('회원정보가 없습니다.'); location.href='login';</script>");				
 			out.flush();
