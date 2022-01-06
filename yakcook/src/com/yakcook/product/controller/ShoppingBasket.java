@@ -38,9 +38,9 @@ public class ShoppingBasket extends HttpServlet {
 			resp.getWriter().print(totalPriceD);	
 		}
 	}
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		
 		String productNo = req.getParameter("productNo");
 		String price = req.getParameter("price");
@@ -71,7 +71,6 @@ public class ShoppingBasket extends HttpServlet {
 		
 //		장바구니에 이미 있는 제품인지 확인 (있으면 메시지도 날려주기)
 		int result = new ServiceProduct().checkMyShoppingBasket(sv, pv);
-		
 //		가져온 장바구니 번호에 제품 넣기 , 장바구니에 그 제품이 없을때
 		List<ShoppingBasketProVo> list = new ArrayList<>();
 //		if(result == 0) {
@@ -95,6 +94,7 @@ public class ShoppingBasket extends HttpServlet {
 		req.setAttribute("sv", sv);
 		
 		req.getRequestDispatcher("/WEB-INF/views/product/shoppingBasket.jsp").forward(req, resp);
+		
 	}
 	
 }

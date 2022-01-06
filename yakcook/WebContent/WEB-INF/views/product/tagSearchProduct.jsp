@@ -25,19 +25,28 @@
                 	</c:if>
                 </c:forEach>
                 </div>
-<!-- 세션에 로그인 유저 있을 경우 -->	<c:if test="${loginUser != null}"></c:if>
-<!-- 세션에 로그인 유저 없을 경우 -->	<c:if test="${loginUser == null}">
-								<!-- 로그인이 필요합니다. 로그인 창으로 이동하시겠습니까? -->
-								</c:if>
                 <div class="sb">
-                	<form action="shoppingBasket" method="POST" style="display:inline;">
-                		<input type="hidden" name="productNo" value="${ts.productNo}">
-	                	<input type="hidden" name="price" value="${ts.price}">
-	                	<input type="hidden" name="amount" value="1" id="toSBamount">
-	                	<input type="hidden" name="categoryNo" value="${ts.categoryNo}">
-	                	<input type="hidden" name="productName" value="${ts.productName}">
-                    	<button type="submit" id="searchToShoppingBasketBtn"><i class="fas fa-cart-plus"></i><span> 장바구니 담기</span></button>
-                	</form>
+<!-- 세션에 로그인 유저 있을 경우 -->	<c:if test="${sessionScope.loginUser != null}">
+				                    <form action="shoppingBasket" method="POST" style="display:inline;">
+				                		<input type="hidden" name="productNo" value="${ts.productNo}">
+					                	<input type="hidden" name="price" value="${ts.price}">
+					                	<input type="hidden" name="amount" value="1" id="toSBamount">
+					                	<input type="hidden" name="categoryNo" value="${ts.categoryNo}">
+					                	<input type="hidden" name="productName" value="${ts.productName}">
+				                    	<button type="submit" id="searchToShoppingBasketBtn"><i class="fas fa-cart-plus"></i><span> 장바구니 담기</span></button>
+				                	</form>
+			                	</c:if>
+				                	
+<!-- 세션에 로그인 유저 없을 경우 -->	<c:if test="${sessionScope.loginUser == null}">
+									<form action="shoppingBasket" method="POST" onsubmit="return loginAlarm();" style="display:inline;">
+				                		<input type="hidden" name="productNo" value="${ts.productNo}">
+					                	<input type="hidden" name="price" value="${ts.price}">
+					                	<input type="hidden" name="amount" value="1" id="toSBamount">
+					                	<input type="hidden" name="categoryNo" value="${ts.categoryNo}">
+					                	<input type="hidden" name="productName" value="${ts.productName}">
+				                    	<button type="submit" id="searchToShoppingBasketBtn"><i class="fas fa-cart-plus"></i><span> 장바구니 담기</span></button>
+				                	</form>
+								</c:if>
                 </div>
                 <div class="sp_name_price">
 	                <div>
@@ -78,5 +87,12 @@
       	</c:forEach>
 	</div>
 	 <%@ include file="/WEB-INF/views/common/footerFinal.jsp" %>
+	 
+	 <script>
+    	function loginAlarm() {
+    		alert("장바구니 이용은 로그인이 필요합니다.");
+    		return false;
+    	}
+    </script>
 </body>
 </html>

@@ -119,7 +119,7 @@
 <body>
 	<div>
 		<h1>${msg}</h1>
-		<a href="searchProduct">돌아가기</a>
+		<a href="/yakcook">돌아가기</a>
 
 		<i class="fas fa-wind" id="wind1"></i>
 		<i class="fas fa-wind" id="wind2"></i>

@@ -1558,6 +1558,26 @@ public class DaoProduct {
 		}
 		
 		return sv;
+	}	
+	// 장바구니에 제품이 있는지 확인
+	public int checkMyShoppingBasket(Connection conn, ShoppingBasketVo sv) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "SELECT * FROM SHOPPINGBAG_PRO WHERE SHOPPINGBAG_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sv.getShoppingBasketNo());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	// 장바구니에 이미 있는 제품인지 확인
 	public int checkMyShoppingBasket(Connection conn, ShoppingBasketVo sv, ProductVo pv) {
@@ -1832,6 +1852,42 @@ public class DaoProduct {
 		
 		return list;
 	}
+	// 내 장바구니에 들어있는 제품 조회후 가져오기
+	public List<ShoppingBasketProVo> searchAllProductInMyShoppingBasket(Connection conn, ShoppingBasketVo sv) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM SHOPPINGBAG_PRO WHERE SHOPPINGBAG_NO = ?";
+		ShoppingBasketProVo sb = null;
+		List<ShoppingBasketProVo> list = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sv.getShoppingBasketNo());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int shoppingBasketNo = rs.getInt("SHOPPINGBAG_NO");
+				int productNo = rs.getInt("PRODUCT_NO");
+				int inventory = rs.getInt("INVENTORY");
+				
+				sb = new ShoppingBasketProVo();
+				
+				sb.setShoppingBasketNo(shoppingBasketNo);
+				sb.setProductNo(productNo);
+				sb.setInventory(inventory);
+				
+				list.add(sb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		return list;
+	}
 	// 세션 로그인 아이디로 로그인한 회원 번호 알아오기
 	public int getMemberNoForShoppingBasket(Connection conn, String loginUserId) {
 		
@@ -1909,6 +1965,10 @@ public class DaoProduct {
 		
 		return list;
 	}
+
+
+
+
 
 	
 

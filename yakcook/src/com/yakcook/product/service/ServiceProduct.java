@@ -528,6 +528,23 @@ public class ServiceProduct {
 		}
 		return sv;
 	}
+	// 장바구니에 제품이 있는지 확인
+	public int checkMyShoppingBasket(ShoppingBasketVo sv) {
+		
+		Connection conn = getConnection();
+		
+		int result = new DaoProduct().checkMyShoppingBasket(conn, sv);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return result;
+	}
 	// 장바구니에 이미 있는 제품인지 확인
 	public int checkMyShoppingBasket(ShoppingBasketVo sv, ProductVo pv) {
 		
@@ -650,7 +667,23 @@ public class ServiceProduct {
 		
 		return result;
 	}
-
+	// 내 장바구니에 담긴 제품 리스트 꺼내오기
+	public List<ShoppingBasketProVo> searchAllProductInMyShoppingBasket(ShoppingBasketVo sv) {
+		
+		Connection conn = getConnection();
+		
+		List<ShoppingBasketProVo> list = new DaoProduct().searchAllProductInMyShoppingBasket(conn, sv);
+		
+		try {
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+		} finally {
+			close(conn);
+		}
+		
+		return list;
+	}
 /*-------------------------------------태그 검색 결과----------------------------------------*/
 	public List<ProductVo> tagSearchProduct(String tagName) {
 		
@@ -666,6 +699,10 @@ public class ServiceProduct {
 		}
 		return list;
 	}
+
+	
+
+
 
 	
 }

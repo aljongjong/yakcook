@@ -33,8 +33,6 @@
             </div>
         </div>
         
-        
-        <div id="layer_bg"></div>
          <%@ include file="/WEB-INF/views/common/footerFinal.jsp" %>
         <% int i = 0; %>
         <c:forEach items="${tagList}" var="tl">
