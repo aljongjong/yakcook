@@ -106,6 +106,8 @@ public class ReviewController extends HttpServlet {
 		
 		if (result > 0 && imgResult > 0) {
 			out.println("<script>alert('게시물이 등록되었습니다.')</script>");
+			
+		
 		} else {
 			out.println("<script>alert('게시물이 등록이 실패되었습니다.')</script>");
 		}

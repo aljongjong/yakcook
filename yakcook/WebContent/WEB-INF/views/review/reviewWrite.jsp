@@ -62,7 +62,7 @@
 			</div>
 		</section>
 
-		<footer> </footer>
+		<footer>  <%@ include file="../common/footerFinal.jsp"%> </footer>
 	</div>
 </body>
 
