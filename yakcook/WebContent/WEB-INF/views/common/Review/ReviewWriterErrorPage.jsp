@@ -26,7 +26,7 @@
         </section>
 
         <footer>
-  <%@ include file="../common/footerFinal.jsp"%>
+  			<%@ include file="/WEB-INF/views/common/footerFinal.jsp"%>
         </footer>
     </div>
     
