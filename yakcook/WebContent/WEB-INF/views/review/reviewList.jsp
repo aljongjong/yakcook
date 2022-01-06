@@ -22,7 +22,7 @@
 			<div id="title">PRODUCT REVIEW</div>
 			<h3>Yakcook 상품에 대해 가득한 이야기들을 확인해보세요!</h3>
 		</header>
-				
+					
 
 		<section>
 		<div id="wrap">
@@ -68,7 +68,7 @@
 		</section>
 
 
-		<footer  id="footer">  <%@ include file="../common/footerFinal.jsp"%>
+		<footer id="footer">  <%@ include file="../common/footerFinal.jsp"%>
 		</footer>
 
 		<%String loginUserId = null;

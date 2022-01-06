@@ -19,7 +19,7 @@
         <section>
                 <div id="response"> 
                    <div><h1>결제가 완료되었습니다.</h1>
-                    <button id="home_btn" onclick="location.href='/yakcook'">리뷰목록 돌아가기</button></div>
+                    <button id="home_btn" onclick="location.href='/yakcook'">홈으로 돌아가기</button></div>
                     
                 </div>
 
