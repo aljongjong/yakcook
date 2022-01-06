@@ -43,7 +43,7 @@
                     <ul>
                         <li><a href="tagSearchBar">태그 검색 <i class="fas fa-search"></i></a></li>
                         <li><a href="searchProduct">제품 보기</a></li>
-                        <li><a href="review">상품 후기</a></li>
+                        <li><a href="reviewList">상품 후기</a></li>
                         <li><a href="notice">고객 센터</a></li>
                     </ul>
                 </div>
