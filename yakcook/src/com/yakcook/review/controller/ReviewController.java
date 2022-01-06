@@ -105,11 +105,11 @@ public class ReviewController extends HttpServlet {
 		
 		
 		if (result > 0 && imgResult > 0) {
-			req.getRequestDispatcher("WEB-INF/views/Review/ReviewWriterSuccessPage.jsp").forward(req, resp);
+			req.getRequestDispatcher("WEB-INF/views/common/Review/ReviewWriterSuccessPage.jsp").forward(req, resp);
 			
 		
 		} else {
-			req.getRequestDispatcher("WEB-INF/views/Review/ReviewWriterErrorPage.jsp").forward(req, resp);
+			req.getRequestDispatcher("WEB-INF/views/common/Review/ReviewWriterErrorPage.jsp").forward(req, resp);
 		}
 
 	}

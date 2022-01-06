@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet"
-	href="/yakcook/resources/css/review/detailReview.css">
+	href="/yakcook/resources/css/review/detailsReview.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/yakcook/resources/js/review/detailReview.js"></script>
@@ -17,21 +17,21 @@
 </head>
 <body>
 
-	
 
-		<header id="header">
+
+	<header id="header">
 		<%@ include file="/WEB-INF/views/common/headerFinal.jsp"%>
-		</header>
+	</header>
 
 
-		<section>
-<div id="wrap">
+	<section>
+		<div id="wrap">
+
 			<c:forEach items="${detailList}" var="d">
 				<c:forEach items="${imgList}" var="i">
 					<div id="button_menu">
 						<button type="button" id="declaration_btn">신고하기</button>
 						<button type="button" id="delete">삭제하기</button>
-						<p>${d.reviewDate}</p>
 					</div>
 					<div id="board">
 
@@ -79,15 +79,15 @@
 							<div id="like_count">현재 이 리뷰가 ${d.reviewLike}명에게 도움이 되고
 								있어요.</div>
 						</div>
-			
+
 					</div>
 				</c:forEach>
 			</c:forEach>
-		</section>
-		<footer id="footer">
-		  <%@ include file="../common/footerFinal.jsp"%>
-		</footer>
-			<%
+	</section>
+	<footer id="footer">
+		<%@ include file="../common/footerFinal.jsp"%>
+	</footer>
+	<%
 			String loginUserId = null;
 			try {
 				loginUserId = ((MemberVo) session.getAttribute("loginUser")).getUser_id();
@@ -97,7 +97,7 @@
 			%>
 
 
-			<script>
+	<script>
 	
 			//게시물좋아요
 						$(function(){
