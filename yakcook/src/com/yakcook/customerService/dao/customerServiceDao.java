@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import com.yakcook.customerService.model.vo.FAQVo;
 import com.yakcook.customerService.model.vo.noticeVo;
 import com.yakcook.customerService.model.vo.pagingVo;
+import com.yakcook.serviceManage.model.vo.QNAVo;
 
 public class customerServiceDao {
 
@@ -181,5 +182,7 @@ public class customerServiceDao {
 		}
 		return NV;
 	}
+
+	
 
 }

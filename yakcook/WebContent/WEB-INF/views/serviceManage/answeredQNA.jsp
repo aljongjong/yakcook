@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FAQ 수정</title>
-<link rel="stylesheet" href="/yakcook/resources/css/serviceManage/addFAQ.css">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/yakcook/resources/css/serviceManage/AnswerQNA.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -13,73 +13,75 @@
 	<%@ include file="/WEB-INF/views/manager/managerHeader.jsp" %>
 	<section>
 		<div id="tableWrap">
-            <span class="title">FAQ 수정</span>
+            <span class="title">QNA 답변 수정</span>
             <br>
             <table>
                 <tr>
                     <th class="t1"><label for="title">제목</label></th>
-                    <th class="t2"><input type="text" class="insert" id="title" required></th>
-                    <th class="t3">분류</th>
-                    <th>
-                    	<select id="category">
-                    		<option value="제품">제품</option>
-                    		<option value="회원관리">회원관리</option>
-                    		<option value="주문/결제">주문/결제</option>
-                    		<option value="교환/반품">교환/반품</option>
-                    		<option value="기타">기타</option>
-                    	</select>
+                    <th class="t2" id="title">${qv.qnaTitle}</th>
+                    <th class="t3">
+                    	분류 <br>
+                    	문의자 <br>
+                    	문의일
+                    </th>
+                    <th class="t4">
+                    	${qv.qnaCategory} <br>
+                    	${qv.userId} <br>
+                    	${qv.writeDateString()}
                     </th>
                 </tr>
                 <tr>
+                	<td colspan="4">${qv.qnaContent}</td>
+                </tr>
+                <tr>
+                	<th class="left" colspan="4">답변자 : ${qv.managerId}</th>
+                </tr>
+                <tr>
                 	<td colspan="4">
-                    	<textarea rows="30" cols="85" id="contents" required>${fv.faqContent}</textarea>
+                    	<textarea rows="30" cols="85" id="contents" required>${qv.managerQuestion}</textarea>
                     </td>
                 </tr>
             </table>
             <br>
             <div class="btnWrap">
-           		<button type="button" class="noticeBtn" id="FAQmodi">수정</button>
-            </div>
-		<br><br><br><br><br>
+           		<button type="button" class="QNABtn" id="AnswerQNA">수정</button>
+            </div> 
+            
     </div>    
 	</section>
+	<br><br><br><br><br>
 	<script>
     window.onload=()=>{
     	$(document).ready(function() {
-            $('#title').val('${fv.faqTitle}');
-            $("select").val('${fv.category}').attr("selected","selected");
+    		$('#title').val('${qv.qnaTitle}');
             var text = $("textarea#contents").val();
 			text = text.replace(/(<br>|<br\/>|<br \/>)/g, '\r\n');
 			$("textarea#contents").val(text)
         });
-    	
 		$('.logoutbtn').on('click', function(){
 			window.location = "/yakcook/managerlogout";
         }); 
 		
-		$('#FAQmodi').on('click', function(){
-    		if(isEmpty($("#contents").val()) || isEmpty($("#title").val())){
-    			alert("제목과 내용을 입력해 주세요.");
+		$('#AnswerQNA').on('click', function(){
+    		if(isEmpty($("textarea#contents").val())){
+    			alert("내용을 입력해 주세요");
     			return false;
     		} else {
     			var text = $("textarea#contents").val();
     			text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
         		$.ajax({
-                	url : '/yakcook/modiFAQ',
+                	url : '/yakcook/answeredqna',
                 	method : 'post',
                 	data: {
-                		faqNumber : ${fv.faqNumber},
-                		faqTitle : $("#title").val(),
-                		category : $("#category").val(),
+                		QNANum : ${qv.qnaNo},
                 		manageNo : ${manager.managerNo},
-                		faqContents : text
+                		QNAContents : text
                 	},
                 	success : function(result){
-
                			const data1 = $.trim(result);
                			if(data1 == "true"){
-               				alert("FAQ 수정 성공");
-               				window.location.replace("/yakcook/manageFAQ");
+               				alert("답변 수정 성공");
+               				window.location.replace("/yakcook/answeredmanageqna");
                 		} else {
                 			alert("오류입니다. 다시 실행해 주십시오.")
                 		}	
@@ -88,9 +90,7 @@
                 		alert("error");
                 	}
         		});
-    		}
-			
-        	
+    		}  	
         });  
 		function isEmpty(str){   
 	        if(typeof str == "undefined" || str == null || str == "")
@@ -100,5 +100,6 @@
 	    }
 	}
     </script>
+
 </body>
 </html>

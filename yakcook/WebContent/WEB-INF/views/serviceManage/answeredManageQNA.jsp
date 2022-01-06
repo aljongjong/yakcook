@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>QNA 관리</title>
+<title>Insert title here</title>
 <link rel="stylesheet" href="/yakcook/resources/css/serviceManage/manageQNA.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -15,15 +15,15 @@
 	
 	<section>
 	<div id="tableWrap">
-            <span class="title">미답변 QNA</span>
-            <span class="title" id="link">답변한 QNA로 가기</span>
+            <span class="title">답변완료 QNA</span>
+            <span class="title" id="link">미답변 QNA로 가기</span>
             <br>
-            <a href="manageQNA" class="category">전체</a>
-            <a href="manageQNA?category=제품" class="category">제품</a>
-            <a href="manageQNA?category=회원관리" class="category">회원관리</a>
-            <a href="manageQNA?category=주문/결제" class="category">주문/결제</a>
-            <a href="manageQNA?category=교환/반품" class="category">교환/반품</a>
-            <a href="manageQNA?category=기타" class="category">기타</a>
+            <a href="answeredmanageqna" class="category">전체</a>
+            <a href="answeredmanageqna?category=제품" class="category">제품</a>
+            <a href="answeredmanageqna?category=회원관리" class="category">회원관리</a>
+            <a href="answeredmanageqna?category=주문/결제" class="category">주문/결제</a>
+            <a href="answeredmanageqna?category=교환/반품" class="category">교환/반품</a>
+            <a href="answeredmanageqna?category=기타" class="category">기타</a>
             <table>
                 <tr>
                     <th class="t1">분류</th>
@@ -63,7 +63,7 @@
 		</div>
         </div>
        
-        
+        <br><br><br><br><br>
     </section>
 
     <script>
@@ -74,11 +74,11 @@
     	$('.view').on('click', function(){
     		let td = $(this).children();
 			let number = td.eq(0).text();
-			let url = "answerqna?qnaNo=" + number;
+			let url = "answeredqna?qnaNo=" + number;
 			window.location = url;
     	});
     	$('#link').on('click', function(){
-    		window.location = "/yakcook/answeredmanageqna";
+    		window.location = "/yakcook/manageQNA";
     	})
 		
     }
