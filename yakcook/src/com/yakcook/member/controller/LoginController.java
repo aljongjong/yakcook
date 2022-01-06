@@ -36,11 +36,11 @@ public class LoginController extends HttpServlet{
 		if(loginUser != null) {
 			req.getSession().setAttribute("loginUser", loginUser);
 			//req.setAttribute("msg", "로그인 성공");
-			req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
+			req.getRequestDispatcher("/index.jsp").forward(req, resp);
 		}else {
 			// 실패
 			req.setAttribute("msg", "로그인 실패");
-			req.getRequestDispatcher("/WEB-INF/views/common/errorPage.jsp").forward(req, resp);
+			req.getRequestDispatcher("/index.jsp").forward(req, resp);
 		}
 	}
 }

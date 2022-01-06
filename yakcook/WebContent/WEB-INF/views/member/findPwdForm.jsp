@@ -41,7 +41,7 @@
 						<h3>이름</h3> 
 					</span>
 					<div class="wrap-input100 validate-input m-b-36" data-validate = "UserId is required">
-						<input class="input100" type="text" name = "name" id = "userName" >
+						<input class="input100" type="text" name = "name" id = "userName" placeholder = "이름을 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 					
@@ -52,7 +52,7 @@
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-						<input class="input100" type = "text" name = "id" id = "userId">
+						<input class="input100" type = "text" name = "id" id = "userId" placeholder = "아이디를 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 					
@@ -63,7 +63,7 @@
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-						<input class="input100" type = "email" name = "email" id = "userEmail">
+						<input class="input100" type = "email" name = "email" id = "userEmail" placeholder = "이메일을 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 							<input type="button" name="emailconfirm_btn" value="이메일 인증" onclick="emailcheck(findPwdform.email.value)">

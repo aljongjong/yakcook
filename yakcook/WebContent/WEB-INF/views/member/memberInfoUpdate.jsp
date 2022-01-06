@@ -12,7 +12,7 @@
   <link rel="stylesheet" type="text/css" href="resouce/CSS/table.css">
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-
+  <link href="resouce/CSS/bootstrap.min.css" rel="stylesheet">
   <style>
   body {padding-top: 60px;}
   </style>
@@ -58,7 +58,7 @@
 	       
 	           핸드폰 : <input type = "text" name = "userphone" value = "${m.user_phone}" style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px; background-color: #eeeeee;"><br><br>
 
-		<input type = "submit" value = "회원정보변경">
+		<input type = "submit" class="btn btn-success" value = "회원정보변경">
     </form>
     </p>
     </div>
