@@ -59,7 +59,7 @@
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-						<input class="input100" type="password"  name="userPwd">
+						<input class="input100" type="password"  name="userPwd" placeholder = "비밀번호를 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 					<input type="submit" value="확인" onclick  = "memderdelete();">

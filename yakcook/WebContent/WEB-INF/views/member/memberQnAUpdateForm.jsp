@@ -20,22 +20,17 @@
 <body>
 <%@ include file="/WEB-INF/views/common/headerFinal.jsp"%>
 	<div id="wrap">
-
-		<header></header>
 			<form action = "qnaupdate" method = "post">
-					<div id="qnd_title">
-						문의 번호 : <input type = "text" id = "qnano" name = "qnano" value = "${q.qna_no}" style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;" readonly><br>
-						아이디 : <input type = "text" id = "userId" name = "userId" value = "${q.user_id}" style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"readonly><br>
-						제목 : <input type = "text" id = "qnatitle" name = "qnatitle" value = "${q.qna_title}" style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"><br>
-					</div>
-					<div id="review_contents"><textarea cols="50" rows="10" name = "qnacontent" style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;">${q.qna_content}</textarea>
-					</div>
+			<h1>문의 내용 수정</h1>
+						문의 번호 : <input type = "text" id = "qnano" name = "qnano" value = "${q.qna_no}" style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;" readonly><br><br>
+						아이디 : <input type = "text" id = "userId" name = "userId" value = "${q.user_id}" style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"readonly><br><br>
+						제목 : <input type = "text" id = "qnatitle" name = "qnatitle" value = "${q.qna_title}" style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"><br><br>
+					    문의 내용 : <input type = "text" id = "qnatitle" name = "qnatitle" value = "${q.qna_content}" readonly style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"><br></div>
+
 					<div id="review_button">
 						<input type="submit" value = "수정완료">
 					</div>
-					</form>
-		<footer></footer>
-	</div>
+		</form>
 </body>
 <%@ include file="../common/footerFinal.jsp"%>
 </html>

@@ -43,7 +43,7 @@
 						아이디 
 					</span>
 					<div class="wrap-input100 validate-input m-b-" data-validate = "Username is required">
-						<input class="input100" type="text" name="id" id = "idBox">
+						<input class="input100" type="text" name="id" id = "idBox" placeholder = "아이디를 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 					<span id="idspan"><label id="idMsg"></label></span>
@@ -55,7 +55,7 @@
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-						<input class="input100" type="password" name="pwd" id = "password" class = "none"  onkeyup="passConfirm()" onpaste="return false;" oncopy="return false;"/>
+						<input class="input100" type="password" name="pwd" id = "password" class = "none"  onkeyup="passConfirm()" onpaste="return false;" oncopy="return false;" placeholder = "비밀번호를 입력해주세요" required/>
 						<span class="focus-input100"></span>
 					</div>
 					<br>
@@ -68,7 +68,7 @@
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-						<input class="input100" type="password" id="passwordConfirm" class = "none" onkeyup="passConfirm()">
+						<input class="input100" type="password" id="passwordConfirm" class = "none" onkeyup="passConfirm()" placeholder = "비밀번호를 재 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 					<br>
@@ -77,7 +77,7 @@
 						이름
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="UserName is required">
-						<input class="input100" type="text" name="name" id="userName" class = "none">
+						<input class="input100" type="text" name="name" id="userName" class = "none" placeholder = "이름을 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 					<br>
@@ -88,7 +88,7 @@
 						이메일
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Email is required">
-						<input class="input100"  type="email" name="email" id = "email" class = "none">
+						<input class="input100"  type="email" name="email" id = "email" class = "none" placeholder = "이메일을 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 						<br>
@@ -99,7 +99,7 @@
 						핸드폰번호
 					</p>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Phone is required">
-						<input class="input100" type="text" name="phone" class = "none" maxlength="13" id = "phoneNumber">
+						<input class="input100" type="text" name="phone" class = "none" maxlength="13" id = "phoneNumber" placeholder = "핸드폰을 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 					

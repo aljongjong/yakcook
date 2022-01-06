@@ -41,7 +41,7 @@
 						<h3>아이디</h3>
 					</span>
 					<div class="wrap-input100 validate-input m-b-36" data-validate="UserName is required">
-						<input class="input100" type="text" name = "Name" id = "userName">
+						<input class="input100" type="text" name = "Name" id = "userName" placeholder = "아이디를 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 	
@@ -49,7 +49,7 @@
 						<h3>이메일</h3>
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Email is required">
-						<input class="input100" type="email" name = "Email" id = "userEmail">
+						<input class="input100" type="email" name = "Email" id = "userEmail" placeholder = "이메일을 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 	

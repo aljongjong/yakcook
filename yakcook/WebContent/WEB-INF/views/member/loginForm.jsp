@@ -43,7 +43,7 @@
 						<h3>아이디</h3>
 					</span>
 					<div class="wrap-input100 validate-input m-b-36" data-validate = "UserId is required">
-						<input class="input100" type="text" name="id" >
+						<input class="input100" type="text" name="id" placeholder = "아이디를 입력해주세요" required >
 						<span class="focus-input100"></span>
 					</div>
 					
@@ -54,7 +54,7 @@
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-						<input class="input100" type="password" name="pwd" >
+						<input class="input100" type="password" name="pwd" placeholder = "비밀번호를 입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 					

@@ -52,7 +52,7 @@
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-						<input class="input100" type="password" name = "password" id = "password" onkeyup="passConfirm()" onpaste="return false;" oncopy="return false;"/>
+						<input class="input100" type="password" name = "password" id = "password" onkeyup="passConfirm()" onpaste="return false;" oncopy="return false;" placeholder = "비밀번호를 입력해주세요" required/>
 						<span class="focus-input100"></span>
 					</div>
 					<br>
@@ -65,7 +65,7 @@
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-						<input class="input100" type="password" name = "passwordcheck" id = "passwordConfirm" onkeyup="passConfirm()">
+						<input class="input100" type="password" name = "passwordcheck" id = "passwordConfirm" onkeyup="passConfirm()" placeholder = "비밀번호 재입력해주세요" required>
 						<span class="focus-input100"></span>
 					</div>
 					<br>
