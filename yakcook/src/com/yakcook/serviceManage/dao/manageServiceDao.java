@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.yakcook.serviceManage.model.vo.FAQVo;
+import com.yakcook.serviceManage.model.vo.QNAVo;
 import com.yakcook.serviceManage.model.vo.noticeVo;
 import com.yakcook.serviceManage.model.vo.pagingVo;
 
@@ -350,6 +351,320 @@ public class manageServiceDao {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	public int countQNAAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT COUNT(QNA_NO) FROM QNA WHERE QUIT_YN='N' AND MANAGER_ANSWER='N'";
+		int count = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
+
+	public int countQNA(Connection conn, String value) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT COUNT(QNA_NO) FROM QNA "
+				+ "WHERE QUIT_YN='N' AND MANAGER_ANSWER='N' AND QNA_CATEGORY=?";
+		int count = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, value);;
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
+
+	public ArrayList<QNAVo> getQNAAll(Connection conn, pagingVo pv) {
+		PreparedStatement pstmt = null;
+		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM , Q.* "
+				+ "FROM QNA Q WHERE Q.QUIT_YN='N' AND Q.MANAGER_ANSWER='N' ORDER BY QNA_DATE)"
+				+ "WHERE RNUM BETWEEN ? AND ?";
+		ResultSet rs = null;
+		ArrayList<QNAVo> QNAList = new ArrayList<QNAVo>();
+		QNAVo qv = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pv.getStartNo());
+			pstmt.setInt(2, pv.getEndNo());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				qv = new QNAVo();
+				qv.setQnaNo(rs.getInt("QNA_NO"));
+				qv.setQnaTitle(rs.getString("QNA_TITLE"));
+				qv.setQnaContent(rs.getString("QNA_CONTENT"));
+				qv.setQnaDate(rs.getTimestamp("QNA_DATE"));
+				qv.setUserId(rs.getString("USER_ID"));
+				qv.setQnaCategory(rs.getString("QNA_CATEGORY"));
+				QNAList.add(qv);
+			}
+			
+			commit(conn);
+		} catch (SQLException e) {
+			close(pstmt);
+			rollback(conn);
+			e.printStackTrace();
+		}
+		return QNAList;
+	}
+
+	public ArrayList<QNAVo> getQNA(Connection conn, String value, pagingVo pv) {
+		PreparedStatement pstmt = null;
+		String sql = "SELECT * FROM (SELECT ROWNUM AS RNUM , Q.* "
+				+ "FROM QNA Q WHERE Q.QUIT_YN='N' AND Q.MANAGER_ANSWER='N' AND QNA_CATEGORY=? ORDER BY QNA_DATE)"
+				+ "WHERE RNUM BETWEEN ? AND ?";
+		ResultSet rs = null;
+		ArrayList<QNAVo> QNAList = new ArrayList<QNAVo>();
+		QNAVo qv = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, value);
+			pstmt.setInt(2, pv.getStartNo());
+			pstmt.setInt(3, pv.getEndNo());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				qv = new QNAVo();
+				qv.setQnaNo(rs.getInt("QNA_NO"));
+				qv.setQnaTitle(rs.getString("QNA_TITLE"));
+				qv.setQnaContent(rs.getString("QNA_CONTENT"));
+				qv.setQnaDate(rs.getTimestamp("QNA_DATE"));
+				qv.setUserId(rs.getString("USER_ID"));
+				qv.setQnaCategory(rs.getString("QNA_CATEGORY"));
+				QNAList.add(qv);
+			}
+			
+			commit(conn);
+		} catch (SQLException e) {
+			close(pstmt);
+			rollback(conn);
+			e.printStackTrace();
+		}
+		return QNAList;
+	}
+
+	public QNAVo selectQNA(Connection conn, int qnaNo) {
+		PreparedStatement pstmt = null;
+		String sql = "SELECT * FROM QNA WHERE QNA_NO = ?";
+		ResultSet rs = null;
+		QNAVo qv = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qnaNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				qv = new QNAVo();
+				qv.setQnaNo(rs.getInt("QNA_NO"));
+				qv.setQnaTitle(rs.getString("QNA_TITLE"));
+				qv.setQnaContent(rs.getString("QNA_CONTENT"));
+				qv.setQnaDate(rs.getTimestamp("QNA_DATE"));
+				qv.setUserId(rs.getString("USER_ID"));
+				qv.setQnaCategory(rs.getString("QNA_CATEGORY"));
+			}
+			
+			commit(conn);
+		} catch (SQLException e) {
+			close(pstmt);
+			rollback(conn);
+			e.printStackTrace();
+		}
+		return qv;
+	}
+
+	public int answerQNA(Connection conn, QNAVo qv) {
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE QNA "
+				+ "SET MANAGER_ANSWER ='Y', MANAGER_NUMBER=?, MANAGER_QUESTION= ? WHERE QNA_NO =?";
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qv.getManagerNo());
+			pstmt.setString(2, qv.getManagerQuestion());
+			pstmt.setInt(3, qv.getQnaNo());
+			result = pstmt.executeUpdate();
+
+			commit(conn);
+		} catch (SQLException e) {
+			close(pstmt);
+			rollback(conn);
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int countAnswerdQNAAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT COUNT(QNA_NO) FROM QNA WHERE QUIT_YN='N' AND MANAGER_ANSWER='Y'";
+		int count = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
+
+	public int countAnswerdQNA(Connection conn, String value) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT COUNT(QNA_NO) FROM QNA "
+				+ "WHERE QUIT_YN='N' AND MANAGER_ANSWER='Y' AND QNA_CATEGORY=?";
+		int count = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, value);;
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
+
+	public ArrayList<QNAVo> getAnswerdQNAAll(Connection conn, pagingVo pv) {
+		PreparedStatement pstmt = null;
+		String sql = "SELECT * "
+				+ "FROM (SELECT ROWNUM AS RNUM , Q.*,M.MANAGER_ID "
+				+ "FROM QNA Q JOIN MANAGER M ON(Q.MANAGER_NUMBER = M.MANAGER_NUMBER) "
+				+ "WHERE Q.QUIT_YN='N' AND Q.MANAGER_ANSWER='Y' ORDER BY QNA_DATE)"
+				+ "WHERE RNUM BETWEEN ? AND ?";
+		ResultSet rs = null;
+		ArrayList<QNAVo> QNAList = new ArrayList<QNAVo>();
+		QNAVo qv = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pv.getStartNo());
+			pstmt.setInt(2, pv.getEndNo());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				qv = new QNAVo();
+				qv.setQnaNo(rs.getInt("QNA_NO"));
+				qv.setQnaTitle(rs.getString("QNA_TITLE"));
+				qv.setQnaContent(rs.getString("QNA_CONTENT"));
+				qv.setQnaDate(rs.getTimestamp("QNA_DATE"));
+				qv.setUserId(rs.getString("USER_ID"));
+				qv.setQnaCategory(rs.getString("QNA_CATEGORY"));
+				qv.setManagerNo(rs.getInt("MANAGER_NUMBER"));
+				qv.setManagerQuestion(rs.getString("MANAGER_QUESTION"));
+				qv.setManagerId(rs.getString("MANAGER_ID"));
+				QNAList.add(qv);
+			}
+			
+			commit(conn);
+		} catch (SQLException e) {
+			close(pstmt);
+			rollback(conn);
+			e.printStackTrace();
+		}
+		return QNAList;
+	}
+
+	public ArrayList<QNAVo> getAnswerdQNA(Connection conn, String value, pagingVo pv) {
+		PreparedStatement pstmt = null;
+		String sql = "SELECT * "
+				+ "FROM (SELECT ROWNUM AS RNUM , Q.*,M.MANAGER_ID "
+				+ "FROM QNA Q JOIN MANAGER M ON(Q.MANAGER_NUMBER = M.MANAGER_NUMBER) "
+				+ "WHERE Q.QUIT_YN='N' AND Q.MANAGER_ANSWER='Y' AND QNA_CATEGORY = ? ORDER BY QNA_DATE)"
+				+ "WHERE RNUM BETWEEN ? AND ?";
+		ResultSet rs = null;
+		ArrayList<QNAVo> QNAList = new ArrayList<QNAVo>();
+		QNAVo qv = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, value);
+			pstmt.setInt(2, pv.getStartNo());
+			pstmt.setInt(3, pv.getEndNo());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				qv = new QNAVo();
+				qv.setQnaNo(rs.getInt("QNA_NO"));
+				qv.setQnaTitle(rs.getString("QNA_TITLE"));
+				qv.setQnaContent(rs.getString("QNA_CONTENT"));
+				qv.setQnaDate(rs.getTimestamp("QNA_DATE"));
+				qv.setUserId(rs.getString("USER_ID"));
+				qv.setQnaCategory(rs.getString("QNA_CATEGORY"));
+				qv.setManagerNo(rs.getInt("MANAGER_NUMBER"));
+				qv.setManagerQuestion(rs.getString("MANAGER_QUESTION"));
+				qv.setManagerId(rs.getString("MANAGER_ID"));
+				QNAList.add(qv);
+			}
+			
+			commit(conn);
+		} catch (SQLException e) {
+			close(pstmt);
+			rollback(conn);
+			e.printStackTrace();
+		}
+		return QNAList;
+	}
+
+	public QNAVo selectAnswerQNA(Connection conn, int qnaNo) {
+		PreparedStatement pstmt = null;
+		String sql = "SELECT * FROM QNA Q JOIN MANAGER M ON(Q.MANAGER_NUMBER = M.MANAGER_NUMBER) WHERE QNA_NO = ?";
+		ResultSet rs = null;
+		QNAVo qv = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qnaNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				qv = new QNAVo();
+				qv.setQnaNo(rs.getInt("QNA_NO"));
+				qv.setQnaTitle(rs.getString("QNA_TITLE"));
+				qv.setQnaContent(rs.getString("QNA_CONTENT"));
+				qv.setQnaDate(rs.getTimestamp("QNA_DATE"));
+				qv.setUserId(rs.getString("USER_ID"));
+				qv.setQnaCategory(rs.getString("QNA_CATEGORY"));
+				qv.setManagerNo(rs.getInt("MANAGER_NUMBER"));
+				qv.setManagerQuestion(rs.getString("MANAGER_QUESTION"));
+				qv.setManagerId(rs.getString("MANAGER_ID"));
+			}
+			
+			commit(conn);
+		} catch (SQLException e) {
+			close(pstmt);
+			rollback(conn);
+			e.printStackTrace();
+		}
+		return qv;
 	}
 
 	

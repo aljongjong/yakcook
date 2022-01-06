@@ -26,12 +26,11 @@
                     </td>
                 </tr>
             </table>
+            <br>
             <div class="btnWrap">
            		<button type="button" class="noticeBtn" id="noticemodi">수정</button>
             </div>
-      
-            
-            
+		<br><br><br><br><br>
     </div>    
 	</section>
 	<script>

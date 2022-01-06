@@ -11,6 +11,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/common/headerFinal.jsp" %>
 	<section>
 	<%@ include file="/WEB-INF/views/customerService/sideMenu.jsp" %>
 	<div id="tableWrap">
@@ -58,7 +59,10 @@
        
         
     </section>
-
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
+	<%@ include file="/WEB-INF/views/common/footerFinal.jsp" %>
     <script>
     window.onload=()=>{
     	$('.view').on('click', function(){

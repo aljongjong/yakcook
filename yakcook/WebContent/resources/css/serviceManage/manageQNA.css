@@ -77,9 +77,6 @@ th{
     text-align: center;
 }
 
-
-
-
 .view>td:nth-of-type(2){
     text-align: center;
     color: rgb(250, 174, 088);
@@ -149,4 +146,7 @@ td>input:hover{
 }
 .hidetd{
 	display:none;
+}
+#link:hover{
+	cursor: pointer;
 }

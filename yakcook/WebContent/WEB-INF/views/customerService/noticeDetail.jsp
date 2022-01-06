@@ -10,9 +10,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-	<%@ include file="/WEB-INF/views/manager/managerHeader.jsp" %>
-	
-	
+	<%@ include file="/WEB-INF/views/common/headerFinal.jsp" %>
 	<section>
 	<div id="tableWrap">
             <span class="title">공지사항</span>
@@ -26,9 +24,12 @@
 					<td colspan=3>${NV.noticeContent}</td>
 				</tr>
             </table>
-            <br>
     </div>    
     </section>
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
+    <%@ include file="/WEB-INF/views/common/footerFinal.jsp" %>
      <script>
     window.onload=()=>{
 		$('.logoutbtn').on('click', function(){

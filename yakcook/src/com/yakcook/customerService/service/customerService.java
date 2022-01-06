@@ -10,6 +10,7 @@ import com.yakcook.customerService.dao.customerServiceDao;
 import com.yakcook.customerService.model.vo.FAQVo;
 import com.yakcook.customerService.model.vo.noticeVo;
 import com.yakcook.customerService.model.vo.pagingVo;
+import com.yakcook.serviceManage.model.vo.QNAVo;
 
 public class customerService {
 
@@ -69,10 +70,11 @@ public class customerService {
 	public noticeVo getNoticeDetail(int noticeNumber) {
 		Connection conn = getConnection();
 		noticeVo NV = null;
-		
 		NV = new customerServiceDao().getNoticeDetail(conn, noticeNumber);
 		close(conn);
 		return NV;
 	}
+
+	
 
 }

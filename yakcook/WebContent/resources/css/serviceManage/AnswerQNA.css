@@ -1,0 +1,106 @@
+@charset "UTF-8";
+section {
+    width:1200px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+table {
+    width: 100%;
+    
+    border-top: 2px solid black;
+    border-bottom:1px solid rgba(201, 199, 199, 0.823);
+    border-collapse: collapse;
+}
+#tableWrap{
+    width: 60%;
+    margin: auto;
+}
+
+tr{
+    border-top: 1px solid rgba(201, 199, 199, 0.823);
+    height: 40px;
+}
+th{
+    font-size: 18px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.content{
+    display:none;
+}
+.content>td{
+    text-align: left;
+    padding: 20px;
+}
+.title{
+    color: rgb(108, 128, 075);
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    margin: 10px;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+.t1{
+    width: 10%;
+}
+.t2{
+	width: 60%;
+	text-align: left;
+	font-weight:400;
+	font-size: 16px;
+}
+.t3{
+	width: 10%;
+	text-align: left;
+}
+.t4{
+	width: 20%;
+	text-align: left;
+}
+.left{
+	text-align: left;
+}
+
+.insert{
+	box-sizing: border-box;
+	border :none;
+	border-bottom:1px solid black;
+	outline: none;
+	font-size: 20px;
+	width: 100%;
+	padding: 5px 10px;
+}
+
+
+.btnWrap{
+	text-align: center;
+}
+
+.QNABtn{
+    background-color: rgb(171, 184, 104);
+    padding: 5px 10px;
+    font-size: 15px;
+    color: white;
+    border: none;
+    
+}
+.QNABtn:hover{
+    background-color: rgb(250, 174, 088);
+    cursor: pointer;
+}
+select{
+	height: 25px;
+	text-align: left;
+}
+textarea{
+	padding: 10px;
+	border: none;
+    resize: none;
+    font-size: 15px;
+}
+textarea:focus {
+    outline: none;
+}

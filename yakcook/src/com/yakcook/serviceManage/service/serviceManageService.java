@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.yakcook.paymentDetail.model.vo.paymentVo;
 import com.yakcook.serviceManage.dao.manageServiceDao;
 import com.yakcook.serviceManage.model.vo.FAQVo;
+import com.yakcook.serviceManage.model.vo.QNAVo;
 import com.yakcook.serviceManage.model.vo.noticeVo;
 import com.yakcook.serviceManage.model.vo.pagingVo;
 
@@ -125,6 +126,87 @@ public class serviceManageService {
 		int result = new manageServiceDao().modiNotice(conn, NV);
 		close(conn);
 		return result;
+	}
+	
+	public ArrayList<QNAVo> getQNAList(String value, pagingVo pv) {
+		Connection conn = getConnection();
+		ArrayList<QNAVo> QNAList = null;
+		int totalBoardCount=0;
+		if(value == null) {
+			totalBoardCount = new manageServiceDao().countQNAAll(conn);
+		}else {
+			totalBoardCount = new manageServiceDao().countQNA(conn ,value);
+		}
+		
+		int maxPage = totalBoardCount / pv.getBoardLimit();
+		if((totalBoardCount % pv.getBoardLimit())!=0) {
+			maxPage++;
+		}
+		pv.setMaxPage(maxPage);
+		int p = pv.getCurrentPage();
+		int startNo = ((p *pv.getBoardLimit()) - pv.getBoardLimit()) +1 ;
+		int endNo = p * pv.getBoardLimit();
+		pv.setStartNo(startNo);
+		pv.setEndNo(endNo);
+		
+		if(value == null) {
+			QNAList = new manageServiceDao().getQNAAll(conn, pv);
+		} else {
+			QNAList = new manageServiceDao().getQNA(conn, value, pv);
+		}
+		close(conn);
+		return QNAList;
+	}
+
+	public QNAVo selectQNA(int qnaNo) {
+		Connection conn = getConnection();
+		QNAVo qv= new manageServiceDao().selectQNA(conn,qnaNo);
+		close(conn);
+		return qv;
+	}
+
+	public int answerQNA(QNAVo qv) {
+		Connection conn = getConnection();
+		int result = new manageServiceDao().answerQNA(conn, qv);
+		close(conn);
+		return result;
+	}
+
+	public ArrayList<QNAVo> getAnsweredQNAList(String value, pagingVo pv) {
+		Connection conn = getConnection();
+		ArrayList<QNAVo> QNAList = null;
+		int totalBoardCount=0;
+		if(value == null) {
+			totalBoardCount = new manageServiceDao().countAnswerdQNAAll(conn);
+		}else {
+			totalBoardCount = new manageServiceDao().countAnswerdQNA(conn ,value);
+		}
+		
+		int maxPage = totalBoardCount / pv.getBoardLimit();
+		if((totalBoardCount % pv.getBoardLimit())!=0) {
+			maxPage++;
+		}
+		pv.setMaxPage(maxPage);
+		int p = pv.getCurrentPage();
+		int startNo = ((p *pv.getBoardLimit()) - pv.getBoardLimit()) +1 ;
+		int endNo = p * pv.getBoardLimit();
+		pv.setStartNo(startNo);
+		pv.setEndNo(endNo);
+		
+		if(value == null) {
+			QNAList = new manageServiceDao().getAnswerdQNAAll(conn, pv);
+		} else {
+			QNAList = new manageServiceDao().getAnswerdQNA(conn, value, pv);
+		}
+		close(conn);
+		return QNAList;
+	}
+
+	public QNAVo selectAnswerQNA(int qnaNo) {
+		Connection conn = getConnection();
+		QNAVo qv= new manageServiceDao().selectAnswerQNA(conn,qnaNo);
+		close(conn);
+		return qv;
 	}
 
 	
