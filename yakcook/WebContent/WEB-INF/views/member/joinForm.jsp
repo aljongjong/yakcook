@@ -7,45 +7,6 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src = "https://developers.kakao.com/sdk/js/kakao.js"></script>
-	<script>
-	window.Kakao.init("eec04ecb595db3100a401b9e63601a3d");
-		function kakaoLogin(){
-			window.Kakao.Auth.login({
-				scope:'profile_nickname, account_email, gender',
-				success : function(authObj){
-					console.log(authObj);
-					window.Kakao.API.request({
-						url:'/v2/user/me',
-						success : res =>{
-							const kakao_account = res.kakao_account;
-							console.log(kakao_account);
-							let id = res.id;
-							let email = res.kakao_account.email;
-							let name = res.properties.nickname;
-							
-							console.log(email);
-							console.log(name);
-							alert('로그인성공');
-						}
-					});
-				}
-			});
-		} 
-	//
-	</script>
-<style>
-    #div-main{
-        width: 50vw;
-        height: 50vh;
-        margin: auto;
-        background-color: cadetblue;
-    }
-    
-    .hint {
-            color: red;
-            padding-left: 10px;
-    }
-</style>
 	<link rel="icon" type="image/png" href="resouce/images/icons/favicon.ico"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="resouce/vendor/bootstrap/css/bootstrap.min.css">
@@ -73,22 +34,22 @@
  <div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-100">
-				<form action="join" method = "post" class="login100-form validate-form flex-sb flex-w" enctype="multipart/form-data" name = "insertform">
+				<form action="join" method = "post" class="login100-form validate-form flex-sb flex-w" name = "insertform">
 					<span class="login100-form-title p-b-32">
 						Sign Up
 					</span>
 
 					<span class="txt1 p-b-11">
-						Userid
+						아이디 
 					</span>
 					<div class="wrap-input100 validate-input m-b-" data-validate = "Username is required">
 						<input class="input100" type="text" name="id" id = "idBox">
 						<span class="focus-input100"></span>
 					</div>
-					<span id="idspan"><label id="idMsg">영문자, 숫자 포함하여 총 4~12자로 입력하시오. 단, 첫 글자는 반드시 영문자로</label></span>
-					
+					<span id="idspan"><label id="idMsg"></label></span>
 					<span class="txt1 p-b-11">
-						Password
+					<br>
+						비밀번호
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate = "Password is required">
 						<span class="btn-show-pass">
@@ -98,10 +59,10 @@
 						<span class="focus-input100"></span>
 					</div>
 					<br>
-					<label class="hint" id="pwdspan" class = "mb-50">영문자, 숫자, 특수문자 포함하여 총 8~15자로 입력하시오. <br></label>
+					<label class="hint" id="pwdspan" class = "mb-50">  <br></label>
 
 					<span class="txt1 p-b-11">
-						Password Re
+						비밀번호 재입력
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Password is required">
 						<span class="btn-show-pass">
@@ -111,35 +72,32 @@
 						<span class="focus-input100"></span>
 					</div>
 					<br>
-					<label class="hint" id="pwdMsg">위의 비밀번호와 일치하게 입력하시오.<br><br></label>
-					<br>
-
+					<label class="hint" id="pwdMsg"></label>
 					<span class="txt1 p-b-11">
-						UserName
+						이름
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="UserName is required">
 						<input class="input100" type="text" name="name" id="userName" class = "none">
 						<span class="focus-input100"></span>
 					</div>
 					<br>
-					<label class="hint" id="nameMsg">한글로만 이루어져야 되며 2글자 이상으로 입력하시오.<br><br></label>
+					<label class="hint" id="nameMsg"><br><br></label>
 					<br>
 
 					<span class="txt1 p-b-11">
-						Email
+						이메일
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Email is required">
 						<input class="input100"  type="email" name="email" id = "email" class = "none">
 						<span class="focus-input100"></span>
 					</div>
 						<br>
-						<label class="hint">이메일 형식에 맞춰서 입력하시오.</label>
+						<label class="hint" id = "emailMsg"> </label>
 						<input type="button" name="emailconfirm_btn" value="인증" onclick="emailcheck(insertform.email.value, insertform.name.value)">
-						<br>
-
-					<span class="txt1 p-b-11">
-						Phone
-					</span>
+					
+					<p class="txt1 p-b-11">
+						핸드폰번호
+					</p>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Phone is required">
 						<input class="input100" type="text" name="phone" class = "none" maxlength="13" id = "phoneNumber">
 						<span class="focus-input100"></span>

@@ -11,6 +11,7 @@ public class MemberQnAVo {
 	private int manager_number;
 	private String qna_category;
 	private String manager_answer;
+	private String manager_question;
 
 	public int getQna_no() {
 		return qna_no;
@@ -60,5 +61,10 @@ public class MemberQnAVo {
 	public void setManager_answer(String manager_answer) {
 		this.manager_answer = manager_answer;
 	}
-	
+	public String getManager_question() {
+		return manager_question;
+	}
+	public void setManager_question(String manager_question) {
+		this.manager_question = manager_question;
+	}
 }

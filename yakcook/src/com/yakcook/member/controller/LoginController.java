@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet{
 		
 		if(loginUser != null) {
 			req.getSession().setAttribute("loginUser", loginUser);
-			req.setAttribute("msg", "로그인 성공");
+			//req.setAttribute("msg", "로그인 성공");
 			req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
 		}else {
 			// 실패

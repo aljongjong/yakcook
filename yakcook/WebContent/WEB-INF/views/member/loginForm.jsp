@@ -5,15 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-    #div-main{
-        width: 50vw;
-        height: 50vh;
-        margin: auto;
-        background-color: cadetblue;
-        text-align: center;
-    }
-</style>
 </head>
 <body>
 <!--===============================================================================================-->	
@@ -40,7 +31,6 @@
 <!--===============================================================================================-->
 </head>
 <body>
-	
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
@@ -50,7 +40,7 @@
 					</span>
 
 					<span class="txt1 p-b-11">
-						Userid
+						<h3>아이디</h3>
 					</span>
 					<div class="wrap-input100 validate-input m-b-36" data-validate = "UserId is required">
 						<input class="input100" type="text" name="id" >
@@ -58,7 +48,7 @@
 					</div>
 					
 					<span class="txt1 p-b-11">
-						Password
+						<h3>비밀번호</h3>
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate = "Password is required">
 						<span class="btn-show-pass">
@@ -89,7 +79,7 @@
 					<div class="container-login100-form-btn">
 						<input type ="submit"  value="Login">
 					</div>
-					<a href="join" class="txt3">
+					<a href="memberjoincheck" class="txt3">
 						Join
 					</a>
 				</form>

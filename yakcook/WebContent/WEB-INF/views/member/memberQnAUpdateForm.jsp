@@ -18,6 +18,7 @@
 
 </head>
 <body>
+<%@ include file="/WEB-INF/views/common/headerFinal.jsp"%>
 	<div id="wrap">
 
 		<header></header>
@@ -33,11 +34,8 @@
 						<input type="submit" value = "수정완료">
 					</div>
 					</form>
-
-
-
-
 		<footer></footer>
 	</div>
 </body>
+<%@ include file="../common/footerFinal.jsp"%>
 </html>

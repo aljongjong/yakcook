@@ -9,7 +9,8 @@ let pwdspan = document.getElementById('pwdspan');
 let userName = document.getElementById('userName'); //이름 값
 let nameMsg = document.getElementById('nameMsg');
 let email = document.getElementById('email'); // 이메일
-let phone = document.getElementById('userphone');
+let phone = document.getElementById('userphone'); // 이메일 밑에 span
+let emailMsg = document.getElementById('emailMsg');
 let passwordCheckNum = 0; // 비밀번호 일치할 때 넘어가도록 관리하는 변수
 let emailCheckNum = 0; // 이메일 인증 성공시 넘어가도록 관리하는 변수
 let nameCheckNum = 0; // 이름 정규식 만족하면 넘어가도록 관리하는 변수
@@ -31,7 +32,7 @@ $('#idBox').keyup(function(){
 			},
 			success : function(data){
 				if(data == "true"){
-					$("#idspan").text("사용 가능한 아이디 입니다.");
+					$("#idspan").text("사용 가능한 이메일입니다");
 					$('input').attr('readonly', false);
 					$("#idBox").focus();
 					userIdCheck = data;
@@ -40,7 +41,7 @@ $('#idBox').keyup(function(){
 				} else{
 					if(data != true){
 						alert("중복된 아이디 입니다.")
-						$("#idspan").text("아이디를 다시 입력 한 후 비번 입력하셈");
+						$("#idspan").text("아이디를 다시 입력해주세요");
 						$('input').not('#idBox').attr('readonly', true);
 					}
 				}
@@ -92,6 +93,40 @@ $('#userName').on('keyup', function(){
 		nameCheckNum = 0;
 	}
 });
+
+// 이메일 중복 확인 + 정규식
+$('#email').keyup(function(){
+let replaceId = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i // 반드시 영문으로 시작 숫자+언더바/하이픈 허용 4~20자리
+if(replaceId.test(email.value) && email.value.length > 3){
+	$('#emailMsg').text(' ');
+	$.ajax({
+		url :'/yakcook/memberEmailDupCheck',
+		type : 'get', 
+		data : {
+			email : $('#email').val()
+		},
+		success : function(data){
+			if(data == "true"){
+				$("#emailMsg").text("사용 가능한 이메일 입니다.");
+				$('input').attr('readonly', false);
+				$("#emailMsg").focus();
+			} else{
+				if(data != true){
+					alert("중복된 이메일 입니다.")
+					$("#emailMsg").text("중복된 이메일입니다 다시 입력하세요");
+				}
+			}
+		},
+		error : function(err){
+			alert('error');
+			}
+		});
+}else{
+	emailMsg.innerHTML = "이메일을 입력하세요";
+	}
+});
+
+
 
 // 이메일 인증
 function emailcheck(email){

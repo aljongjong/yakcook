@@ -1,6 +1,7 @@
 package com.yakcook.member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +23,9 @@ public class MemderFindIdController extends HttpServlet {
 	// 아이디 찾기 진행
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		
 		//MemberDao mDao = new MemberDao();
 		String name = req.getParameter("Name");
 		String email = req.getParameter("Email");
@@ -31,12 +35,13 @@ public class MemderFindIdController extends HttpServlet {
 		req.setAttribute("id", id);
 		
 		if(id != null) {
-			req.setAttribute("msg", "조회 성공");
 			req.setAttribute("id", id);
 			req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
 		}else {
-			req.setAttribute("msg", "조회 실패");
-			req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
+			out.println("<script>alert('회원정보가 없습니다.'); location.href='login';</script>");				
+			out.flush();
+			//req.setAttribute("msg", "조회 실패");
+			//req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
 		}
 	}
 }

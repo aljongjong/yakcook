@@ -244,4 +244,15 @@ public int myinfoUpdate(String id, String email, String phone) {
 	}
 	return result;
 }
+
+public int dupCheckEmail(String email) {
+	Connection conn = getConnection();
+	int result = selectMemberByEmail(conn, email);
+	close(conn);
+	return result;
+}
+
+private int selectMemberByEmail(Connection conn, String email) {
+	 return new MemberDao().selectMemberByEmail(conn, email);
+}
 			 }

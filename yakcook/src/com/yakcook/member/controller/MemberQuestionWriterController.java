@@ -1,6 +1,7 @@
 package com.yakcook.member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +27,9 @@ public class MemberQuestionWriterController extends HttpServlet{
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		
 		HttpSession session = req.getSession();
 		
 		//현재 로그인 한 회원의 세션 정보 가져오기
@@ -51,12 +55,16 @@ public class MemberQuestionWriterController extends HttpServlet{
 	
 		if(result>0) {
 			// 성공
-			req.setAttribute("msg", "글쓰기 성공");
-			req.getRequestDispatcher("WEB-INF/views/common/successPage.jsp").forward(req, resp);
+			out.println("<script>alert('문의글이 성공적으로 작성 되었습니다.'); location.href='memberquestion';</script>");				
+			out.flush();
+			//req.setAttribute("msg", "글쓰기 성공");
+			//req.getRequestDispatcher("WEB-INF/views/common/successPage.jsp").forward(req, resp);
 		}else {
 			// 실패
-			req.setAttribute("msg", "글쓰끼 실패");
-			req.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(req, resp);
+			//req.setAttribute("msg", "글쓰끼 실패");
+			//req.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(req, resp);
+			out.println("<script>alert('문의글 작성에 실패했습니다.'); location.href='memberquestion';</script>");				
+			out.flush();
 		}
 		
 	}	

@@ -10,7 +10,7 @@
 <%String id = (String)session.getAttribute("userId"); %>
 <link rel="stylesheet" href="/yakcook/resources/css/review/writerReview.css">
 <body>
-
+<%@ include file="/WEB-INF/views/common/headerFinal.jsp"%>
     <div id="wrap">
         <header>
 
@@ -53,6 +53,7 @@
 
         </footer>
     </div>
+<%@ include file="../common/footerFinal.jsp"%>
 </body>
 
 </html>
