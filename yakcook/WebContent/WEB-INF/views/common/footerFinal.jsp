@@ -9,7 +9,6 @@
 <script src="https://kit.fontawesome.com/77be500183.js" crossorigin="anonymous"></script>
 </head>
 <body>
-        <div style="width:100%; height:200px;"></div>
         <div class="footerWrap">
             <div class="footerContents">
                 <!-- yakcook 정보 -->
