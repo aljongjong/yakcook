@@ -307,12 +307,14 @@ public class MemberDao {
             String qna_title = rs.getString("QNA_TITLE");
             String qna_content = rs.getString("QNA_CONTENT");
             String user_id = rs.getString("USER_ID");
+            String manager_question = rs.getString("MANAGER_QUESTION");
             
             q = new MemberQnAVo();
             q.setQna_no(qna_no);
             q.setQna_title(qna_title);
             q.setQna_content(qna_content);
-            q.setUser_id(user_id);            
+            q.setUser_id(user_id); 
+            q.setManager_question(manager_question);
             QnAListView.add(q);
          }
       } catch (SQLException e) {
@@ -360,6 +362,7 @@ public class MemberDao {
                String qna_title = rs.getString("QNA_TITLE"); 
                String qna_content = rs.getString("QNA_CONTENT");
                String qna_category = rs.getString("QNA_CATEGORY");
+               String manger_answer = rs.getString("MANAGER_ANSWER");
                
                MemberQnAVo q = new MemberQnAVo();
                q.setQna_no(qna_no);
@@ -367,6 +370,7 @@ public class MemberDao {
                q.setQna_title(qna_title);
                q.setQna_content(qna_content);
                q.setQna_category(qna_category);
+               q.setManager_answer(manger_answer);
 
                qnaList.add(q);
             }
@@ -439,6 +443,7 @@ public MemberQnAVo myqnaList(Connection conn, String qna_no) {
 			q.setQna_title(rs.getString("QNA_TITLE"));
 			q.setQna_content(rs.getString("QNA_CONTENT"));
 			q.setUser_id(rs.getString("USER_ID"));
+			q.setManager_answer(rs.getString("MANAGER_ANSWER"));
 		}
 	} catch (SQLException e) {
 		e.printStackTrace();
@@ -520,6 +525,27 @@ public int myinfoUpdate(Connection conn, String id, String email, String phone) 
 		close(rs);
 	}
 	
+	return result;
+}
+
+public int selectMemberByEmail(Connection conn, String email) {
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	int result = 0;
+	String sql = "SELECT COUNT(*) FROM MEMBER WHERE USER_EMAIL = ?"; 
+	
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1,email);
+		rs = pstmt.executeQuery();
+		rs.next();
+		result = rs.getInt(1);
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(pstmt);
+		close(rs);
+	}
 	return result;
 }
     

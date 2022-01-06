@@ -38,7 +38,7 @@
 					</span>
 	
 					<span class="txt1 p-b-11">
-						UserName
+						<h3>아이디</h3>
 					</span>
 					<div class="wrap-input100 validate-input m-b-36" data-validate="UserName is required">
 						<input class="input100" type="text" name = "Name" id = "userName">
@@ -46,7 +46,7 @@
 					</div>
 	
 					<span class="txt1 p-b-11">
-						Email
+						<h3>이메일</h3>
 					</span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Email is required">
 						<input class="input100" type="email" name = "Email" id = "userEmail">

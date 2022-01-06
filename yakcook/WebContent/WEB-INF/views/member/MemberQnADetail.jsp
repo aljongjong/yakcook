@@ -18,8 +18,8 @@
 
 </head>
 <body>
+<%@ include file="/WEB-INF/views/common/headerFinal.jsp"%>
 	<div id="wrap">
-
 		<header></header>
 			<c:forEach items="${qnaList}" var="q">
 			<form action = "qnadelete" method = "get">
@@ -32,7 +32,9 @@
 					</div>
 
 					<div id="review_contents">${q.qna_content}</div>
-
+					<hr>
+					답변 : 
+					<div id="review_contents">${q.manager_question}</div>
 					</div>
 
 					<div id="review_button">
@@ -42,11 +44,8 @@
 					</div>
 					</form>
 			</c:forEach>
-
-
-
-
 		<footer></footer>
 	</div>
+<%@ include file="../common/footerFinal.jsp"%>
 </body>
 </html>

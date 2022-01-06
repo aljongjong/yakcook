@@ -1,6 +1,7 @@
 package com.yakcook.member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,9 @@ public class MemberFindPwdController extends HttpServlet{
 	//비번 찾기 기능 수행
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		
 		String name = req.getParameter("name");
 		String id = req.getParameter("id");
 		String email = req.getParameter("email");
@@ -33,8 +37,10 @@ public class MemberFindPwdController extends HttpServlet{
 			req.setAttribute("id", id);
 			req.getRequestDispatcher("/WEB-INF/views/member/findPwdUpdateForm.jsp").forward(req, resp);
 		}else {
-			req.setAttribute("msg", "비번 조회까지 실패");
-			req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
+			//req.setAttribute("msg", "비번 조회까지 실패");
+			//req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
+			out.println("<script>alert('비밀번호 조회 실패'); location.href='login';</script>");				
+			out.flush();
 		}
 	}
 }

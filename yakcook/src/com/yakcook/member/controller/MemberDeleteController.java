@@ -1,6 +1,7 @@
 package com.yakcook.member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +27,7 @@ public class MemberDeleteController extends HttpServlet{
 		int result = new MemberService().deleteMember(userPwd,userId);
 		
 		 if(result > 0) {
-			 req.setAttribute("msg", "회원탈퇴 성공");
+			 //req.setAttribute("msg", "회원탈퇴 성공");
 			 req.getSession().invalidate();
 			 req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
 		 }else { // 실패 
