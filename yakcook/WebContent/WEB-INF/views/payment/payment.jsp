@@ -229,7 +229,7 @@
 	</section>
 
 	<footer> 
-	
+	  <%@ include file="../common/footerFinal.jsp"%>
 	  </footer>
 	</div>
 

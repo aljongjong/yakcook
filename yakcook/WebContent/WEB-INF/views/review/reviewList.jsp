@@ -68,7 +68,8 @@
 		</section>
 
 
-		<footer  id="footer"> </footer>
+		<footer  id="footer">  <%@ include file="../common/footerFinal.jsp"%>
+		</footer>
 
 		<%String loginUserId = null;
 		try{

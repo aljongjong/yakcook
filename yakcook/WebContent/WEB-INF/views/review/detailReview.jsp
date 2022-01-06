@@ -85,7 +85,7 @@
 			</c:forEach>
 		</section>
 		<footer id="footer">
-		
+		  <%@ include file="../common/footerFinal.jsp"%>
 		</footer>
 			<%
 			String loginUserId = null;
