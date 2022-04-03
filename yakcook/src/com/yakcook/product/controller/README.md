@@ -83,7 +83,49 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 ## 제품 관리 
 ### <제품 조회, 등록, 수정, 삭제>
 ```java
+// 다중 파일 업로드
+List<ProductImgVo> pImgList = new ArrayList<>();
 
+Collection<Part> parts = req.getParts(); // 모든 part들을 가져옴
+ProductImgVo pImg = null;
+
+if(resultTag == 3) {
+	for(Part file : parts) {
+		if(!file.getName().equals("f")) continue; // name이 f인 경우에 실행
+
+		// 사용자가 업로드한 파일 이름 알아오기
+		String originName = file.getSubmittedFileName();
+
+		// 사용자가 업로드한 파일에 input 스트림 연결
+		InputStream fis = file.getInputStream();
+
+		// 파일 이름 변경
+		String changeName = "Z" + UUID.randomUUID();
+		String ext = originName.substring(originName.lastIndexOf("."), originName.length());
+
+		// 저장할 경로
+		String realPath = req.getServletContext().getRealPath("/upload/product");
+
+		// 파일 경로
+		String filePath = realPath + File.separator + changeName + ext;
+
+		// 파일 저장
+		FileOutputStream fos = new FileOutputStream(filePath);
+
+		byte[] buf = new byte[1024];
+		int size = 0;
+		while((size = fis.read(buf)) != -1) {
+			fos.write(buf, 0, size);
+		}
+		fis.close();
+		fos.close();
+
+		pImg = new ProductImgVo();
+		pImg.setProductImgName(changeName + ext);
+
+		pImgList.add(pImg);
+	}
+}
 ```
 
 
