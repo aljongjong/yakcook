@@ -21,16 +21,10 @@
   * [헤더 메뉴바](yakcook/WebContent/WEB-INF/views/common/headerFinal.jsp)
   * [풋터](yakcook/WebContent/WEB-INF/views/common/footerFinal.jsp)
 - 제품 조회 (카테고리 별/정렬 조회, 제품 상세 정보 페이지)
-  * [컨트롤러]()
-  * [화면]()
 - 제품 관리 (제품 조회, 등록, 수정, 삭제)
-  * [컨트롤러]()
-  * [화면]()
 - 태그 검색 (제품별 등록 태그 검색)
-  * [컨트롤러]()
-  * [화면]()
 - 장바구니
-  * [컨트롤러]()
+  + [컨트롤러]()
   * [화면]()
 
 
