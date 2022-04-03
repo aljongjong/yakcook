@@ -24,7 +24,7 @@
 - 제품 관리 (제품 조회, 등록, 수정, 삭제)
 - 태그 검색 (제품별 등록 태그 검색)
 - 장바구니
-  + [제품(조회, 관리, 태그 검색, 장바구니 포함) 컨트롤러]()
+  + [제품(조회, 관리, 태그 검색, 장바구니 포함) 컨트롤러](yakcook/src/com/yakcook/product/controller/)
   * [제품(조회, 관리, 태그 검색, 장바구니 포함) 화면](yakcook/WebContent/WEB-INF/views/product/)
 
 
