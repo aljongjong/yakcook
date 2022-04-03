@@ -132,7 +132,35 @@ if(resultTag == 3) {
 ## 태그 검색 
 ### <제품별 등록 태그 검색>
 ```java
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+	String tagName = req.getParameter("tagName");
+
+	System.out.println("tagName:" + tagName);
+	req.setAttribute("tagName", tagName);
+
+	// 같은 태그를 가지고 있는 제품들 검색 후 리턴
+	List<ProductVo> list = new ArrayList<>();
+	list = new ServiceProduct().tagSearchProduct(tagName);
+
+	if(list.size() > 0) {
+		req.setAttribute("tagSearchList", list);
+	} else {
+		req.setAttribute("msg", "검색한 태그 결과가 없습니다.");
+	}
+
+	// 제품 이미지 불러오기
+	List<ProductImgVo> piList = new ServiceProduct().searchAllProductImg();
+	req.setAttribute("productImgList", piList);
+
+	// 태그 매치
+	List<ProductVo> tagProductList = new ServiceProduct().tagProductList();
+	req.setAttribute("tagProductList", tagProductList);
+
+
+	req.getRequestDispatcher("/WEB-INF/views/product/tagSearchProduct.jsp").forward(req, resp);
+}
 ```
 
 ## 장바구니
