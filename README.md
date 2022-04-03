@@ -14,7 +14,7 @@
 
 
 ## 🦊 담당 구현 기능
-- [로고 제작]()
+- [로고 제작](yakcook/WebContent/resources/images/common/logoWhite.png)
 - 메인 UI 제작 (메인 화면, 헤더 메뉴바, 풋터)
 - 제품 조회 (카테고리 별/정렬 조회, 제품 상세 정보 페이지)
 - 제품 관리 (제품 조회, 등록, 수정, 삭제)
