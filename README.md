@@ -1,5 +1,5 @@
 # 💊 약cook (건강기능식품 쇼핑몰)
-<div style="width:100%;">
+<div style="width:100%; box-sizing: border-box;">
 <img style="width:50%; float:left; box-sizing: border-box;" width="720" alt="스크린샷 2022-01-16 오후 3 55 11" src="https://user-images.githubusercontent.com/85149442/161420180-2e18ff2c-6325-408e-9478-1ae131d9c91b.png">
 <img style="width:50%; float:left; box-sizing: border-box;" width="720" alt="스크린샷 2022-01-16 오후 3 55 29" src="https://user-images.githubusercontent.com/85149442/161420191-7ab17546-1a65-4c5b-a270-fe23f284bb4e.png">
 </div>
