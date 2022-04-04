@@ -37,4 +37,6 @@
 - HTML5
 - CSS3
 
-## ♻️ 🫙🧊🕋💾🗄 데이터베이스 모델링
+## 🗄 데이터베이스 모델링
+<img width="1004" alt="image" src="https://user-images.githubusercontent.com/85149442/161479660-644d418b-79bd-438c-84f3-4a3e9d27ab58.png">
+
